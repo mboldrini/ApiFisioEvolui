@@ -8,11 +8,11 @@ interface IRequest {
 	nome: string;
 	email: string;
 	celular: string;
-	instagram?: string;
+	instagram: string;
 	crefito: string;
 	dtNascimento: Date;
 	cpfcnpj: string;
-	excluido?: number;
+	excluido: number;
 }
 
 class CreateUserService {
@@ -29,9 +29,14 @@ class CreateUserService {
 	}: IRequest): Promise<User> {
 		const usersRepository = getCustomRepository(UsersRepository);
 
-		const userExists = await usersRepository.findByUid(uid);
-		if (userExists) {
-			throw new AppError('Já existe um usuario com o email informado');
+		const userUidExists = await usersRepository.findByUid(uid);
+		if (userUidExists) {
+			throw new AppError('Já existe um usuario com o uid informado');
+		}
+
+		const userEmailExists = await usersRepository.findByEmail(email);
+		if (userEmailExists) {
+			throw new AppError('Já existe um usuário com o email informado');
 		}
 
 		const user = usersRepository.create({

@@ -19,7 +19,7 @@ export default class UsersController {
 
 		const createUser = new CreateUserService();
 
-		const user = createUser.execute({
+		const user = await createUser.execute({
 			uid,
 			nome,
 			email,
@@ -39,7 +39,7 @@ export default class UsersController {
 
 		const updateUser = new UpdateUserService();
 
-		const user = updateUser.execute({
+		const user = await updateUser.execute({
 			uid,
 			nome,
 			celular,
