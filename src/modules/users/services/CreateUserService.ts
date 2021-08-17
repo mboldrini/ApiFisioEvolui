@@ -3,6 +3,13 @@ import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
 import User from '../typeorm/entities/User';
 
+interface IParams {
+	atendimento_duracao: string;
+	agenda_retroativo: number;
+	evolucao_repetir: number;
+	pagamento_valor: string;
+}
+
 interface IRequest {
 	uid: string;
 	nome: string;
@@ -13,6 +20,7 @@ interface IRequest {
 	dtNascimento: Date;
 	cpfcnpj: string;
 	excluido: number;
+	params: Object;
 }
 
 class CreateUserService {
