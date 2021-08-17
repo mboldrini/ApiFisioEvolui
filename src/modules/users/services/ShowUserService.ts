@@ -1,3 +1,4 @@
+import { Request, Response } from 'express';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import User from '../typeorm/entities/User';
@@ -16,6 +17,8 @@ class ShowUserService {
 		if (!user) {
 			throw new AppError('Usuario não encontrado');
 		}
+
+		console.log('ShowUserService: ', user);
 
 		return user;
 	}

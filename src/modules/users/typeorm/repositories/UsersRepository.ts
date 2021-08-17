@@ -20,15 +20,5 @@ export class UsersRepository extends Repository<User> {
 		});
 		return user;
 	}
-
-	public async findByEmailAndUid(email: string, uid: string): Promise<User | undefined> {
-		const user = await this.findOne({
-			where: {
-				email,
-				uid,
-			},
-		});
-		return user;
-	}
 }
 export default UsersRepository;
