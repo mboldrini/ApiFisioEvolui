@@ -10,3 +10,4 @@ dist
 
 uploads/*
 !uploads/.gitkeep
+src/modules/params/typeorm/entities/UserParams.ts
