@@ -5,7 +5,7 @@ import UpdateUserService from '../services/UpdateUserService';
 
 export default class UsersController {
 	public async show(request: Request, response: Response): Promise<Response> {
-		const { uid } = request.params;
+		const { uid } = request.user;
 
 		const showUser = new ShowUserService();
 
@@ -35,7 +35,8 @@ export default class UsersController {
 	}
 
 	public async update(request: Request, response: Response): Promise<Response> {
-		const { uid, nome, email, celular, instagram, crefito, dtNascimento, cpfcnpj, excluido } = request.body;
+		const { uid } = request.user;
+		const { nome, email, celular, instagram, crefito, dtNascimento, cpfcnpj, excluido } = request.body;
 
 		const updateUser = new UpdateUserService();
 
