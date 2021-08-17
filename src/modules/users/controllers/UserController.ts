@@ -1,3 +1,4 @@
+import CreateUserParamsService from '@modules/params/services/CreateUserParamsService';
 import { Request, Response } from 'express';
 import CreateUserService from '../services/CreateUserService';
 import ShowUserService from '../services/ShowUserService';
@@ -15,10 +16,9 @@ export default class UsersController {
 	}
 
 	public async create(request: Request, response: Response): Promise<Response> {
-		const { uid, nome, email, celular, instagram, crefito, dtNascimento, cpfcnpj, excluido } = request.body;
+		const { uid, nome, email, celular, instagram, crefito, dtNascimento, cpfcnpj, excluido, params } = request.body;
 
 		const createUser = new CreateUserService();
-
 		const user = await createUser.execute({
 			uid,
 			nome,
@@ -30,6 +30,9 @@ export default class UsersController {
 			cpfcnpj,
 			excluido,
 		});
+
+		const createUserParams = new CreateUserParamsService();
+		const newParams = await createUser.execute(params);
 
 		return response.json(user);
 	}

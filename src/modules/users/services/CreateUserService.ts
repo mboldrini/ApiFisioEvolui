@@ -1,3 +1,4 @@
+import { UserParamsRepository } from './../../params/typeorm/repositories/UserParamsRepository';
 import { UsersRepository } from './../typeorm/repositories/UsersRepository';
 import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
@@ -20,7 +21,6 @@ interface IRequest {
 	dtNascimento: Date;
 	cpfcnpj: string;
 	excluido: number;
-	params: Object;
 }
 
 class CreateUserService {

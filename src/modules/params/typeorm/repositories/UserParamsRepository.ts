@@ -6,7 +6,6 @@ interface IRequest {
 	agenda_retroativo: number;
 	evolucao_repetir: number;
 	pagamento_valor: string;
-	uid_user: string;
 }
 
 @EntityRepository(UserParams)

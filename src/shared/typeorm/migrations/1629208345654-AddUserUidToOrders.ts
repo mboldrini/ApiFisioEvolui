@@ -5,7 +5,7 @@ export class AddUserUidToOrders1629208345654 implements MigrationInterface {
 		await queryRunner.addColumn(
 			'user_params', // nome da tabela que ela vai ser adicionada
 			new TableColumn({
-				name: 'uid_user',
+				name: 'uid',
 				type: 'varchar',
 				isNullable: true,
 			}),
@@ -15,7 +15,7 @@ export class AddUserUidToOrders1629208345654 implements MigrationInterface {
 			'user_params',
 			new TableForeignKey({
 				name: 'ParametrosUser',
-				columnNames: ['uid_user'],
+				columnNames: ['uid'],
 				referencedTableName: 'users',
 				referencedColumnNames: ['uid'],
 				onDelete: 'SET NULL',
@@ -25,6 +25,6 @@ export class AddUserUidToOrders1629208345654 implements MigrationInterface {
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.dropForeignKey('user_params', 'ParametrosUser');
-		await queryRunner.dropColumn('user_params', 'uid_user');
+		await queryRunner.dropColumn('user_params', 'uid');
 	}
 }

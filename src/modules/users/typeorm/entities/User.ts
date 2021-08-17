@@ -1,4 +1,14 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, PrimaryColumn } from 'typeorm';
+import UserParams from '@modules/params/typeorm/entities/UserParams';
+import {
+	Column,
+	CreateDateColumn,
+	Entity,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn,
+	PrimaryColumn,
+	OneToOne,
+	JoinColumn,
+} from 'typeorm';
 
 @Entity('users')
 class User {
@@ -34,5 +44,9 @@ class User {
 
 	@UpdateDateColumn()
 	updated_at: Date;
+
+	@OneToOne(() => UserParams, userParams => userParams.user)
+	@JoinColumn()
+	userParams: UserParams;
 }
 export default User;

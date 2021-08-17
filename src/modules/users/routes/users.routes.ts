@@ -21,6 +21,7 @@ usersRouter.post(
 			dtNascimento: Joi.date().required(),
 			cpfcnpj: Joi.string().required(),
 			excluido: Joi.number().optional(),
+			params: Joi.object().optional(),
 		},
 	}),
 	usersController.create,

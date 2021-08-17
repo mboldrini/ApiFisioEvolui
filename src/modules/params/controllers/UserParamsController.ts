@@ -4,7 +4,7 @@ import CreateUserParamsService from '../services/CreateUserParamsService';
 
 export default class UserParamsController {
 	public async create(request: Request, response: Response): Promise<Response> {
-		const { atendimento_duracao, agenda_retroativo, evolucao_repetir, pagamento_valor } = request.body;
+		const { atendimento_duracao, agenda_retroativo, evolucao_repetir, pagamento_valor, uid_user } = request.body;
 
 		const createUserParams = new CreateUserParamsService();
 
@@ -13,6 +13,7 @@ export default class UserParamsController {
 			agenda_retroativo,
 			evolucao_repetir,
 			pagamento_valor,
+			uid_user,
 		});
 
 		return response.json(userParams);
