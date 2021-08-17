@@ -24,6 +24,7 @@ class CreateUserParamsService {
 			agenda_retroativo,
 			evolucao_repetir,
 			pagamento_valor,
+			uid_user: 'admin',
 		});
 
 		await userParamsRepository.save(userParams);
