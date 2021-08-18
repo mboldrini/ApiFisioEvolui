@@ -9,34 +9,25 @@ import {
 	JoinColumn,
 } from 'typeorm';
 
-@Entity('users')
-class User {
+@Entity('user_configs')
+class UserConfigs {
 	@PrimaryColumn()
-	uid: string;
+	id: number;
 
 	@Column()
-	nome: string;
+	atendimento_duracao: string;
 
 	@Column()
-	email: string;
+	agenda_retroativo: number;
 
 	@Column()
-	celular: string;
+	evolucao_repetir: number;
 
 	@Column()
-	instagram: string;
+	pagamento_valor: string;
 
 	@Column()
-	crefito: string;
-
-	@Column()
-	dtNascimento: Date;
-
-	@Column()
-	cpfcnpj: string;
-
-	@Column('int')
-	excluido: number;
+	user_uid: string;
 
 	@CreateDateColumn()
 	created_at: Date;
@@ -44,4 +35,4 @@ class User {
 	@UpdateDateColumn()
 	updated_at: Date;
 }
-export default User;
+export default UserConfigs;

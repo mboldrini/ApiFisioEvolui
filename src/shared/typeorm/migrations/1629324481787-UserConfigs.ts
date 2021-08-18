@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class parametros1629207183146 implements MigrationInterface {
+export class UserConfigs1629324481787 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'user_params',
+				name: 'user_configs',
 				columns: [
 					{
 						name: 'id',
@@ -34,6 +34,10 @@ export class parametros1629207183146 implements MigrationInterface {
 						isNullable: true,
 					},
 					{
+						name: 'user_uid',
+						type: 'varchar',
+					},
+					{
 						name: 'created_at',
 						type: 'timestamp',
 						default: 'now()',
@@ -44,11 +48,21 @@ export class parametros1629207183146 implements MigrationInterface {
 						default: 'now()',
 					},
 				],
+				foreignKeys: [
+					{
+						name: 'FkUserUid',
+						referencedTableName: 'users', // tabela do USERS
+						referencedColumnNames: ['uid'], // nome da coluna LA no user
+						columnNames: ['user_uid'], //nome da coluna AQUI
+						onDelete: 'CASCADE',
+						onUpdate: 'CASCADE',
+					},
+				],
 			}),
 		);
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropTable('user_params');
+		await queryRunner.dropTable('user_configs');
 	}
 }

@@ -1,5 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm';
-import UserParams from '../entities/UserParams';
+import UserConfigs from '../entities/UserConfigs';
 
 interface IRequest {
 	atendimento_duracao: string;
@@ -8,9 +8,9 @@ interface IRequest {
 	pagamento_valor: string;
 }
 
-@EntityRepository(UserParams)
-export class UserParamsRepository extends Repository<UserParams> {
-	public async findByUid(uid: string): Promise<UserParams | undefined> {
+@EntityRepository(UserConfigs)
+export class UserConfigsRepository extends Repository<UserConfigs> {
+	public async findByUid(uid: string): Promise<UserConfigs | undefined> {
 		const user = await this.findOne({
 			where: {
 				uid,
@@ -19,4 +19,4 @@ export class UserParamsRepository extends Repository<UserParams> {
 		return user;
 	}
 }
-export default UserParamsRepository;
+export default UserConfigsRepository;

@@ -1,4 +1,4 @@
-import CreateUserParamsService from '@modules/params/services/CreateUserParamsService';
+import CreateUserConfigsService from '@modules/params/services/CreateUserConfigsService';
 import { Request, Response } from 'express';
 import CreateUserService from '../services/CreateUserService';
 import ShowUserService from '../services/ShowUserService';
@@ -18,6 +18,8 @@ export default class UsersController {
 	public async create(request: Request, response: Response): Promise<Response> {
 		const { uid, nome, email, celular, instagram, crefito, dtNascimento, cpfcnpj, excluido, params } = request.body;
 
+		const { atendimento_duracao, agenda_retroativo, evolucao_repetir, pagamento_valor } = params;
+
 		const createUser = new CreateUserService();
 		const user = await createUser.execute({
 			uid,
@@ -31,8 +33,15 @@ export default class UsersController {
 			excluido,
 		});
 
-		const createUserParams = new CreateUserParamsService();
-		const newParams = await createUser.execute(params);
+		const createParams = new CreateUserConfigsService();
+		const usrConfigs = await createParams.execute({
+			atendimento_duracao,
+			agenda_retroativo,
+			evolucao_repetir,
+			pagamento_valor,
+			user_uid: uid,
+		});
+		console.log('usrConfigs: ', usrConfigs);
 
 		return response.json(user);
 	}
