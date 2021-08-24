@@ -26,7 +26,6 @@ export default function isAuthenticated(request: Request, response: Response, ne
 			uid,
 			email,
 		};
-		console.log('isAuthenticated - request.user: ', request.user);
 
 		return next();
 	} catch {
