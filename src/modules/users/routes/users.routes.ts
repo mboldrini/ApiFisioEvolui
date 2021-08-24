@@ -22,6 +22,7 @@ usersRouter.post(
 			cpfcnpj: Joi.string().required(),
 			excluido: Joi.number().optional(),
 			configs: Joi.object().optional(),
+			agenda: Joi.array().optional(),
 		},
 	}),
 	usersController.create,

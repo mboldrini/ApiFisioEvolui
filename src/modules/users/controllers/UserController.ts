@@ -1,3 +1,4 @@
+import CreateUserAgendaService from '@modules/user_agenda/services/CreateUserAgendaService';
 import CreateUserConfigsService from '@modules/user_configs/services/CreateUserConfigsService';
 import ShowUserConfigsService from '@modules/user_configs/services/ShowUserConfigsService';
 import { Request, Response } from 'express';
@@ -16,7 +17,7 @@ export default class UsersController {
 	}
 
 	public async create(request: Request, response: Response): Promise<Response> {
-		const { uid, nome, email, celular, instagram, crefito, dtNascimento, cpfcnpj, excluido, configs } =
+		const { uid, nome, email, celular, instagram, crefito, dtNascimento, cpfcnpj, excluido, configs, agenda } =
 			request.body;
 
 		const { atendimento_duracao, agenda_retroativo, evolucao_repetir, pagamento_valor } = configs;
@@ -43,7 +44,6 @@ export default class UsersController {
 			pagamento_valor,
 			user_uid: uid,
 		});
-		console.log('usrConfigs: ', usrConfigs);
 
 		return response.json({
 			user,
@@ -52,7 +52,8 @@ export default class UsersController {
 	}
 
 	public async update(request: Request, response: Response): Promise<Response> {
-		const { uid, nome, email, celular, instagram, crefito, dtNascimento, cpfcnpj } = request.body;
+		const { nome, email, celular, instagram, crefito, dtNascimento, cpfcnpj } = request.body;
+		const { uid } = request.user;
 
 		const updateUser = new UpdateUserService();
 
