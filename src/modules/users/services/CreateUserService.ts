@@ -20,6 +20,7 @@ interface IRequest {
 	dtNascimento: Date;
 	cpfcnpj: string;
 	excluido: number;
+	configs: IParams;
 }
 
 class CreateUserService {
@@ -33,6 +34,7 @@ class CreateUserService {
 		dtNascimento,
 		cpfcnpj,
 		excluido,
+		configs,
 	}: IRequest): Promise<User> {
 		const usersRepository = getCustomRepository(UsersRepository);
 

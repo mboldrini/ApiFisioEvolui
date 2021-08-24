@@ -1,4 +1,5 @@
-import CreateUserConfigsService from '@modules/params/services/CreateUserConfigsService';
+import CreateUserConfigsService from '@modules/user_configs/services/CreateUserConfigsService';
+import ShowUserConfigsService from '@modules/user_configs/services/ShowUserConfigsService';
 import { Request, Response } from 'express';
 import CreateUserService from '../services/CreateUserService';
 import ShowUserService from '../services/ShowUserService';
@@ -9,16 +10,16 @@ export default class UsersController {
 		const { uid, email } = request.user;
 
 		const showUser = new ShowUserService();
-
 		const user = await showUser.execute({ uid });
 
 		return response.json(user);
 	}
 
 	public async create(request: Request, response: Response): Promise<Response> {
-		const { uid, nome, email, celular, instagram, crefito, dtNascimento, cpfcnpj, excluido, params } = request.body;
+		const { uid, nome, email, celular, instagram, crefito, dtNascimento, cpfcnpj, excluido, configs } =
+			request.body;
 
-		const { atendimento_duracao, agenda_retroativo, evolucao_repetir, pagamento_valor } = params;
+		const { atendimento_duracao, agenda_retroativo, evolucao_repetir, pagamento_valor } = configs;
 
 		const createUser = new CreateUserService();
 		const user = await createUser.execute({
@@ -31,6 +32,7 @@ export default class UsersController {
 			dtNascimento,
 			cpfcnpj,
 			excluido,
+			configs,
 		});
 
 		const createParams = new CreateUserConfigsService();
@@ -43,7 +45,10 @@ export default class UsersController {
 		});
 		console.log('usrConfigs: ', usrConfigs);
 
-		return response.json(user);
+		return response.json({
+			user,
+			configs: usrConfigs,
+		});
 	}
 
 	public async update(request: Request, response: Response): Promise<Response> {
