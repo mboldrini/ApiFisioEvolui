@@ -33,7 +33,6 @@ export default class UsersController {
 			dtNascimento,
 			cpfcnpj,
 			excluido,
-			configs,
 		});
 
 		const createParams = new CreateUserConfigsService();
@@ -45,9 +44,13 @@ export default class UsersController {
 			user_uid: uid,
 		});
 
+		const createAgenda = new CreateUserAgendaService();
+		const usrAgenda = await createAgenda.execute(agenda, uid);
+
 		return response.json({
 			user,
 			configs: usrConfigs,
+			agenda: usrAgenda,
 		});
 	}
 

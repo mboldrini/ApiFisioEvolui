@@ -12,6 +12,15 @@ export class UserAgendaRepository extends Repository<UserAgenda> {
 		});
 		return user;
 	}
+
+	public async findAllAgendaByUid(uid: string): Promise<UserAgenda[] | undefined> {
+		const userAgenda = await this.find({
+			where: {
+				user_uid: uid,
+			},
+		});
+		return userAgenda;
+	}
 }
 
 export default UserAgendaRepository;

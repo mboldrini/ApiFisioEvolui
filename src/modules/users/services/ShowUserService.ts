@@ -1,3 +1,4 @@
+import { UserAgendaRepository } from './../../user_agenda/typeorm/repositories/UserAgendaRepository';
 import { UserConfigsRepository } from '../../user_configs/typeorm/repositories/UserConfigsRepository';
 import { Request, Response } from 'express';
 import AppError from '@shared/errors/AppError';
@@ -31,7 +32,13 @@ class ShowUserService {
 			throw new AppError('Configs de usuario não encontradas');
 		}
 
-		return { user, configs }; // ignora pq aparentemente ta funcionando...
+		const userAgendaRepo = getCustomRepository(UserAgendaRepository);
+		const userAgenda = await userAgendaRepo.findAllAgendaByUid(uid);
+		if (!userAgenda) {
+			throw new AppError('Agenda de usuario não encontradas');
+		}
+
+		return { user, configs, userAgenda };
 	}
 }
 

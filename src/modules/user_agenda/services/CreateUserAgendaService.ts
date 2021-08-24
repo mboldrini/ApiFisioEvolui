@@ -4,7 +4,6 @@ import { getCustomRepository } from 'typeorm';
 import UserAgenda from '../typeorm/entities/UserAgenda';
 import { UserAgendaRepository } from '../typeorm/repositories/UserAgendaRepository';
 
-interface IDia {}
 interface IRequest {
 	horario_inicio: number;
 	horario_fim: number;
