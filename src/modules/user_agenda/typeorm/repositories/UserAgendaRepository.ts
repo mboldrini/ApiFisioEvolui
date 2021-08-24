@@ -21,6 +21,16 @@ export class UserAgendaRepository extends Repository<UserAgenda> {
 		});
 		return userAgenda;
 	}
+
+	public async findAgendaByUidAndDay(uid: string, dia: number): Promise<UserAgenda | undefined> {
+		const user = await this.findOne({
+			where: {
+				user_uid: uid,
+				dia_semana: dia,
+			},
+		});
+		return user;
+	}
 }
 
 export default UserAgendaRepository;

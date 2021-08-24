@@ -10,4 +10,6 @@ userAgendaRouter.get('/', isAuthenticated, userAgendaController.show);
 
 userAgendaRouter.post('/', isAuthenticated, userAgendaController.create);
 
+userAgendaRouter.put('/', isAuthenticated, userAgendaController.update);
+
 export default userAgendaRouter;
