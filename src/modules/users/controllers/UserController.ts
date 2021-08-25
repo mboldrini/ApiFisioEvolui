@@ -1,3 +1,4 @@
+import CreateEnderecoService from '@modules/endereco/services/CreateEnderecoService';
 import CreateUserAgendaService from '@modules/user_agenda/services/CreateUserAgendaService';
 import CreateUserConfigsService from '@modules/user_configs/services/CreateUserConfigsService';
 import ShowUserConfigsService from '@modules/user_configs/services/ShowUserConfigsService';
@@ -17,10 +18,24 @@ export default class UsersController {
 	}
 
 	public async create(request: Request, response: Response): Promise<Response> {
-		const { uid, nome, email, celular, instagram, crefito, dtNascimento, cpfcnpj, excluido, configs, agenda } =
-			request.body;
+		const {
+			uid,
+			nome,
+			email,
+			celular,
+			instagram,
+			crefito,
+			dtNascimento,
+			cpfcnpj,
+			excluido,
+			configs,
+			agenda,
+			endereco,
+		} = request.body;
 
 		const { atendimento_duracao, agenda_retroativo, evolucao_repetir, pagamento_valor } = configs;
+
+		const { logradouro, uf, cep, bairro, cidade, latitude, longitude } = endereco;
 
 		const createUser = new CreateUserService();
 		const user = await createUser.execute({
@@ -47,10 +62,23 @@ export default class UsersController {
 		const createAgenda = new CreateUserAgendaService();
 		const usrAgenda = await createAgenda.execute(agenda, uid);
 
+		const createEndereco = new CreateEnderecoService();
+		const usrEndereco = await createEndereco.execute({
+			logradouro,
+			uf,
+			cep,
+			bairro,
+			cidade,
+			latitude,
+			longitude,
+			user_uid: uid,
+		});
+
 		return response.json({
 			user,
 			configs: usrConfigs,
 			agenda: usrAgenda,
+			endereco: usrEndereco,
 		});
 	}
 
