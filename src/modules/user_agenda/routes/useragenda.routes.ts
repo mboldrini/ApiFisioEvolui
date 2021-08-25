@@ -10,7 +10,17 @@ userAgendaRouter.get('/', isAuthenticated, userAgendaController.show);
 
 userAgendaRouter.post('/', isAuthenticated, userAgendaController.create);
 
-userAgendaRouter.put('/', isAuthenticated, userAgendaController.update);
+userAgendaRouter.put(
+	'/',
+	isAuthenticated,
+	celebrate({
+		[Segments.BODY]: {
+			horario_inicio: Joi.number().required(),
+			horario_fim: Joi.number().required(),
+			dia_semana: Joi.number().required(),
+		},
+	}),
+	userAgendaController.update,
+);
 
 export default userAgendaRouter;
-//testet
