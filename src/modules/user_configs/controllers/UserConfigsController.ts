@@ -6,8 +6,6 @@ import UpdateUserConfigService from '../services/UpdateUserConfigService';
 
 export default class UserConfigsController {
 	public async show(request: Request, response: Response): Promise<Response> {
-		console.log(request.user);
-
 		const { uid } = request.user;
 
 		const showUser = new ShowUserConfigsService();
@@ -30,7 +28,6 @@ export default class UserConfigsController {
 			pagamento_valor,
 			user_uid,
 		});
-		console.log('UsrConfigsController - usrConfigs: ', usrConfigs);
 
 		return response.json(usrConfigs);
 	}
@@ -38,9 +35,6 @@ export default class UserConfigsController {
 	public async update(request: Request, response: Response): Promise<Response> {
 		const { atendimento_duracao, agenda_retroativo, evolucao_repetir, pagamento_valor } = request.body;
 		const { uid } = request.user;
-
-		console.log('UID: ', uid);
-		console.log('BODY: ', request.body);
 
 		const updateUser = new UpdateUserConfigService();
 
