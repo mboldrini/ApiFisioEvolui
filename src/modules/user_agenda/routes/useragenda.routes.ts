@@ -8,7 +8,8 @@ const userAgendaController = new UserAgendaController();
 
 userAgendaRouter.get('/', isAuthenticated, userAgendaController.show);
 
-userAgendaRouter.post('/', isAuthenticated, userAgendaController.create);
+// também não pode cadastrar direto
+// userAgendaRouter.post('/', isAuthenticated, userAgendaController.create);
 
 userAgendaRouter.put(
 	'/',
