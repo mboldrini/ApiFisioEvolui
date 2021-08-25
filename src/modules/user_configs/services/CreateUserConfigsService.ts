@@ -1,10 +1,7 @@
 import { UserConfigsRepository } from '../typeorm/repositories/UserConfigsRepository';
 import AppError from '@shared/errors/AppError';
-import { sign } from 'jsonwebtoken';
-import authConfig from '@config/auth';
 import { getCustomRepository } from 'typeorm';
 import UserConfigs from '../typeorm/entities/UserConfigs';
-import User from '@modules/users/typeorm/entities/User';
 
 interface IRequest {
 	atendimento_duracao: string;
