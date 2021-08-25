@@ -12,6 +12,7 @@ interface IRequest {
 	latitude: number;
 	longitude: number;
 	user_uid: string;
+	paciente_id?: number;
 }
 
 class CreateEnderecoService {
@@ -24,10 +25,11 @@ class CreateEnderecoService {
 		latitude,
 		longitude,
 		user_uid,
+		paciente_id,
 	}: IRequest): Promise<Endereco> {
 		const enderecoRepo = getCustomRepository(EnderecoRepository);
 
-		const endereco = enderecoRepo.create({
+		const endereco = await enderecoRepo.create({
 			logradouro,
 			uf,
 			cep,
@@ -36,6 +38,7 @@ class CreateEnderecoService {
 			latitude,
 			longitude,
 			user_uid,
+			paciente_id,
 		});
 
 		await enderecoRepo.save(endereco);

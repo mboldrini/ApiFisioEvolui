@@ -29,6 +29,9 @@ class Endereco {
 	@Column()
 	user_uid: string;
 
+	@Column()
+	paciente_id: number;
+
 	@CreateDateColumn()
 	created_at: Date;
 

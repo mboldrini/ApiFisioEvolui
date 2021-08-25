@@ -21,7 +21,7 @@ class CreateUserConfigsService {
 	}: IRequest): Promise<UserConfigs> {
 		const userConfigsRepo = getCustomRepository(UserConfigsRepository);
 
-		const userConfigs = userConfigsRepo.create({
+		const userConfigs = await userConfigsRepo.create({
 			atendimento_duracao,
 			agenda_retroativo,
 			evolucao_repetir,

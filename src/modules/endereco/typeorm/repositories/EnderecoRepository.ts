@@ -11,6 +11,7 @@ interface ITeste {
 	latitude: number;
 	longitude: number;
 	user_uid: string;
+	paciente_id: number;
 }
 
 @EntityRepository(Endereco)

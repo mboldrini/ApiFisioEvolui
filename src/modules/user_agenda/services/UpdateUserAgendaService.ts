@@ -22,7 +22,8 @@ class UpdateUserAgendaService {
 
 		diasAgenda.horario_inicio = horario_inicio;
 		diasAgenda.horario_fim = horario_fim;
-		(diasAgenda.dia_semana = dia_semana), await userAgendaRepo.save(diasAgenda);
+		diasAgenda.dia_semana = dia_semana;
+		await userAgendaRepo.save(diasAgenda);
 
 		return diasAgenda;
 	}
