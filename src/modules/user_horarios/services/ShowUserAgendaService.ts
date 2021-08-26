@@ -1,4 +1,4 @@
-import { UserAgendaRepository } from './../typeorm/repositories/UserAgendaRepository';
+import { UserAgendaRepository } from '../typeorm/repositories/UserAgendaRepository';
 import { Request, Response } from 'express';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
