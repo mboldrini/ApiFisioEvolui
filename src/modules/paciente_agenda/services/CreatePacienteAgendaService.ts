@@ -1,4 +1,4 @@
-import { PacienteRepository } from './../../paciente/typeorm/repositories/PacienteRepository';
+// import { PacienteRepository } from './../../paciente/typeorm/repositories/PacienteRepository';
 import { PacienteAgendaRepository } from './../typeorm/repositories/PacienteAgendaRepository';
 import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
@@ -12,42 +12,25 @@ interface IRequest {
 	limite_recorrencia: boolean;
 	data_limite?: Date;
 	paciente_id: number;
-	user_uid: string;
 }
 
 class CreatePacienteAgendaService {
-	public async execute({
-		dia_semana,
-		data_agendamento,
-		horario,
-		recorrente,
-		limite_recorrencia,
-		data_limite,
-		paciente_id,
-		user_uid,
-	}: IRequest): Promise<PacienteAgenda> {
+	public async execute(pacienteAgenda: IRequest[], uid: string, paciente_id: number): Promise<IRequest[]> {
 		const pacienteAgendaRepository = getCustomRepository(PacienteAgendaRepository);
 
-		const pacienteRepo = getCustomRepository(PacienteRepository);
-		const pacienteExists = await pacienteRepo.findByUidAndId(user_uid, paciente_id);
-		if (!pacienteExists) {
-			throw new AppError('Não existe paciente cadastrado p/ o ID informado');
-		}
-
-		const paciente = pacienteAgendaRepository.create({
-			dia_semana,
-			data_agendamento,
-			horario,
-			recorrente,
-			limite_recorrencia,
-			data_limite,
+		const listaPacienteAgenda = pacienteAgenda.map(dia => ({
+			dia_semana: dia.dia_semana,
+			data_agendamento: dia.data_agendamento,
+			horario: dia.horario,
+			recorrente: dia.recorrente,
+			limite_recorrencia: dia.limite_recorrencia,
+			data_limite: dia.data_limite,
 			paciente_id,
-			user_uid,
-		});
+			user_uid: uid,
+		}));
+		await pacienteAgendaRepository.save(listaPacienteAgenda);
 
-		await pacienteAgendaRepository.save(paciente);
-
-		return paciente;
+		return listaPacienteAgenda;
 	}
 }
 export default CreatePacienteAgendaService;

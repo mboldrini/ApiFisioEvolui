@@ -1,4 +1,3 @@
-import { EnderecoRepository } from './../../endereco/typeorm/repositories/EnderecoRepository';
 import { PacienteRepository } from './../typeorm/repositories/PacienteRepository';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
@@ -57,8 +56,6 @@ class UpdatePacienteService {
 			pacienteExists.ultimoAtendimento = ultimoAtendimento;
 		}
 		pacienteExists.excluido = excluido;
-
-		console.log('SALVA O : ', pacienteExists);
 
 		await pacienteRepo.save(pacienteExists);
 

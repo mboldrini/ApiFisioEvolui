@@ -8,7 +8,7 @@ const pacienteAgendaController = new PacienteAgendaController();
 
 // pacienteRouter.get('/', isAuthenticated, pacienteController.show);
 
-pacienteAgendaRouter.post(
+pacienteAgendaRouter.put(
 	'/',
 	isAuthenticated,
 	celebrate({
@@ -22,7 +22,18 @@ pacienteAgendaRouter.post(
 			paciente_id: Joi.number().required(),
 		},
 	}),
-	pacienteAgendaController.create,
+	pacienteAgendaController.update,
+);
+
+pacienteAgendaRouter.delete(
+	'/',
+	isAuthenticated,
+	celebrate({
+		[Segments.BODY]: {
+			id: Joi.optional().required(),
+		},
+	}),
+	pacienteAgendaController.delete,
 );
 
 export default pacienteAgendaRouter;

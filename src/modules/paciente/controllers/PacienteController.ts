@@ -1,6 +1,7 @@
 import CreateEnderecoService from '@modules/endereco/services/CreateEnderecoService';
 import ShowEnderecoService from '@modules/endereco/services/ShowEnderecoService';
 import UpdateEnderecoService from '@modules/endereco/services/UpdateEnderecoService';
+import CreatePacienteAgendaService from '@modules/paciente_agenda/services/CreatePacienteAgendaService';
 import { Console } from 'console';
 import { Request, Response } from 'express';
 import CreatePacienteService from '../services/CreatePacienteService';
@@ -33,6 +34,7 @@ export default class PacienteController {
 			ultimoAtendimento,
 			excluido,
 			endereco,
+			agenda,
 		} = request.body;
 		const { uid } = request.user;
 
@@ -52,7 +54,7 @@ export default class PacienteController {
 
 		const { logradouro, cep, uf, bairro, cidade, latitude, longitude } = endereco;
 		const createEndereco = new CreateEnderecoService();
-		const enderecocriar = await createEndereco.execute({
+		const enderecoCriar = await createEndereco.execute({
 			logradouro,
 			uf,
 			cep,
@@ -64,7 +66,10 @@ export default class PacienteController {
 			paciente_id: paciente.id,
 		});
 
-		return response.json(paciente);
+		const createPacienteAgenda = new CreatePacienteAgendaService();
+		const agendaCriar = await createPacienteAgenda.execute(agenda, uid, paciente.id);
+
+		return response.json({ paciente, endereco: enderecoCriar, agenda: agendaCriar });
 	}
 
 	public async update(request: Request, response: Response): Promise<Response> {
