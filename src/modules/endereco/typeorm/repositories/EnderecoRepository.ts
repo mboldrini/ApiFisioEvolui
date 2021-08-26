@@ -24,11 +24,11 @@ export class EnderecoRepository extends Repository<Endereco> {
 		});
 		return user;
 	}
-	public async findByUidAndId(uid: string, id: number): Promise<Endereco | undefined> {
+	public async findByUidAndIdPaciente(uid: string, id: number): Promise<Endereco | undefined> {
 		const user = await this.findOne({
 			where: {
 				user_uid: uid,
-				id: id,
+				paciente_id: id,
 			},
 		});
 		return user;

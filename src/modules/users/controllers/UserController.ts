@@ -1,5 +1,5 @@
 import CreateEnderecoService from '@modules/endereco/services/CreateEnderecoService';
-import CreateUserAgendaService from '@modules/user_agenda/services/CreateUserAgendaService';
+import CreateUserAgendaService from '@modules/user_horarios/services/CreateUserAgendaService';
 import CreateUserConfigsService from '@modules/user_configs/services/CreateUserConfigsService';
 import ShowUserConfigsService from '@modules/user_configs/services/ShowUserConfigsService';
 import { Request, Response } from 'express';

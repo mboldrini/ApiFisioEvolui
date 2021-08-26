@@ -1,8 +1,9 @@
-import { Column, CreateDateColumn, Entity, UpdateDateColumn, PrimaryColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, UpdateDateColumn, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('paciente')
 class Paciente {
-	@PrimaryColumn('int')
+	//@PrimaryColumn('int')
+	@PrimaryGeneratedColumn() //<<<< usar isso ao inves da opcao de cima
 	id: number;
 
 	@Column()

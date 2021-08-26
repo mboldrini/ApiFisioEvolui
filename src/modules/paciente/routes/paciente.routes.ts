@@ -6,7 +6,7 @@ import PacienteController from '../controllers/PacienteController';
 const pacienteRouter = Router();
 const pacienteController = new PacienteController();
 
-// enderecoRouter.get('/', isAuthenticated, enderecoController.show);
+pacienteRouter.get('/', isAuthenticated, pacienteController.show);
 
 pacienteRouter.post(
 	'/',
@@ -26,6 +26,27 @@ pacienteRouter.post(
 		},
 	}),
 	pacienteController.create,
+);
+
+pacienteRouter.put(
+	'/',
+	isAuthenticated,
+	celebrate({
+		[Segments.BODY]: {
+			paciente_id: Joi.number().required(),
+			nome: Joi.string().required(),
+			telefoneCelular: Joi.string().required(),
+			telefoneContato: Joi.string().optional(),
+			email: Joi.string().optional(),
+			cpf: Joi.string().optional(),
+			tem_comorbidade: Joi.number().required(),
+			comorbidade_descricao: Joi.string().optional(),
+			ultimoAtendimento: Joi.date().optional(),
+			excluido: Joi.number().required(),
+			endereco: Joi.object(),
+		},
+	}),
+	pacienteController.update,
 );
 
 // enderecoRouter.put(

@@ -5,13 +5,14 @@ import Endereco from '../typeorm/entities/Endereco';
 
 interface IRequest {
 	uid: string;
+	paciente_id: number;
 }
 
 class ShowEnderecoService {
-	public async execute({ uid }: IRequest): Promise<Endereco> {
+	public async findByUidAndIdPaciente({ uid, paciente_id }: IRequest): Promise<Endereco> {
 		const enderecoRepo = getCustomRepository(EnderecoRepository);
 
-		const enderecoProcurado = await enderecoRepo.findByUid(uid);
+		const enderecoProcurado = await enderecoRepo.findByUidAndIdPaciente(uid, paciente_id);
 		if (!enderecoProcurado) {
 			throw new AppError('Não foi encontrado nenhum endereço cadastrado para o usuário');
 		}

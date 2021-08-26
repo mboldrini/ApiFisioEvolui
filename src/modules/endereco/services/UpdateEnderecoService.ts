@@ -4,7 +4,6 @@ import { getCustomRepository } from 'typeorm';
 import Endereco from '../typeorm/entities/Endereco';
 
 interface IRequest {
-	id: number;
 	logradouro: string;
 	uf: string;
 	cep: string;
@@ -13,11 +12,11 @@ interface IRequest {
 	latitude: number;
 	longitude: number;
 	user_uid: string;
+	paciente_id: number;
 }
 
 class UpdateEnderecoService {
 	public async execute({
-		id,
 		logradouro,
 		uf,
 		cep,
@@ -26,10 +25,11 @@ class UpdateEnderecoService {
 		latitude,
 		longitude,
 		user_uid,
+		paciente_id,
 	}: IRequest): Promise<Endereco> {
 		const enderecoRepo = getCustomRepository(EnderecoRepository);
 
-		const enderecoProcurado = await enderecoRepo.findByUidAndId(user_uid, id);
+		const enderecoProcurado = await enderecoRepo.findByUidAndIdPaciente(user_uid, paciente_id);
 		if (!enderecoProcurado) {
 			throw new AppError('Não foi encontrado nenhum endereço cadastrado para o usuário');
 		}

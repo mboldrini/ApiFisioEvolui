@@ -24,6 +24,7 @@ enderecoRouter.put(
 			cidade: Joi.string().required(),
 			latitude: Joi.number().required(),
 			longitude: Joi.number().required(),
+			paciente_id: Joi.number().required(),
 		},
 	}),
 	enderecoController.update,
