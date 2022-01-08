@@ -8,96 +8,49 @@ import ShowUserService from '../services/ShowUserService';
 import UpdateUserService from '../services/UpdateUserService';
 
 export default class UsersController {
-	public async show(request: Request, response: Response): Promise<Response> {
-		const { uid, email } = request.user;
+	// public async show(request: Request, response: Response): Promise<Response> {
+	// 	const { uid, email } = request.user;
 
-		const showUser = new ShowUserService();
-		const user = await showUser.execute({ uid });
+	// 	const showUser = new ShowUserService();
+	// 	const user = await showUser.execute({ uid });
 
-		return response.json(user);
-	}
+	// 	return response.json(user);
+	// }
 
 	public async create(request: Request, response: Response): Promise<Response> {
-		const {
-			uid,
-			nome,
-			email,
-			celular,
-			instagram,
-			crefito,
-			dtNascimento,
-			cpfcnpj,
-			excluido,
-			configs,
-			agenda,
-			endereco,
-		} = request.body;
-
-		const { atendimento_duracao, agenda_retroativo, evolucao_repetir, pagamento_valor } = configs;
-
-		const { logradouro, uf, cep, bairro, cidade, latitude, longitude } = endereco;
+		const { id, email, family_name, given_name, name, picture, crefito, celular } = request.body;
 
 		const createUser = new CreateUserService();
 		const user = await createUser.execute({
-			uid,
-			nome,
+			id,
 			email,
-			celular,
-			instagram,
+			family_name,
+			given_name,
+			name,
+			picture,
 			crefito,
-			dtNascimento,
-			cpfcnpj,
-			excluido,
-		});
-
-		const createParams = new CreateUserConfigsService();
-		const usrConfigs = await createParams.execute({
-			atendimento_duracao,
-			agenda_retroativo,
-			evolucao_repetir,
-			pagamento_valor,
-			user_uid: uid,
-		});
-
-		const createAgenda = new CreateUserAgendaService();
-		const usrAgenda = await createAgenda.execute(agenda, uid);
-
-		const createEndereco = new CreateEnderecoService();
-		const usrEndereco = await createEndereco.execute({
-			logradouro,
-			uf,
-			cep,
-			bairro,
-			cidade,
-			latitude,
-			longitude,
-			user_uid: uid,
-		});
-
-		return response.json({
-			user,
-			configs: usrConfigs,
-			agenda: usrAgenda,
-			endereco: usrEndereco,
-		});
-	}
-
-	public async update(request: Request, response: Response): Promise<Response> {
-		const { nome, email, celular, instagram, crefito, dtNascimento, cpfcnpj } = request.body;
-		const { uid } = request.user;
-
-		const updateUser = new UpdateUserService();
-
-		const user = await updateUser.execute({
-			uid,
-			nome,
 			celular,
-			instagram,
-			crefito,
-			dtNascimento,
-			cpfcnpj,
 		});
 
 		return response.json(user);
 	}
+
+	// public async update(request: Request, response: Response): Promise<Response> {
+	// 	const { nome, email, celular, instagram, crefito, dtNascimento, cpfcnpj } = request.body;
+	// 	const { uid } = request.user;
+
+	// 	const updateUser = new UpdateUserService();
+
+	// 	const user = await updateUser.execute({
+	// 		uid,
+	// 		nome,
+	// 		celular,
+	// 		instagram,
+	// 		crefito,
+	// 		dtNascimento,
+	// 		cpfcnpj,
+	// 	});
+
+	// 	return response.json(user);
+	// }
 }

@@ -12,28 +12,28 @@ import {
 @Entity('users')
 class User {
 	@PrimaryColumn()
-	uid: string;
+	id: string;
 
 	@Column()
-	nome: string;
+	family_name: string;
+
+	@Column()
+	given_name: string;
+
+	@Column()
+	name: string;
+
+	@Column()
+	picture: string;
 
 	@Column()
 	email: string;
 
 	@Column()
-	celular: string;
-
-	@Column()
-	instagram: string;
-
-	@Column()
 	crefito: string;
 
 	@Column()
-	dtNascimento: Date;
-
-	@Column()
-	cpfcnpj: string;
+	celular: string;
 
 	@Column('int')
 	excluido: number;

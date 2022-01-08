@@ -7,41 +7,43 @@ export class CreateUsers1629138793563 implements MigrationInterface {
 				name: 'users',
 				columns: [
 					{
-						name: 'uid',
+						name: 'id',
 						type: 'varchar',
 						isPrimary: true,
 						isNullable: false,
 					},
 					{
-						name: 'nome',
+						name: 'family_name',
 						type: 'varchar',
 					},
 					{
+						name: 'given_name',
+						type: 'varchar',
+						isNullable: false,
+					},
+					{
+						name: 'name',
+						type: 'varchar',
+						isNullable: false,
+					},
+					{
+						name: 'picture',
+						type: 'varchar',
+						isNullable: false,
+					},
+					{
 						name: 'email',
-						type: 'varchar(100)',
+						type: 'varchar',
 						isUnique: true,
-					},
-					{
-						name: 'celular',
-						type: 'varchar(14)',
-						isNullable: true,
-					},
-					{
-						name: 'instagram',
-						type: 'varchar(100)',
-						isNullable: true,
+						isNullable: false,
 					},
 					{
 						name: 'crefito',
-						type: 'varchar(15)',
+						type: 'varchar',
 					},
 					{
-						name: 'dtNascimento',
-						type: 'date',
-					},
-					{
-						name: 'cpfcnpj',
-						type: 'varchar(25)',
+						name: 'celular',
+						type: 'varchar',
 					},
 					{
 						name: 'excluido',

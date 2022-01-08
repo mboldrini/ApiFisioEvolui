@@ -6,29 +6,25 @@ import isAuthenticated from '@shared/http/middlewares/isAuthenticated';
 const usersRouter = Router();
 const usersController = new UsersController();
 
-usersRouter.get('/', isAuthenticated, usersController.show);
+// usersRouter.get('/', isAuthenticated, usersController.show);
 
 usersRouter.post(
 	'/',
 	celebrate({
 		[Segments.BODY]: {
-			uid: Joi.string(),
-			nome: Joi.string().required(),
+			family_name: Joi.string().required(),
+			given_name: Joi.string().required(),
+			id: Joi.string().required(),
+			name: Joi.string().required(),
 			email: Joi.string().email().required(),
-			celular: Joi.string().required(),
-			instagram: Joi.string().optional(),
+			picture: Joi.string().required(),
 			crefito: Joi.string().required(),
-			dtNascimento: Joi.date().required(),
-			cpfcnpj: Joi.string().required(),
-			excluido: Joi.number().optional(),
-			configs: Joi.object().required(),
-			agenda: Joi.array().required(),
-			endereco: Joi.object().required(),
+			celular: Joi.string().required(),
 		},
 	}),
 	usersController.create,
 );
 
-usersRouter.put('/:uid', usersController.update);
+//usersRouter.put('/:uid', usersController.update);
 
 export default usersRouter;

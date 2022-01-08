@@ -4,32 +4,30 @@ import AppError from '@shared/errors/AppError';
 import User from '../typeorm/entities/User';
 
 interface IRequest {
-	uid: string;
-	nome: string;
+	id: string;
 	email: string;
-	celular: string;
-	instagram: string;
+	family_name: string;
+	given_name: string;
+	name: string;
+	picture: string;
 	crefito: string;
-	dtNascimento: Date;
-	cpfcnpj: string;
-	excluido: number;
+	celular: string;
 }
 
 class CreateUserService {
 	public async execute({
-		uid,
-		nome,
+		id,
 		email,
-		celular,
-		instagram,
+		family_name,
+		given_name,
+		name,
+		picture,
 		crefito,
-		dtNascimento,
-		cpfcnpj,
-		excluido,
+		celular,
 	}: IRequest): Promise<User> {
 		const usersRepository = getCustomRepository(UsersRepository);
 
-		const userUidExists = await usersRepository.findByUid(uid);
+		const userUidExists = await usersRepository.findById(id);
 		if (userUidExists) {
 			throw new AppError('Já existe um usuario com o uid informado');
 		}
@@ -40,16 +38,17 @@ class CreateUserService {
 		}
 
 		const user = usersRepository.create({
-			uid,
-			nome,
+			id,
+			family_name,
+			given_name,
+			name,
+			picture,
 			email,
-			celular,
-			instagram,
 			crefito,
-			dtNascimento,
-			cpfcnpj,
-			excluido,
+			celular,
 		});
+
+		console.log(user);
 
 		await usersRepository.save(user);
 

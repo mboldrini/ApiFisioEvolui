@@ -17,14 +17,14 @@ routes.use('/sessions', sessionsRouter);
 
 routes.use('/users', usersRouter);
 
-routes.use('/configs', userConfigsRouter);
+// routes.use('/configs', userConfigsRouter);
 
-routes.use('/horarios', userAgendaRouter);
+// routes.use('/horarios', userAgendaRouter);
 
-routes.use('/endereco', enderecoRouter);
+// routes.use('/endereco', enderecoRouter);
 
-routes.use('/paciente', pacienteRouter);
+// routes.use('/paciente', pacienteRouter);
 
-routes.use('/pacienteagenda', pacienteAgendaRouter);
+// routes.use('/pacienteagenda', pacienteAgendaRouter);
 
 export default routes;
