@@ -8,7 +8,7 @@ import { UsersRepository } from './../typeorm/repositories/UsersRepository';
 import UserConfigs from '@modules/user_configs/typeorm/entities/UserConfigs';
 
 interface IRequest {
-	uid: string;
+	id: string;
 }
 
 interface IResponse {
@@ -17,28 +17,29 @@ interface IResponse {
 }
 
 class ShowUserService {
-	public async execute({ uid }: IRequest): Promise<Object> {
+	public async execute({ id }: IRequest): Promise<Object> {
 		const userRepository = getCustomRepository(UsersRepository);
 
-		const user = await userRepository.findByUid(uid);
+		const user = await userRepository.findById(id);
 
 		if (!user) {
 			throw new AppError('Usuario não encontrado');
 		}
 
-		const userConfigsRepo = getCustomRepository(UserConfigsRepository);
-		const configs = await userConfigsRepo.findByUid(uid);
-		if (!configs) {
-			throw new AppError('Configs de usuario não encontradas');
-		}
+		// const userConfigsRepo = getCustomRepository(UserConfigsRepository);
+		// const configs = await userConfigsRepo.findById(id);
+		// if (!configs) {
+		// 	throw new AppError('Configs de usuario não encontradas');
+		// }
 
-		const userAgendaRepo = getCustomRepository(UserAgendaRepository);
-		const userAgenda = await userAgendaRepo.findAllAgendaByUid(uid);
-		if (!userAgenda) {
-			throw new AppError('Agenda de usuario não encontradas');
-		}
+		// const userAgendaRepo = getCustomRepository(UserAgendaRepository);
+		// const userAgenda = await userAgendaRepo.findAllAgendaByUid(uid);
+		// if (!userAgenda) {
+		// 	throw new AppError('Agenda de usuario não encontradas');
+		// }
 
-		return { user, configs, userAgenda };
+		//return { user, configs, userAgenda };
+		return { user };
 	}
 }
 

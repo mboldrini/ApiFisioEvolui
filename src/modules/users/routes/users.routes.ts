@@ -6,7 +6,7 @@ import isAuthenticated from '@shared/http/middlewares/isAuthenticated';
 const usersRouter = Router();
 const usersController = new UsersController();
 
-// usersRouter.get('/', isAuthenticated, usersController.show);
+usersRouter.get('/', isAuthenticated, usersController.show);
 
 usersRouter.post(
 	'/',

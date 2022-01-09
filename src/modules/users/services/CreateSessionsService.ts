@@ -7,25 +7,25 @@ import UsersRepository from '../typeorm/repositories/UsersRepository';
 
 interface IRequest {
 	email: string;
-	uid: string;
+	id: string;
 }
 interface IResponse {
 	token: string;
 }
 
 class CreateSessionsService {
-	public async execute({ email, uid }: IRequest): Promise<IResponse> {
+	public async execute({ email, id }: IRequest): Promise<IResponse> {
 		const usersRepository = getCustomRepository(UsersRepository);
 		const user = await usersRepository.findByEmail(email);
 		if (!user) {
 			throw new AppError('Usuário não encontrado', 401);
 		}
 
-		if (uid !== user.uid) {
+		if (id !== user.id) {
 			throw new AppError('Usuário inválido', 401);
 		}
 
-		const token = sign({ uid: uid, email: email }, authConfig.jwt.secret, {
+		const token = sign({ id: id, email: email }, authConfig.jwt.secret, {
 			expiresIn: authConfig.jwt.expiresIn,
 		});
 

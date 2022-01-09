@@ -8,14 +8,14 @@ import ShowUserService from '../services/ShowUserService';
 import UpdateUserService from '../services/UpdateUserService';
 
 export default class UsersController {
-	// public async show(request: Request, response: Response): Promise<Response> {
-	// 	const { uid, email } = request.user;
+	public async show(request: Request, response: Response): Promise<Response> {
+		const { id, email } = request.user;
 
-	// 	const showUser = new ShowUserService();
-	// 	const user = await showUser.execute({ uid });
+		const showUser = new ShowUserService();
+		const user = await showUser.execute({ id });
 
-	// 	return response.json(user);
-	// }
+		return response.json(user);
+	}
 
 	public async create(request: Request, response: Response): Promise<Response> {
 		const { id, email, family_name, given_name, name, picture, crefito, celular } = request.body;

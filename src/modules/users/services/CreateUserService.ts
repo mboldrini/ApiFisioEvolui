@@ -27,9 +27,9 @@ class CreateUserService {
 	}: IRequest): Promise<User> {
 		const usersRepository = getCustomRepository(UsersRepository);
 
-		const userUidExists = await usersRepository.findById(id);
-		if (userUidExists) {
-			throw new AppError('Já existe um usuario com o uid informado');
+		const userIdExists = await usersRepository.findById(id);
+		if (userIdExists) {
+			throw new AppError('Já existe um usuario com o ID informado');
 		}
 
 		const userEmailExists = await usersRepository.findByEmail(email);
