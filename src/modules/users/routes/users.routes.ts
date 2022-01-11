@@ -25,6 +25,16 @@ usersRouter.post(
 	usersController.create,
 );
 
-//usersRouter.put('/:uid', usersController.update);
+usersRouter.put(
+	'/',
+	isAuthenticated,
+	celebrate({
+		[Segments.BODY]: {
+			crefito: Joi.string().required(),
+			celular: Joi.string().required(),
+		},
+	}),
+	usersController.update,
+);
 
 export default usersRouter;

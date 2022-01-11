@@ -9,7 +9,7 @@ import UpdateUserService from '../services/UpdateUserService';
 
 export default class UsersController {
 	public async show(request: Request, response: Response): Promise<Response> {
-		const { id, email } = request.user;
+		const { id } = request.user;
 
 		const showUser = new ShowUserService();
 		const user = await showUser.execute({ id });
@@ -35,22 +35,18 @@ export default class UsersController {
 		return response.json(user);
 	}
 
-	// public async update(request: Request, response: Response): Promise<Response> {
-	// 	const { nome, email, celular, instagram, crefito, dtNascimento, cpfcnpj } = request.body;
-	// 	const { uid } = request.user;
+	public async update(request: Request, response: Response): Promise<Response> {
+		const { celular, crefito } = request.body;
+		const { id } = request.user;
 
-	// 	const updateUser = new UpdateUserService();
+		const updateUser = new UpdateUserService();
 
-	// 	const user = await updateUser.execute({
-	// 		uid,
-	// 		nome,
-	// 		celular,
-	// 		instagram,
-	// 		crefito,
-	// 		dtNascimento,
-	// 		cpfcnpj,
-	// 	});
+		const user = await updateUser.execute({
+			id,
+			celular,
+			crefito,
+		});
 
-	// 	return response.json(user);
-	// }
+		return response.json(user);
+	}
 }
