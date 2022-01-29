@@ -1,4 +1,4 @@
-import { EnderecoRepository } from './../../endereco/typeorm/repositories/EnderecoRepository';
+import { TipoAtendimentoRepository } from './../../tipo_atendimento/typeorm/repositories/TipoAtendimentoRepository';
 import { PacienteRepository } from './../typeorm/repositories/PacienteRepository';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
@@ -6,54 +6,76 @@ import Paciente from '../typeorm/entities/Paciente';
 
 interface IRequest {
 	nome: string;
-	telefoneCelular: string;
-	telefoneContato?: string;
-	email?: string;
 	cpf: string;
-	tem_comorbidade: number;
-	comorbidade_descricao?: string;
-	ultimoAtendimento?: Date;
+	dataNascimento?: Date;
+	celular: string;
+	telefoneRecado?: string;
+	email?: string;
+	tipoAtendimento: number;
+	temComorbidade: boolean;
+	logradouro?: string;
+	uf: string;
+	bairro?: string;
+	numero?: string;
+	referencia?: string;
 	excluido: number;
-	user_uid: string;
+	user_id: string;
 }
 
 class CreatePacienteService {
 	public async execute({
 		nome,
-		telefoneCelular,
-		telefoneContato,
-		email,
 		cpf,
-		tem_comorbidade,
-		comorbidade_descricao,
-		ultimoAtendimento,
+		dataNascimento,
+		celular,
+		telefoneRecado,
+		email,
+		tipoAtendimento,
+		temComorbidade,
+		logradouro,
+		uf,
+		bairro,
+		numero,
+		referencia,
 		excluido,
-		user_uid,
+		user_id,
 	}: IRequest): Promise<Paciente> {
-		const pacienteRepo = getCustomRepository(PacienteRepository);
+		const novoPaciente = getCustomRepository(PacienteRepository);
 
-		const pacienteCpfExists = await pacienteRepo.findByCpfAndUid(user_uid, cpf);
-		if (pacienteCpfExists) {
-			throw new AppError('Você já tem um paciente cadastrado com esse CPF');
-		}
+		const tipoAtendimentoRepo = getCustomRepository(TipoAtendimentoRepository);
 
-		const paciente = await pacienteRepo.create({
-			nome,
-			telefoneCelular,
-			telefoneContato,
-			email,
-			cpf,
-			tem_comorbidade,
-			comorbidade_descricao,
-			ultimoAtendimento,
-			excluido,
-			user_uid,
+		const tipoAtendimentoExiste = await tipoAtendimentoRepo.findByIdAndUser({
+			tipo_id: tipoAtendimento,
+			user_id,
 		});
 
-		await pacienteRepo.save(paciente);
+		if (!tipoAtendimentoExiste) {
+			throw new AppError('Tipo de Atendimento não encontrado', 404);
+		}
 
-		return paciente;
+		excluido = 0;
+
+		const novoPct = await novoPaciente.create({
+			nome,
+			cpf,
+			dataNascimento,
+			celular,
+			telefoneRecado,
+			email,
+			tipoAtendimento,
+			temComorbidade,
+			logradouro,
+			uf,
+			bairro,
+			numero,
+			referencia,
+			excluido,
+			user_id,
+		});
+
+		await novoPaciente.save(novoPct);
+
+		return novoPct;
 	}
 }
-
 export default CreatePacienteService;

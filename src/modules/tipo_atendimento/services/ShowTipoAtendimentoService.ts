@@ -5,7 +5,7 @@ import { getCustomRepository } from 'typeorm';
 import UserConfigs from '../typeorm/entities/TipoAtendimento';
 
 interface IRequest {
-	tipo_id: string;
+	tipo_id: number;
 	user_id: string;
 }
 

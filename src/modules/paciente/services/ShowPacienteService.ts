@@ -1,28 +1,32 @@
-import { EnderecoRepository } from './../../endereco/typeorm/repositories/EnderecoRepository';
 import { PacienteRepository } from './../typeorm/repositories/PacienteRepository';
+import { Request, Response } from 'express';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import Paciente from '../typeorm/entities/Paciente';
 
 interface IRequest {
-	paciente_id: number;
-	user_uid: string;
+	id: number;
+	user_id: string;
 }
 
 class ShowPacienteService {
-	public async execute({ user_uid, paciente_id }: IRequest): Promise<Paciente> {
+	public async execute({ id, user_id }: IRequest): Promise<Paciente> {
 		const pacienteRepo = getCustomRepository(PacienteRepository);
 
-		const pacienteExists = await pacienteRepo.findByUidAndId(user_uid, paciente_id);
-		if (!pacienteExists) {
-			throw new AppError('Não existe nenhum paciente cadastrado com esse ID');
+		const pacienteEncontrado = await pacienteRepo.findByIdAndUser({
+			id,
+			user_id,
+		});
+
+		if (!pacienteEncontrado) {
+			throw new AppError('Paciente não encontrado', 404);
 		}
 
-		const enderecoRepo = getCustomRepository(EnderecoRepository);
-		const enderecoExists = await enderecoRepo.findByUidAndIdPaciente(user_uid, paciente_id);
+		if (pacienteEncontrado.excluido == 1) {
+			throw new AppError('Paciente excluído', 404);
+		}
 
-		return pacienteExists;
+		return pacienteEncontrado;
 	}
 }
-
 export default ShowPacienteService;

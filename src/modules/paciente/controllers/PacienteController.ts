@@ -1,8 +1,3 @@
-import CreateEnderecoService from '@modules/endereco/services/CreateEnderecoService';
-import ShowEnderecoService from '@modules/endereco/services/ShowEnderecoService';
-import UpdateEnderecoService from '@modules/endereco/services/UpdateEnderecoService';
-import CreatePacienteAgendaService from '@modules/paciente_agenda/services/CreatePacienteAgendaService';
-import { Console } from 'console';
 import { Request, Response } from 'express';
 import CreatePacienteService from '../services/CreatePacienteService';
 import ShowPacienteService from '../services/ShowPacienteService';
@@ -10,113 +5,100 @@ import UpdatePacienteService from '../services/UpdatePacienteService';
 
 export default class PacienteController {
 	public async show(request: Request, response: Response): Promise<Response> {
-		const { uid } = request.user;
-		const { paciente_id } = request.body;
+		const { id } = request.body;
+		const usrId = request.user.id;
 
-		const pacienteServ = new ShowPacienteService();
-		const paciente = await pacienteServ.execute({ user_uid: uid, paciente_id });
+		const showPaciente = new ShowPacienteService();
+		const pct = await showPaciente.execute({
+			id,
+			user_id: usrId,
+		});
 
-		const showEndereco = new ShowEnderecoService();
-		const endereco = await showEndereco.findByUidAndIdPaciente({ uid, paciente_id });
-
-		return response.json({ paciente, endereco });
+		return response.json(pct);
 	}
 
 	public async create(request: Request, response: Response): Promise<Response> {
 		const {
 			nome,
-			telefoneCelular,
-			telefoneContato,
-			email,
 			cpf,
-			tem_comorbidade,
-			comorbidade_descricao,
-			ultimoAtendimento,
-			excluido,
-			endereco,
-			agenda,
-		} = request.body;
-		const { uid } = request.user;
-
-		const createParams = new CreatePacienteService();
-		const paciente = await createParams.execute({
-			nome,
-			telefoneCelular,
-			telefoneContato,
+			dataNascimento,
+			celular,
+			telefoneRecado,
 			email,
-			cpf,
-			tem_comorbidade,
-			comorbidade_descricao,
-			ultimoAtendimento,
-			excluido,
-			user_uid: uid,
-		});
-
-		const { logradouro, cep, uf, bairro, cidade, latitude, longitude } = endereco;
-		const createEndereco = new CreateEnderecoService();
-		const enderecoCriar = await createEndereco.execute({
+			tipoAtendimento,
+			temComorbidade,
 			logradouro,
 			uf,
-			cep,
 			bairro,
-			cidade,
-			latitude,
-			longitude,
-			user_uid: uid,
-			paciente_id: paciente.id,
+			numero,
+			referencia,
+		} = request.body;
+
+		const { id } = request.user;
+
+		const createParams = new CreatePacienteService();
+
+		const pct = await createParams.execute({
+			nome,
+			cpf,
+			dataNascimento,
+			celular,
+			telefoneRecado,
+			email,
+			tipoAtendimento,
+			temComorbidade,
+			logradouro,
+			uf,
+			bairro,
+			numero,
+			referencia,
+			excluido: 0,
+			user_id: id,
 		});
 
-		const createPacienteAgenda = new CreatePacienteAgendaService();
-		const agendaCriar = await createPacienteAgenda.execute(agenda, uid, paciente.id);
-
-		return response.json({ paciente, endereco: enderecoCriar, agenda: agendaCriar });
+		return response.json(pct);
 	}
 
 	public async update(request: Request, response: Response): Promise<Response> {
 		const {
-			paciente_id,
+			id,
 			nome,
-			telefoneCelular,
-			telefoneContato,
-			email,
 			cpf,
-			tem_comorbidade,
-			comorbidade_descricao,
-			ultimoAtendimento,
-			excluido,
-			endereco,
-		} = request.body;
-		const { uid } = request.user;
-
-		const updateParams = new UpdatePacienteService();
-		const paciente = await updateParams.execute({
-			paciente_id,
-			nome,
-			telefoneCelular,
-			telefoneContato,
+			dataNascimento,
+			celular,
+			telefoneRecado,
 			email,
-			cpf,
-			tem_comorbidade,
-			comorbidade_descricao,
-			ultimoAtendimento,
-			excluido,
-			user_uid: uid,
-		});
-
-		const { logradouro, cep, uf, bairro, cidade, latitude, longitude } = endereco;
-		const updateEndereco = new UpdateEnderecoService();
-		const enderecocriar = await updateEndereco.execute({
+			tipoAtendimento,
+			temComorbidade,
 			logradouro,
 			uf,
-			cep,
 			bairro,
-			cidade,
-			latitude,
-			longitude,
-			user_uid: uid,
-			paciente_id: paciente.id,
+			numero,
+			referencia,
+		} = request.body;
+
+		const user_id = request.user.id;
+
+		const createParams = new UpdatePacienteService();
+
+		const pct = await createParams.execute({
+			id,
+			nome,
+			cpf,
+			dataNascimento,
+			celular,
+			telefoneRecado,
+			email,
+			tipoAtendimento,
+			temComorbidade,
+			logradouro,
+			uf,
+			bairro,
+			numero,
+			referencia,
+			user_id,
 		});
 
-		return response.json({ paciente, endereco });
+		return response.json(pct);
 	}
 }

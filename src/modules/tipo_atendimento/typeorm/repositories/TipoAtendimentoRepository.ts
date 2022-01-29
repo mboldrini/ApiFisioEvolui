@@ -10,7 +10,7 @@ interface IRequest {
 }
 
 interface ITipoPesquisa {
-	tipo_id: string;
+	tipo_id: number;
 	user_id: string;
 }
 

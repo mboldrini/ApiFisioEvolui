@@ -1,12 +1,10 @@
 import isAuthenticated from '@shared/http/middlewares/isAuthenticated';
-import { celebrate, Joi, Segments } from 'celebrate';
 import { Router } from 'express';
+import { celebrate, Joi, Segments } from 'celebrate';
 import PacienteController from '../controllers/PacienteController';
 
 const pacienteRouter = Router();
 const pacienteController = new PacienteController();
-
-pacienteRouter.get('/', isAuthenticated, pacienteController.show);
 
 pacienteRouter.post(
 	'/',
@@ -14,19 +12,32 @@ pacienteRouter.post(
 	celebrate({
 		[Segments.BODY]: {
 			nome: Joi.string().required(),
-			telefoneCelular: Joi.string().required(),
-			telefoneContato: Joi.string().optional(),
+			cpf: Joi.string().required(),
+			dataNascimento: Joi.date().optional(),
+			celular: Joi.string().required(),
+			telefoneRecado: Joi.string().optional(),
 			email: Joi.string().optional(),
-			cpf: Joi.string().optional(),
-			tem_comorbidade: Joi.number().required(),
-			comorbidade_descricao: Joi.string().optional(),
-			ultimoAtendimento: Joi.date().optional(),
-			excluido: Joi.number().required(),
-			endereco: Joi.object().required(),
-			agenda: Joi.array().required(),
+			tipoAtendimento: Joi.number().required(),
+			temComorbidade: Joi.bool().required(),
+			logradouro: Joi.string().optional(),
+			uf: Joi.number().required(),
+			bairro: Joi.string().optional(),
+			numero: Joi.string().optional(),
+			referencia: Joi.string().optional(),
 		},
 	}),
 	pacienteController.create,
+);
+
+pacienteRouter.get(
+	'/',
+	isAuthenticated,
+	celebrate({
+		[Segments.BODY]: {
+			id: Joi.number().required(),
+		},
+	}),
+	pacienteController.show,
 );
 
 pacienteRouter.put(
@@ -34,38 +45,23 @@ pacienteRouter.put(
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			paciente_id: Joi.number().required(),
+			id: Joi.number().required(),
 			nome: Joi.string().required(),
-			telefoneCelular: Joi.string().required(),
-			telefoneContato: Joi.string().optional(),
-			email: Joi.string().optional(),
-			cpf: Joi.string().optional(),
-			tem_comorbidade: Joi.number().required(),
-			comorbidade_descricao: Joi.string().optional(),
-			ultimoAtendimento: Joi.date().optional(),
-			excluido: Joi.number().required(),
-			endereco: Joi.object(),
+			cpf: Joi.string().required(),
+			dataNascimento: Joi.date().required(),
+			celular: Joi.string().required(),
+			telefoneRecado: Joi.string().required(),
+			email: Joi.string().required(),
+			tipoAtendimento: Joi.number().required(),
+			temComorbidade: Joi.bool().required(),
+			logradouro: Joi.string().required(),
+			uf: Joi.number().required(),
+			bairro: Joi.string().required(),
+			numero: Joi.string().required(),
+			referencia: Joi.string().required(),
 		},
 	}),
 	pacienteController.update,
 );
-
-// enderecoRouter.put(
-// 	'/',
-// 	isAuthenticated,
-// 	celebrate({
-// 		[Segments.BODY]: {
-// 			id: Joi.number().required(),
-// 			logradouro: Joi.string().required(),
-// 			uf: Joi.string().required(),
-// 			cep: Joi.string().required(),
-// 			bairro: Joi.string().required(),
-// 			cidade: Joi.string().required(),
-// 			latitude: Joi.number().required(),
-// 			longitude: Joi.number().required(),
-// 		},
-// 	}),
-// 	enderecoController.update,
-// );
 
 export default pacienteRouter;

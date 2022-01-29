@@ -10,31 +10,46 @@ class Paciente {
 	nome: string;
 
 	@Column()
-	telefoneCelular: string;
+	cpf: string;
 
 	@Column()
-	telefoneContato: string;
+	dataNascimento: Date;
+
+	@Column()
+	celular: string;
+
+	@Column()
+	telefoneRecado: string;
 
 	@Column()
 	email: string;
 
 	@Column()
-	cpf: string;
+	tipoAtendimento: number;
 
 	@Column()
-	tem_comorbidade: number;
+	temComorbidade: boolean;
 
 	@Column()
-	comorbidade_descricao: string;
+	logradouro: string;
 
 	@Column()
-	ultimoAtendimento: Date;
+	uf: string;
+
+	@Column()
+	bairro: string;
+
+	@Column()
+	numero: string;
+
+	@Column()
+	referencia: string;
 
 	@Column()
 	excluido: number;
 
 	@Column()
-	user_uid: string;
+	user_id: string;
 
 	@CreateDateColumn()
 	created_at: Date;
