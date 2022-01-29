@@ -1,5 +1,5 @@
 // import { PacienteRepository } from './../../paciente/typeorm/repositories/PacienteRepository';
-import { PacienteAgendaRepository } from './../typeorm/repositories/PacienteAgendaRepository';
+import { PacienteAgendaRepository } from '../typeorm/repositories/PacienteAgendaRepository';
 import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
 import PacienteAgenda from '../typeorm/entities/PacienteAgenda';
