@@ -35,7 +35,7 @@ export default class AgendamentoController {
 
 		const createAgendamento = new CreateAgendamentoService();
 
-		const agendament = await createAgendamento.execute(paciente_id, user_id, agendamentos);
+		const agendament = await createAgendamento.execute({ paciente_id, user_id, agendamentos });
 
 		return response.json(agendament);
 	}

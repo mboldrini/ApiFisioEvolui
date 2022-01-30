@@ -10,12 +10,19 @@ interface IAgendamento {
 	status: number;
 }
 
-class CreateAgendamentoService {
-	public async execute(paciente_id: number, user_id: string, agendamentos: IAgendamento[]): Promise<IAgendamento[]> {
-		const novoAgendamentoRepository = getCustomRepository(AgendamentoRepository);
+interface IRequest {
+	paciente_id: number;
+	user_id: string;
+	agendamentos: IAgendamento[];
+}
 
-		const pacienteRepo = getCustomRepository(PacienteRepository);
-		const pacienteExiste = await pacienteRepo.findByIdAndUser({
+class CreateAgendamentoService {
+	public async execute({ paciente_id, user_id, agendamentos }: IRequest): Promise<IAgendamento[]> {
+		const agendamentoRepository = getCustomRepository(AgendamentoRepository);
+		const pacienteRepository = getCustomRepository(PacienteRepository);
+
+		/* Paciente Existe*/
+		const pacienteExiste = await pacienteRepository.findByIdAndUser({
 			id: paciente_id,
 			user_id,
 		});
@@ -23,17 +30,23 @@ class CreateAgendamentoService {
 			throw new AppError('Paciente não encontrado', 404);
 		}
 
-		const listaAgendamentos = agendamentos.map(agendam => ({
-			dataHora: agendam.dataHora,
-			tipo: agendam.tipo,
-			status: agendam.status,
+		const agendamentosExistem = await agendamentoRepository.findAllByIds(agendamentos, user_id);
+		if (agendamentosExistem.length > 0) {
+			throw new AppError(`Já existe um agendamento p/ a data ${agendamentosExistem[0].dataHora}`);
+		}
+
+		const serializedAgendamentos = agendamentos.map(agendamento => ({
+			dataHora: agendamento.dataHora,
+			tipo: agendamento.tipo,
+			status: agendamento.status,
 			paciente_id,
 			user_id,
-			excluido: 0,
+			excluido: false,
 		}));
-		await novoAgendamentoRepository.create(listaAgendamentos);
 
-		return agendamentos;
+		await agendamentoRepository.save(serializedAgendamentos);
+
+		return serializedAgendamentos;
 	}
 }
 export default CreateAgendamentoService;
