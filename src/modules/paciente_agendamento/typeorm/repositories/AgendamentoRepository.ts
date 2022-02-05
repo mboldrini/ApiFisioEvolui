@@ -22,6 +22,7 @@ export class AgendamentoRepository extends Repository<Agendamento> {
 			where: {
 				id,
 				user_id,
+				excluido: false,
 			},
 		});
 		return agendamento;
@@ -31,6 +32,7 @@ export class AgendamentoRepository extends Repository<Agendamento> {
 			where: {
 				dataHora,
 				user_id,
+				excluido: false,
 			},
 		});
 		return agendamento;
@@ -43,6 +45,7 @@ export class AgendamentoRepository extends Repository<Agendamento> {
 			where: {
 				dataHora: In(agendamentosIds),
 				user_id,
+				excluido: false,
 			},
 		});
 

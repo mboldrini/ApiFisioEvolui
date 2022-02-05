@@ -21,6 +21,7 @@ export class TipoAtendimentoRepository extends Repository<TipoAtendimento> {
 			where: {
 				id: tipo_id,
 				user_id,
+				excluido: false,
 			},
 		});
 		return atendimento;

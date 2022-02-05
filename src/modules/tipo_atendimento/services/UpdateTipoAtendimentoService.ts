@@ -4,7 +4,7 @@ import { getCustomRepository } from 'typeorm';
 import TipoAtendimento from '../typeorm/entities/TipoAtendimento';
 
 interface IRequest {
-	id_tipo: string;
+	id_tipo: number;
 	tipo: string;
 	valor_atendimento: number;
 	descricao?: string;

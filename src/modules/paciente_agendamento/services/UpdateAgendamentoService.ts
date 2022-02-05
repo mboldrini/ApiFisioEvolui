@@ -9,21 +9,13 @@ interface IAgendamento {
 	dataHora: string;
 	tipo: number;
 	status: number;
-	excluido: boolean;
+	excluido?: boolean;
 	paciente_id: number;
 	user_id: string;
 }
 
 class UpdateAgendamentoService {
-	public async execute({
-		id,
-		dataHora,
-		tipo,
-		status,
-		excluido,
-		paciente_id,
-		user_id,
-	}: IAgendamento): Promise<IAgendamento> {
+	public async execute({ id, dataHora, tipo, status, paciente_id, user_id }: IAgendamento): Promise<IAgendamento> {
 		const agendamentoRepository = getCustomRepository(AgendamentoRepository);
 
 		const pacienteRepo = getCustomRepository(PacienteRepository);
@@ -52,9 +44,8 @@ class UpdateAgendamentoService {
 		if (agendamentoExiste.status != status) {
 			agendamentoExiste.status = status;
 		}
-		if (agendamentoExiste.excluido != excluido) {
-			agendamentoExiste.excluido = excluido;
-		}
+
+		agendamentoExiste.excluido = false;
 
 		await agendamentoRepository.save(agendamentoExiste);
 

@@ -21,7 +21,6 @@ export default class AgendamentoController {
 			dataHora,
 			tipo,
 			status,
-			excluido,
 			paciente_id,
 			user_id,
 		});

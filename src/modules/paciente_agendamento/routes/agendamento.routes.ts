@@ -15,7 +15,13 @@ agendamentoRouter.post(
 			// tipo: Joi.number().required(),
 			// status: Joi.number().required(),
 			paciente_id: Joi.number().required(),
-			agendamentos: Joi.array().required(),
+			agendamentos: Joi.array()
+				.items({
+					dataHora: Joi.string().required(),
+					tipo: Joi.number().required(),
+					status: Joi.number().required(),
+				})
+				.required(),
 		},
 	}),
 	agendamentoControler.create,
@@ -41,7 +47,6 @@ agendamentoRouter.put(
 			dataHora: Joi.string().required(),
 			tipo: Joi.number().required(),
 			status: Joi.number().required(),
-			excluido: Joi.bool().required(),
 			paciente_id: Joi.number().required(),
 		},
 	}),
