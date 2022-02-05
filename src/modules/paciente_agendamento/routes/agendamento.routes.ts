@@ -11,15 +11,13 @@ agendamentoRouter.post(
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			// dataHora: Joi.date().required(),
-			// tipo: Joi.number().required(),
-			// status: Joi.number().required(),
 			paciente_id: Joi.number().required(),
 			agendamentos: Joi.array()
 				.items({
 					dataHora: Joi.string().required(),
 					tipo: Joi.number().required(),
 					status: Joi.number().required(),
+					data: Joi.date().required(),
 				})
 				.required(),
 		},
@@ -45,12 +43,25 @@ agendamentoRouter.put(
 		[Segments.BODY]: {
 			id: Joi.number().required(),
 			dataHora: Joi.string().required(),
+			data: Joi.date().required(),
 			tipo: Joi.number().required(),
 			status: Joi.number().required(),
 			paciente_id: Joi.number().required(),
 		},
 	}),
 	agendamentoControler.update,
+);
+
+agendamentoRouter.delete(
+	'/',
+	isAuthenticated,
+	celebrate({
+		[Segments.BODY]: {
+			id: Joi.number().required(),
+			paciente_id: Joi.number().required(),
+		},
+	}),
+	agendamentoControler.delete,
 );
 
 export default agendamentoRouter;

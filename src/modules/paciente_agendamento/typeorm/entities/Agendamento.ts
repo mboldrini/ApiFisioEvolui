@@ -10,6 +10,9 @@ class Agendamento {
 	dataHora: string;
 
 	@Column()
+	data: Date;
+
+	@Column()
 	tipo: number;
 
 	@Column()

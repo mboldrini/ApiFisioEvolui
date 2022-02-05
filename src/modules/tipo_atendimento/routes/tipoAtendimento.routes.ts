@@ -46,4 +46,6 @@ tipoAtendimentoRouter.put(
 	tipoAtendimentoController.update,
 );
 
+tipoAtendimentoRouter.delete('/:id', isAuthenticated, tipoAtendimentoController.delete);
+
 export default tipoAtendimentoRouter;

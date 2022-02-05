@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import CreateTipoAtendimentoService from '../services/CreateTipoAtendimentoService';
+import DeleteTipoAtendimentoService from '../services/DeleteTipoAtendimentoService';
 import ShowTipoAtendimentoService from '../services/ShowTipoAtendimentoService';
 import UpdateTipoAtendimentoService from '../services/UpdateTipoAtendimentoService';
 
@@ -45,6 +46,20 @@ export default class TipoAtendimentoController {
 			valor_atendimento,
 			descricao,
 			user_id: id,
+		});
+
+		return response.json(tipoAtendimento);
+	}
+
+	public async delete(request: Request, response: Response): Promise<Response> {
+		const { id } = request.params;
+		const user_id = request.user.id;
+
+		const updateTipoAtendimento = new DeleteTipoAtendimentoService();
+
+		const tipoAtendimento = await updateTipoAtendimento.execute({
+			id,
+			user_id,
 		});
 
 		return response.json(tipoAtendimento);

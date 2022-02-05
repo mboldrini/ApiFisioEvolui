@@ -8,6 +8,7 @@ interface IAgendamento {
 	dataHora: string;
 	tipo: number;
 	status: number;
+	data: Date;
 }
 
 interface IRequest {
@@ -39,6 +40,7 @@ class CreateAgendamentoService {
 			dataHora: agendamento.dataHora,
 			tipo: agendamento.tipo,
 			status: agendamento.status,
+			data: agendamento.data,
 			paciente_id,
 			user_id,
 			excluido: false,

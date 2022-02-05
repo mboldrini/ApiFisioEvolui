@@ -2,29 +2,15 @@ import { PacienteRepository } from '../../paciente/typeorm/repositories/Paciente
 import { AgendamentoRepository } from '../typeorm/repositories/AgendamentoRepository';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
-import Agendamento from '../typeorm/entities/Agendamento';
 
 interface IAgendamento {
 	id: number;
-	dataHora: string;
-	data: Date;
-	tipo: number;
-	status: number;
-	excluido?: boolean;
 	paciente_id: number;
 	user_id: string;
 }
 
-class UpdateAgendamentoService {
-	public async execute({
-		id,
-		dataHora,
-		data,
-		tipo,
-		status,
-		paciente_id,
-		user_id,
-	}: IAgendamento): Promise<IAgendamento> {
+class DeleteAgendamentoService {
+	public async execute({ id, paciente_id, user_id }: IAgendamento): Promise<IAgendamento> {
 		const agendamentoRepository = getCustomRepository(AgendamentoRepository);
 
 		const pacienteRepo = getCustomRepository(PacienteRepository);
@@ -44,24 +30,11 @@ class UpdateAgendamentoService {
 			throw new AppError('Agendamento não encontrado', 404);
 		}
 
-		if (agendamentoExiste.dataHora != dataHora) {
-			agendamentoExiste.dataHora = dataHora;
-		}
-		if (agendamentoExiste.data != data) {
-			agendamentoExiste.data = data;
-		}
-		if (agendamentoExiste.tipo != tipo) {
-			agendamentoExiste.tipo = tipo;
-		}
-		if (agendamentoExiste.status != status) {
-			agendamentoExiste.status = status;
-		}
-
-		agendamentoExiste.excluido = false;
+		agendamentoExiste.excluido = true;
 
 		await agendamentoRepository.save(agendamentoExiste);
 
 		return agendamentoExiste;
 	}
 }
-export default UpdateAgendamentoService;
+export default DeleteAgendamentoService;
