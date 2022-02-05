@@ -66,11 +66,6 @@ export default class PacienteController {
 			agendamentos,
 		});
 
-		const novoUser = {
-			pct,
-			agendamento: agendm,
-		};
-
 		return response.json({ paciente: pct, agendamento: agendm });
 	}
 

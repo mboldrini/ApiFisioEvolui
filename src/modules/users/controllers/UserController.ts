@@ -1,4 +1,4 @@
-import CreateEnderecoService from '@modules/endereco/services/CreateEnderecoService';
+import CreateEnderecoService from '@modules/OLD_endereco/services/CreateEnderecoService';
 import CreateUserAgendaService from '@modules/user_horarios/services/CreateUserAgendaService';
 import CreateUserConfigsService from '@modules/user_configs/services/CreateUserConfigsService';
 import ShowUserConfigsService from '@modules/user_configs/services/ShowUserConfigsService';

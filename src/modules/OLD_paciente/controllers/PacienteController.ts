@@ -1,6 +1,6 @@
-import CreateEnderecoService from '@modules/endereco/services/CreateEnderecoService';
-import ShowEnderecoService from '@modules/endereco/services/ShowEnderecoService';
-import UpdateEnderecoService from '@modules/endereco/services/UpdateEnderecoService';
+import CreateEnderecoService from '@modules/OLD_endereco/services/CreateEnderecoService';
+import ShowEnderecoService from '@modules/OLD_endereco/services/ShowEnderecoService';
+import UpdateEnderecoService from '@modules/OLD_endereco/services/UpdateEnderecoService';
 import CreatePacienteAgendaService from '@modules/OLD_paciente_agenda/services/CreatePacienteAgendaService';
 import { Console } from 'console';
 import { Request, Response } from 'express';

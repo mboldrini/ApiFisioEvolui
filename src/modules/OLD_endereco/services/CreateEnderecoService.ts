@@ -1,4 +1,4 @@
-import { EnderecoRepository } from './../typeorm/repositories/EnderecoRepository';
+import { EnderecoRepository } from '../typeorm/repositories/EnderecoRepository';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import Endereco from '../typeorm/entities/Endereco';
