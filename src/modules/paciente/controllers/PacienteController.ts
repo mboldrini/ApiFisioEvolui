@@ -1,3 +1,4 @@
+import CreateAgendamentoService from '@modules/paciente_agendamento/services/CreateAgendamentoService';
 import { Request, Response } from 'express';
 import CreatePacienteService from '../services/CreatePacienteService';
 import ShowPacienteService from '../services/ShowPacienteService';
@@ -32,12 +33,12 @@ export default class PacienteController {
 			bairro,
 			numero,
 			referencia,
+			agendamentos,
 		} = request.body;
 
 		const { id } = request.user;
 
 		const createParams = new CreatePacienteService();
-
 		const pct = await createParams.execute({
 			nome,
 			cpf,
@@ -56,7 +57,21 @@ export default class PacienteController {
 			user_id: id,
 		});
 
-		return response.json(pct);
+		console.log(pct);
+
+		const pacienteAgendamento = new CreateAgendamentoService();
+		const agendm = await pacienteAgendamento.execute({
+			paciente_id: pct.id,
+			user_id: id,
+			agendamentos,
+		});
+
+		const novoUser = {
+			pct,
+			agendamento: agendm,
+		};
+
+		return response.json({ paciente: pct, agendamento: agendm });
 	}
 
 	public async update(request: Request, response: Response): Promise<Response> {

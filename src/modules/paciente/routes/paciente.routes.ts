@@ -24,6 +24,14 @@ pacienteRouter.post(
 			bairro: Joi.string().optional(),
 			numero: Joi.string().optional(),
 			referencia: Joi.string().optional(),
+			agendamentos: Joi.array()
+				.items({
+					dataHora: Joi.string().required(),
+					tipo: Joi.number().required(),
+					status: Joi.number().required(),
+					data: Joi.date().required(),
+				})
+				.optional(),
 		},
 	}),
 	pacienteController.create,
