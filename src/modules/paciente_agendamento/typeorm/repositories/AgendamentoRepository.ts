@@ -1,4 +1,4 @@
-import { EntityRepository, In, Repository } from 'typeorm';
+import { Between, EntityRepository, In, Repository } from 'typeorm';
 import Agendamento from '../entities/Agendamento';
 
 interface ITipo {
@@ -13,6 +13,13 @@ interface ITipo2 {
 
 interface IFindAgendamentos {
 	dataHora: string;
+}
+
+interface IDateRange {
+	dataInicio: Date;
+	dataFim: Date;
+	user_id: string;
+	paciente_id: number;
 }
 
 @EntityRepository(Agendamento)
@@ -52,6 +59,23 @@ export class AgendamentoRepository extends Repository<Agendamento> {
 		console.log(existentAgendamentos);
 
 		return existentAgendamentos;
+	}
+
+	public async findByDataRangeAndUser({
+		dataInicio,
+		dataFim,
+		paciente_id,
+		user_id,
+	}: IDateRange): Promise<Agendamento[] | undefined> {
+		const agendamento = await this.find({
+			where: {
+				data: Between(dataInicio, dataFim),
+				paciente_id,
+				user_id,
+				excluido: false,
+			},
+		});
+		return agendamento;
 	}
 }
 export default AgendamentoRepository;

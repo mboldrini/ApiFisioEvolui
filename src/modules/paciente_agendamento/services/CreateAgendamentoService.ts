@@ -6,9 +6,9 @@ import Agendamento from '../typeorm/entities/Agendamento';
 
 interface IAgendamento {
 	dataHora: string;
+	data: Date;
 	tipo: number;
 	status: number;
-	data: Date;
 }
 
 interface IRequest {

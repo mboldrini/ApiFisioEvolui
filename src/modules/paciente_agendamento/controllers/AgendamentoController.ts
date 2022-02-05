@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import CreateAgendamentoService from '../services/CreateAgendamentoService';
 import DeleteAgendamentoService from '../services/DeleteAgendamentoService';
 import ShowAgendamentoService from '../services/ShowAgendamentoService';
+import ShowAllAgendamentoService from '../services/ShowAllAgendamentoService';
 import UpdateAgendamentoService from '../services/UpdateAgendamentoService';
 
 interface IAgendamento {
@@ -64,5 +65,15 @@ export default class AgendamentoController {
 		const agendamento = await showAgendamento.execute({ id, paciente_id, user_id });
 
 		return response.json(agendamento);
+	}
+
+	public async showAll(request: Request, response: Response): Promise<Response> {
+		const { dataInicio, dataFim, paciente_id } = request.body;
+		const user_id = request.user.id;
+
+		const showAllAgendamento = new ShowAllAgendamentoService();
+		const agendamentos = await showAllAgendamento.execute({ dataInicio, dataFim, paciente_id, user_id });
+
+		return response.json(agendamentos);
 	}
 }

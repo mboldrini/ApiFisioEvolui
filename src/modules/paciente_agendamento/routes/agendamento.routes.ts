@@ -36,6 +36,19 @@ agendamentoRouter.get(
 	agendamentoControler.show,
 );
 
+agendamentoRouter.get(
+	'/all',
+	isAuthenticated,
+	celebrate({
+		[Segments.BODY]: {
+			dataInicio: Joi.date().required(),
+			dataFim: Joi.date().required(),
+			paciente_id: Joi.number().required(),
+		},
+	}),
+	agendamentoControler.showAll,
+);
+
 agendamentoRouter.put(
 	'/',
 	isAuthenticated,
