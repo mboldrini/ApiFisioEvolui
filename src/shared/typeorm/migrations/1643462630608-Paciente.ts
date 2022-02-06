@@ -25,7 +25,7 @@ export class Paciente1643462630608 implements MigrationInterface {
 					},
 					{
 						name: 'dataNascimento',
-						type: 'timestamp',
+						type: 'varchar(50)',
 						isNullable: true,
 					},
 					{

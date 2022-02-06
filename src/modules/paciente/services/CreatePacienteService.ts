@@ -7,7 +7,7 @@ import Paciente from '../typeorm/entities/Paciente';
 interface IRequest {
 	nome: string;
 	cpf: string;
-	dataNascimento?: Date;
+	dataNascimento?: string;
 	celular: string;
 	telefoneRecado?: string;
 	email?: string;

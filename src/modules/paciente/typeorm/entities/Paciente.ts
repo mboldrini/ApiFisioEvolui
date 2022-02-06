@@ -13,7 +13,7 @@ class Paciente {
 	cpf: string;
 
 	@Column()
-	dataNascimento: Date;
+	dataNascimento: string;
 
 	@Column()
 	celular: string;

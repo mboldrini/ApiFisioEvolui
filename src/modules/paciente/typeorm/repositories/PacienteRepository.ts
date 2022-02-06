@@ -6,6 +6,15 @@ interface ITipoPesquisa {
 	user_id: string;
 }
 
+interface IQtdAtendimento {
+	qtd: number;
+}
+
+interface ITipoAtendimento {
+	tipoAtendimento: number;
+	user_id: string;
+}
+
 @EntityRepository(Paciente)
 export class PacienteRepository extends Repository<Paciente> {
 	public async findByIdAndUser({ id, user_id }: ITipoPesquisa): Promise<Paciente | undefined> {
@@ -27,6 +36,17 @@ export class PacienteRepository extends Repository<Paciente> {
 			},
 		});
 		return pacientes;
+	}
+
+	public async findAllByAtendimento({ tipoAtendimento, user_id }: ITipoAtendimento): Promise<any> {
+		const qtdPcts = await this.findAndCount({
+			where: {
+				tipoAtendimento,
+				user_id,
+				excluido: false,
+			},
+		});
+		return qtdPcts;
 	}
 }
 export default PacienteRepository;

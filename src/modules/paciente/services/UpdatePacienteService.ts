@@ -8,7 +8,7 @@ interface IRequest {
 	id: number;
 	nome: string;
 	cpf: string;
-	dataNascimento: Date; //era opcional
+	dataNascimento: string; //era opcional
 	celular: string;
 	telefoneRecado: string; //era opcional
 	email: string; //era opcional
@@ -102,7 +102,7 @@ class UpdatePacienteService {
 			pacienteExiste.referencia = referencia;
 		}
 
-		pacienteExiste.excluido = 0;
+		pacienteExiste.excluido = false;
 
 		const novoPct = await novoPaciente.save(pacienteExiste);
 
