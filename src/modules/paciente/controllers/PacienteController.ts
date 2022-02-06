@@ -1,6 +1,7 @@
 import CreateAgendamentoService from '@modules/paciente_agendamento/services/CreateAgendamentoService';
 import { Request, Response } from 'express';
 import CreatePacienteService from '../services/CreatePacienteService';
+import ShowAllPacienteService from '../services/ShowAllPacientesService';
 import ShowPacienteService from '../services/ShowPacienteService';
 import UpdatePacienteService from '../services/UpdatePacienteService';
 
@@ -107,6 +108,17 @@ export default class PacienteController {
 			numero,
 			referencia,
 			user_id,
+		});
+
+		return response.json(pct);
+	}
+
+	public async showAll(request: Request, response: Response): Promise<Response> {
+		const { id } = request.user;
+
+		const showPaciente = new ShowAllPacienteService();
+		const pct = await showPaciente.execute({
+			user_id: id,
 		});
 
 		return response.json(pct);

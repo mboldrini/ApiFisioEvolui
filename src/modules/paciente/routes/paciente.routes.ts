@@ -72,4 +72,6 @@ pacienteRouter.put(
 	pacienteController.update,
 );
 
+pacienteRouter.get('/all', isAuthenticated, pacienteController.showAll);
+
 export default pacienteRouter;

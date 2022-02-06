@@ -13,9 +13,20 @@ export class PacienteRepository extends Repository<Paciente> {
 			where: {
 				id,
 				user_id,
+				excluido: false,
 			},
 		});
 		return atendimento;
+	}
+
+	public async findAllPacientes(user_id: string): Promise<Paciente[] | undefined> {
+		const pacientes = await this.find({
+			where: {
+				user_id,
+				excluido: false,
+			},
+		});
+		return pacientes;
 	}
 }
 export default PacienteRepository;
