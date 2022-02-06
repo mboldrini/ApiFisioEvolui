@@ -74,4 +74,15 @@ pacienteRouter.put(
 
 pacienteRouter.get('/all', isAuthenticated, pacienteController.showAll);
 
+pacienteRouter.delete(
+	'/',
+	isAuthenticated,
+	celebrate({
+		[Segments.BODY]: {
+			id: Joi.number().required(),
+		},
+	}),
+	pacienteController.delete,
+);
+
 export default pacienteRouter;

@@ -34,6 +34,18 @@ export class AgendamentoRepository extends Repository<Agendamento> {
 		});
 		return agendamento;
 	}
+
+	public async findAllByIdAndUser({ id, user_id }: ITipo): Promise<Agendamento[] | undefined> {
+		const agendamento = await this.find({
+			where: {
+				paciente_id: id,
+				user_id,
+				excluido: false,
+			},
+		});
+		return agendamento;
+	}
+
 	public async findByDataHoraAndUser({ dataHora, user_id }: ITipo2): Promise<Agendamento | undefined> {
 		const agendamento = await this.findOne({
 			where: {
@@ -55,8 +67,6 @@ export class AgendamentoRepository extends Repository<Agendamento> {
 				excluido: false,
 			},
 		});
-
-		console.log(existentAgendamentos);
 
 		return existentAgendamentos;
 	}

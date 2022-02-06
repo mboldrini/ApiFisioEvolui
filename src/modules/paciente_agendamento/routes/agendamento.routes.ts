@@ -77,4 +77,15 @@ agendamentoRouter.delete(
 	agendamentoControler.delete,
 );
 
+agendamentoRouter.delete(
+	'/all',
+	isAuthenticated,
+	celebrate({
+		[Segments.BODY]: {
+			paciente_id: Joi.number().required(),
+		},
+	}),
+	agendamentoControler.deleteAll,
+);
+
 export default agendamentoRouter;

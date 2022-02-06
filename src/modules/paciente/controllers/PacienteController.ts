@@ -1,6 +1,8 @@
 import CreateAgendamentoService from '@modules/paciente_agendamento/services/CreateAgendamentoService';
+import DeleteAllAgendamentoService from '@modules/paciente_agendamento/services/DeleteAllAgendamentoService';
 import { Request, Response } from 'express';
 import CreatePacienteService from '../services/CreatePacienteService';
+import DeletePacienteService from '../services/DeletePacienteService';
 import ShowAllPacienteService from '../services/ShowAllPacientesService';
 import ShowPacienteService from '../services/ShowPacienteService';
 import UpdatePacienteService from '../services/UpdatePacienteService';
@@ -54,7 +56,7 @@ export default class PacienteController {
 			bairro,
 			numero,
 			referencia,
-			excluido: 0,
+			excluido: false,
 			user_id: id,
 		});
 
@@ -122,5 +124,18 @@ export default class PacienteController {
 		});
 
 		return response.json(pct);
+	}
+
+	public async delete(request: Request, response: Response): Promise<Response> {
+		const { id } = request.body;
+		const user_id = request.user.id;
+
+		const excluiAgendamentosPct = new DeleteAllAgendamentoService();
+		const pctDelAgendamentos = await excluiAgendamentosPct.execute({ paciente_id: id, user_id });
+
+		const excluiPaciente = new DeletePacienteService();
+		const pctDel = await excluiPaciente.execute({ paciente_id: id, user_id });
+
+		return response.json({ message: 'Paciente e agendamentos excluidos com sucesso!' });
 	}
 }

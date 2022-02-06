@@ -46,7 +46,7 @@ class Paciente {
 	referencia: string;
 
 	@Column()
-	excluido: number;
+	excluido: boolean;
 
 	@Column()
 	user_id: string;

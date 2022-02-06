@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import CreateAgendamentoService from '../services/CreateAgendamentoService';
 import DeleteAgendamentoService from '../services/DeleteAgendamentoService';
+import DeleteAllAgendamentoService from '../services/DeleteAllAgendamentoService';
 import ShowAgendamentoService from '../services/ShowAgendamentoService';
 import ShowAllAgendamentoService from '../services/ShowAllAgendamentoService';
 import UpdateAgendamentoService from '../services/UpdateAgendamentoService';
@@ -57,6 +58,16 @@ export default class AgendamentoController {
 		return response.json(agendamento);
 	}
 
+	public async showAll(request: Request, response: Response): Promise<Response> {
+		const { dataInicio, dataFim, paciente_id } = request.body;
+		const user_id = request.user.id;
+
+		const showAllAgendamento = new ShowAllAgendamentoService();
+		const agendamentos = await showAllAgendamento.execute({ dataInicio, dataFim, paciente_id, user_id });
+
+		return response.json(agendamentos);
+	}
+
 	public async delete(request: Request, response: Response): Promise<Response> {
 		const { id, paciente_id }: IUpdate = request.body;
 		const user_id = request.user.id;
@@ -67,13 +78,13 @@ export default class AgendamentoController {
 		return response.json(agendamento);
 	}
 
-	public async showAll(request: Request, response: Response): Promise<Response> {
-		const { dataInicio, dataFim, paciente_id } = request.body;
+	public async deleteAll(request: Request, response: Response): Promise<Response> {
+		const { paciente_id } = request.body;
 		const user_id = request.user.id;
 
-		const showAllAgendamento = new ShowAllAgendamentoService();
-		const agendamentos = await showAllAgendamento.execute({ dataInicio, dataFim, paciente_id, user_id });
+		const showAgendamento = new DeleteAllAgendamentoService();
+		const agendamento = await showAgendamento.execute({ paciente_id, user_id });
 
-		return response.json(agendamentos);
+		return response.json(agendamento);
 	}
 }

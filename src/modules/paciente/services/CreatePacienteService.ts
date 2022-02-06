@@ -18,7 +18,7 @@ interface IRequest {
 	bairro?: string;
 	numero?: string;
 	referencia?: string;
-	excluido: number;
+	excluido: boolean;
 	user_id: string;
 }
 
@@ -53,7 +53,7 @@ class CreatePacienteService {
 			throw new AppError('Tipo de Atendimento não encontrado', 404);
 		}
 
-		excluido = 0;
+		excluido = false;
 
 		const novoPct = await novoPaciente.create({
 			nome,
