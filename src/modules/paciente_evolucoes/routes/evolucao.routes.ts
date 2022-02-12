@@ -22,4 +22,21 @@ evolucaoRouter.post(
 	evolucaoController.create,
 );
 
+evolucaoRouter.put(
+	'/',
+	isAuthenticated,
+	celebrate({
+		[Segments.BODY]: {
+			id: Joi.number().required(),
+			evolucao: Joi.string().required(),
+			observacoes: Joi.string().optional(),
+			status: Joi.number().required(),
+			tipo: Joi.number().optional(),
+			agendamento_id: Joi.number().required(),
+			paciente_id: Joi.number().required(),
+		},
+	}),
+	evolucaoController.update,
+);
+
 export default evolucaoRouter;
