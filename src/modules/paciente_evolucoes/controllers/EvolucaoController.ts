@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import CreateEvolucaoService from '../services.ts/CreateEvolucaoService';
+import ShowAllEvolucoesService from '../services.ts/ShowAllEvolucoesService';
 import ShowEvolucaoService from '../services.ts/ShowEvolucaoService';
 import UpdateEvolucaoService from '../services.ts/UpdateEvolucaoService';
 
@@ -56,5 +57,19 @@ export default class EvolucaoController {
 		});
 
 		return response.json(evolucao);
+	}
+
+	public async showAll(request: Request, response: Response): Promise<Response> {
+		const { paciente_id } = request.body;
+		const user_id = request.user.id;
+
+		const showEvolucao = new ShowAllEvolucoesService();
+
+		const evolucoes = await showEvolucao.execute({
+			paciente_id,
+			user_id,
+		});
+
+		return response.json(evolucoes);
 	}
 }

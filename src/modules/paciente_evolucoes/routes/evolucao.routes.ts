@@ -51,4 +51,15 @@ evolucaoRouter.get(
 	evolucaoController.show,
 );
 
+evolucaoRouter.get(
+	'/all',
+	isAuthenticated,
+	celebrate({
+		[Segments.BODY]: {
+			paciente_id: Joi.number().required(),
+		},
+	}),
+	evolucaoController.showAll,
+);
+
 export default evolucaoRouter;
