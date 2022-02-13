@@ -44,15 +44,18 @@ class DeleteAllAgendamentoService {
 			id: paciente_id,
 			user_id,
 		});
+		if (agendamentosExistem) {
+			const serializedAgendamentos = agendamentosExistem.map(agendamento => ({
+				id: agendamento.id,
+				excluido: true,
+			}));
 
-		const serializedAgendamentos = agendamentosExistem.map(agendamento => ({
-			id: agendamento.id,
-			excluido: true,
-		}));
+			await agendamentoRepository.save(serializedAgendamentos);
 
-		await agendamentoRepository.save(serializedAgendamentos);
+			return serializedAgendamentos;
+		}
 
-		return serializedAgendamentos;
+		return null;
 	}
 }
 export default DeleteAllAgendamentoService;
