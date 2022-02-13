@@ -39,4 +39,16 @@ evolucaoRouter.put(
 	evolucaoController.update,
 );
 
+evolucaoRouter.get(
+	'/',
+	isAuthenticated,
+	celebrate({
+		[Segments.BODY]: {
+			agendamento_id: Joi.number().required(),
+			paciente_id: Joi.number().required(),
+		},
+	}),
+	evolucaoController.show,
+);
+
 export default evolucaoRouter;
