@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import CreateEvolucaoService from '../services.ts/CreateEvolucaoService';
+import DeleteEvolucaoService from '../services.ts/DeleteEvolucaoService';
 import ShowAllEvolucoesService from '../services.ts/ShowAllEvolucoesService';
 import ShowEvolucaoService from '../services.ts/ShowEvolucaoService';
 import UpdateEvolucaoService from '../services.ts/UpdateEvolucaoService';
@@ -71,5 +72,21 @@ export default class EvolucaoController {
 		});
 
 		return response.json(evolucoes);
+	}
+
+	public async delete(request: Request, response: Response): Promise<Response> {
+		const { id, agendamento_id, paciente_id } = request.body;
+		const user_id = request.user.id;
+
+		const deleteEvolucao = new DeleteEvolucaoService();
+
+		const evolucao = await deleteEvolucao.execute({
+			id,
+			agendamento_id,
+			paciente_id,
+			user_id,
+		});
+
+		return response.json(evolucao);
 	}
 }

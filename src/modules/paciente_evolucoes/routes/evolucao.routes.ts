@@ -39,6 +39,19 @@ evolucaoRouter.put(
 	evolucaoController.update,
 );
 
+evolucaoRouter.delete(
+	'/',
+	isAuthenticated,
+	celebrate({
+		[Segments.BODY]: {
+			id: Joi.number().required(),
+			agendamento_id: Joi.number().required(),
+			paciente_id: Joi.number().required(),
+		},
+	}),
+	evolucaoController.delete,
+);
+
 evolucaoRouter.get(
 	'/',
 	isAuthenticated,
