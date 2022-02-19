@@ -100,6 +100,9 @@ export class AgendamentoRepository extends Repository<Agendamento> {
 				user_id,
 				excluido: false,
 			},
+			order: {
+				hora: 'ASC',
+			},
 		});
 		return agendamento;
 	}
