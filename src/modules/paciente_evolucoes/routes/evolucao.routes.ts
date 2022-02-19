@@ -52,8 +52,8 @@ evolucaoRouter.delete(
 	evolucaoController.delete,
 );
 
-evolucaoRouter.get(
-	'/',
+evolucaoRouter.post(
+	'/show',
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
@@ -65,13 +65,13 @@ evolucaoRouter.get(
 );
 
 evolucaoRouter.get(
-	'/all',
+	'/all/:paciente_id',
 	isAuthenticated,
-	celebrate({
-		[Segments.BODY]: {
-			paciente_id: Joi.number().required(),
-		},
-	}),
+	// celebrate({
+	// 	[Segments.BODY]: {
+	// 		paciente_id: Joi.number().required(),
+	// 	},
+	// }),
 	evolucaoController.showAll,
 );
 

@@ -50,11 +50,13 @@ export default class AgendamentoController {
 	}
 
 	public async show(request: Request, response: Response): Promise<Response> {
-		const { id } = request.body;
+		const { id } = request.params;
 		const user_id = request.user.id;
 
+		let idUrl = parseInt(id);
+
 		const showAgendamento = new ShowAgendamentoService();
-		const agendamento = await showAgendamento.execute({ id, user_id });
+		const agendamento = await showAgendamento.execute({ id: idUrl, user_id });
 
 		return response.json(agendamento);
 	}
@@ -73,8 +75,8 @@ export default class AgendamentoController {
 		const { dataInicio, dataFim } = request.body;
 		const user_id = request.user.id;
 
-		const showAllAgendamento = new ShowAllDayAgendamentoService();
-		const agendamentos = await showAllAgendamento.execute({ dataInicio, dataFim, user_id });
+		const showAllDayAgendamentos = new ShowAllDayAgendamentoService();
+		const agendamentos = await showAllDayAgendamentos.execute({ dataInicio, dataFim, user_id });
 
 		return response.json(agendamentos);
 	}

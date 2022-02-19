@@ -26,17 +26,17 @@ agendamentoRouter.post(
 );
 
 agendamentoRouter.get(
-	'/',
+	'/:id',
 	isAuthenticated,
-	celebrate({
-		[Segments.BODY]: {
-			id: Joi.number().required(),
-		},
-	}),
+	// celebrate({
+	// 	[Segments.BODY]: {
+	// 		id: Joi.number().required(),
+	// 	},
+	// }),
 	agendamentoControler.show,
 );
 
-agendamentoRouter.get(
+agendamentoRouter.post(
 	'/all',
 	isAuthenticated,
 	celebrate({
@@ -49,7 +49,7 @@ agendamentoRouter.get(
 	agendamentoControler.showAll,
 );
 
-agendamentoRouter.get(
+agendamentoRouter.post(
 	'/allday',
 	isAuthenticated,
 	celebrate({

@@ -61,13 +61,17 @@ export default class EvolucaoController {
 	}
 
 	public async showAll(request: Request, response: Response): Promise<Response> {
-		const { paciente_id } = request.body;
+		const { paciente_id } = request.params;
 		const user_id = request.user.id;
+
+		const pct_id = parseInt(paciente_id);
+
+		console.log(pct_id);
 
 		const showEvolucao = new ShowAllEvolucoesService();
 
 		const evolucoes = await showEvolucao.execute({
-			paciente_id,
+			paciente_id: pct_id,
 			user_id,
 		});
 
