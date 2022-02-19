@@ -35,11 +35,6 @@ class DeleteAllAgendamentoService {
 			throw new AppError('Paciente não encontrado', 404);
 		}
 
-		console.log('PACIENTE EXISTE!');
-		console.log(pacienteExiste);
-
-		console.log(`User_id: ${user_id}`);
-
 		const agendamentosExistem = await agendamentoRepository.findAllByIdAndUser({
 			id: paciente_id,
 			user_id,

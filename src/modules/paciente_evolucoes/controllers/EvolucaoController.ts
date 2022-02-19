@@ -66,8 +66,6 @@ export default class EvolucaoController {
 
 		const pct_id = parseInt(paciente_id);
 
-		console.log(pct_id);
-
 		const showEvolucao = new ShowAllEvolucoesService();
 
 		const evolucoes = await showEvolucao.execute({

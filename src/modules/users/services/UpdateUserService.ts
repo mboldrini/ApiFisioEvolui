@@ -19,8 +19,6 @@ class UpdateUserService {
 			throw new AppError('Usuario não encontrado');
 		}
 
-		console.log('UpdateUserService.ts');
-
 		user.celular = celular;
 		user.crefito = crefito;
 

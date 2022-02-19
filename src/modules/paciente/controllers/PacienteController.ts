@@ -66,8 +66,6 @@ export default class PacienteController {
 			comorbidades,
 		});
 
-		console.log(pct);
-
 		const pacienteAgendamento = new CreateAgendamentoService();
 		const agendm = await pacienteAgendamento.execute({
 			paciente_id: pct.id,
