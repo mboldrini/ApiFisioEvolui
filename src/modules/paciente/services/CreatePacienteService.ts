@@ -20,6 +20,9 @@ interface IRequest {
 	referencia?: string;
 	excluido: boolean;
 	user_id: string;
+	queixamotivo: string;
+	diagnosticos: string;
+	comorbidades: string;
 }
 
 class CreatePacienteService {
@@ -39,6 +42,9 @@ class CreatePacienteService {
 		referencia,
 		excluido,
 		user_id,
+		queixamotivo,
+		diagnosticos,
+		comorbidades,
 	}: IRequest): Promise<Paciente> {
 		const novoPaciente = getCustomRepository(PacienteRepository);
 
@@ -71,6 +77,9 @@ class CreatePacienteService {
 			referencia,
 			excluido,
 			user_id,
+			queixamotivo,
+			diagnosticos,
+			comorbidades,
 		});
 
 		await novoPaciente.save(novoPct);

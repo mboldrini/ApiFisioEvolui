@@ -24,6 +24,9 @@ pacienteRouter.post(
 			bairro: Joi.string().optional(),
 			numero: Joi.string().optional(),
 			referencia: Joi.string().optional(),
+			queixamotivo: Joi.string().optional().length(2490),
+			diagnosticos: Joi.string().optional().length(2490),
+			comorbidades: Joi.string().optional().length(2490),
 			agendamentos: Joi.array()
 				.items({
 					dataHora: Joi.string().required(),
@@ -67,6 +70,9 @@ pacienteRouter.put(
 			bairro: Joi.string().required(),
 			numero: Joi.string().required(),
 			referencia: Joi.string().required(),
+			queixamotivo: Joi.string().optional().length(2490),
+			diagnosticos: Joi.string().optional().length(2490),
+			comorbidades: Joi.string().optional().length(2490),
 		},
 	}),
 	pacienteController.update,

@@ -20,6 +20,9 @@ interface IRequest {
 	numero: string; //era opcional
 	referencia: string; //era opcional
 	user_id: string;
+	queixamotivo: string;
+	diagnosticos: string;
+	comorbidades: string;
 }
 
 class UpdatePacienteService {
@@ -39,6 +42,9 @@ class UpdatePacienteService {
 		numero,
 		referencia,
 		user_id,
+		queixamotivo,
+		diagnosticos,
+		comorbidades,
 	}: IRequest): Promise<Paciente> {
 		const novoPaciente = getCustomRepository(PacienteRepository);
 
@@ -100,6 +106,18 @@ class UpdatePacienteService {
 		}
 		if (pacienteExiste.referencia != referencia) {
 			pacienteExiste.referencia = referencia;
+		}
+
+		if (pacienteExiste.queixamotivo != queixamotivo) {
+			pacienteExiste.queixamotivo = queixamotivo;
+		}
+
+		if (pacienteExiste.diagnosticos != diagnosticos) {
+			pacienteExiste.diagnosticos = diagnosticos;
+		}
+
+		if (pacienteExiste.comorbidades != comorbidades) {
+			pacienteExiste.comorbidades = comorbidades;
 		}
 
 		pacienteExiste.excluido = false;

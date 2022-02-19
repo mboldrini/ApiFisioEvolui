@@ -56,5 +56,14 @@ class Paciente {
 
 	@UpdateDateColumn()
 	updated_at: Date;
+
+	@Column()
+	queixamotivo: string;
+
+	@Column()
+	diagnosticos: string;
+
+	@Column()
+	comorbidades: string;
 }
 export default Paciente;

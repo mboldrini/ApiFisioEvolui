@@ -37,6 +37,9 @@ export default class PacienteController {
 			numero,
 			referencia,
 			agendamentos,
+			queixamotivo,
+			diagnosticos,
+			comorbidades,
 		} = request.body;
 
 		const { id } = request.user;
@@ -58,6 +61,9 @@ export default class PacienteController {
 			referencia,
 			excluido: false,
 			user_id: id,
+			queixamotivo,
+			diagnosticos,
+			comorbidades,
 		});
 
 		console.log(pct);
@@ -88,6 +94,9 @@ export default class PacienteController {
 			bairro,
 			numero,
 			referencia,
+			queixamotivo,
+			diagnosticos,
+			comorbidades,
 		} = request.body;
 
 		const user_id = request.user.id;
@@ -110,6 +119,9 @@ export default class PacienteController {
 			numero,
 			referencia,
 			user_id,
+			queixamotivo,
+			diagnosticos,
+			comorbidades,
 		});
 
 		return response.json(pct);
