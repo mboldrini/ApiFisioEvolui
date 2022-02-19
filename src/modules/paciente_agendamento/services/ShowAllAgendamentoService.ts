@@ -26,7 +26,15 @@ class ShowAllAgendamentoService {
 			throw new AppError('Não existe agendamentos para a data selecionada', 404);
 		}
 
-		return agendamentoExiste;
+		const agendamentos = agendamentoExiste.map(agendamento => ({
+			id: agendamento.id,
+			dataHora: agendamento.dataHora,
+			data: agendamento.data,
+			tipo: agendamento.tipo,
+			status: agendamento.status,
+		}));
+
+		return agendamentos;
 	}
 }
 export default ShowAllAgendamentoService;
