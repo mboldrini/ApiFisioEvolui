@@ -4,6 +4,7 @@ import DeleteAgendamentoService from '../services/DeleteAgendamentoService';
 import DeleteAllAgendamentoService from '../services/DeleteAllAgendamentoService';
 import ShowAgendamentoService from '../services/ShowAgendamentoService';
 import ShowAllAgendamentoService from '../services/ShowAllAgendamentoService';
+import ShowAllDayAgendamentoService from '../services/ShowAllDayAgendamentoService';
 import UpdateAgendamentoService from '../services/UpdateAgendamentoService';
 
 interface IAgendamento {
@@ -64,6 +65,16 @@ export default class AgendamentoController {
 
 		const showAllAgendamento = new ShowAllAgendamentoService();
 		const agendamentos = await showAllAgendamento.execute({ dataInicio, dataFim, paciente_id, user_id });
+
+		return response.json(agendamentos);
+	}
+
+	public async showAllDay(request: Request, response: Response): Promise<Response> {
+		const { dataInicio, dataFim } = request.body;
+		const user_id = request.user.id;
+
+		const showAllAgendamento = new ShowAllDayAgendamentoService();
+		const agendamentos = await showAllAgendamento.execute({ dataInicio, dataFim, user_id });
 
 		return response.json(agendamentos);
 	}

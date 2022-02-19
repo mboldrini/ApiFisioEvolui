@@ -19,7 +19,7 @@ interface IDateRange {
 	dataInicio: Date;
 	dataFim: Date;
 	user_id: string;
-	paciente_id: number;
+	paciente_id?: number;
 }
 
 @EntityRepository(Agendamento)
@@ -81,6 +81,17 @@ export class AgendamentoRepository extends Repository<Agendamento> {
 			where: {
 				data: Between(dataInicio, dataFim),
 				paciente_id,
+				user_id,
+				excluido: false,
+			},
+		});
+		return agendamento;
+	}
+
+	public async findByDataRange({ dataInicio, dataFim, user_id }: IDateRange): Promise<Agendamento[] | undefined> {
+		const agendamento = await this.find({
+			where: {
+				data: Between(dataInicio, dataFim),
 				user_id,
 				excluido: false,
 			},

@@ -49,6 +49,18 @@ agendamentoRouter.get(
 	agendamentoControler.showAll,
 );
 
+agendamentoRouter.get(
+	'/allday',
+	isAuthenticated,
+	celebrate({
+		[Segments.BODY]: {
+			dataInicio: Joi.date().required(),
+			dataFim: Joi.date().required(),
+		},
+	}),
+	agendamentoControler.showAllDay,
+);
+
 agendamentoRouter.put(
 	'/',
 	isAuthenticated,
