@@ -14,10 +14,11 @@ agendamentoRouter.post(
 			paciente_id: Joi.number().required(),
 			agendamentos: Joi.array()
 				.items({
-					dataHora: Joi.string().required(),
+					//dataHora: Joi.string().required(),
 					tipo: Joi.number().required(),
 					status: Joi.number().required(),
-					data: Joi.date().required(),
+					data: Joi.string().required(),
+					hora: Joi.number().required(),
 				})
 				.required(),
 		},
@@ -90,13 +91,13 @@ agendamentoRouter.delete(
 );
 
 agendamentoRouter.delete(
-	'/all',
+	'/all/:paciente_id',
 	isAuthenticated,
-	celebrate({
-		[Segments.BODY]: {
-			paciente_id: Joi.number().required(),
-		},
-	}),
+	// celebrate({
+	// 	[Segments.BODY]: {
+	// 		paciente_id: Joi.number().required(),
+	// 	},
+	// }),
 	agendamentoControler.deleteAll,
 );
 

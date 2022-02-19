@@ -18,7 +18,6 @@ class DeletePacienteAgendaService {
 
 		if (agendaExists) {
 			await pacienteAgendaRepo.remove(agendaExists);
-			console.log('deletou?');
 		}
 
 		return;

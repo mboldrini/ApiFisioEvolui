@@ -13,6 +13,9 @@ class Agendamento {
 	data: Date;
 
 	@Column()
+	hora: number;
+
+	@Column()
 	tipo: number;
 
 	@Column()

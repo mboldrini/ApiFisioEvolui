@@ -24,6 +24,11 @@ export class AgendamentoPaciente1643478011671 implements MigrationInterface {
 						isNullable: false,
 					},
 					{
+						name: 'hora',
+						type: 'float',
+						isNullable: true,
+					},
+					{
 						name: 'tipo',
 						type: 'int',
 						isNullable: false,

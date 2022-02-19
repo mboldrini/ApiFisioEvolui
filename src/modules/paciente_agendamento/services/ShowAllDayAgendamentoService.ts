@@ -26,8 +26,8 @@ class ShowAllDayAgendamentoService {
 
 		const agendamentos = agendamentoExiste.map(agendamento => ({
 			id: agendamento.id,
-			dataHora: agendamento.dataHora,
 			data: agendamento.data,
+			hora: agendamento.hora,
 		}));
 
 		return agendamentos;

@@ -29,10 +29,10 @@ pacienteRouter.post(
 			comorbidades: Joi.string().optional().max(2490),
 			agendamentos: Joi.array()
 				.items({
-					dataHora: Joi.string().required(),
+					data: Joi.string().required(),
+					hora: Joi.number().required(),
 					tipo: Joi.number().required(),
 					status: Joi.number().required(),
-					data: Joi.date().required(),
 				})
 				.optional(),
 		},
@@ -41,13 +41,13 @@ pacienteRouter.post(
 );
 
 pacienteRouter.get(
-	'/',
+	'/:id',
 	isAuthenticated,
-	celebrate({
-		[Segments.BODY]: {
-			id: Joi.number().required(),
-		},
-	}),
+	// celebrate({
+	// 	[Segments.BODY]: {
+	// 		id: Joi.number().required(),
+	// 	},
+	// }),
 	pacienteController.show,
 );
 

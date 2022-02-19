@@ -1,24 +1,44 @@
 import { PacienteRepository } from '../../paciente/typeorm/repositories/PacienteRepository';
 import { AgendamentoRepository } from '../typeorm/repositories/AgendamentoRepository';
 import AppError from '@shared/errors/AppError';
-import { getCustomRepository } from 'typeorm';
+import { Double, getCustomRepository } from 'typeorm';
 import Agendamento from '../typeorm/entities/Agendamento';
 
-interface IAgendamento {
-	dataHora: string;
-	data: Date;
+interface IAgendamentoReceive {
+	data: string;
+	hora: number;
 	tipo: number;
 	status: number;
+	paciente_id: number;
+	user_id: number;
+	excluido: boolean;
+}
+
+interface IAgendamentoReturn {
+	dataHora: string;
+	data: Date;
+	hora: Double;
+	tipo: number;
+	status: number;
+	paciente_id: number;
+	user_id: string;
+	excluido: boolean;
 }
 
 interface IRequest {
 	paciente_id: number;
 	user_id: string;
-	agendamentos: IAgendamento[];
+	agendamentos: IAgendamentoReceive[];
+}
+
+function GetData(data: string) {
+	let dataStr = data.split('-');
+	let date = new Date(parseInt(dataStr[0]), parseInt(dataStr[1]) - 1, parseInt(dataStr[2]));
+	return date;
 }
 
 class CreateAgendamentoService {
-	public async execute({ paciente_id, user_id, agendamentos }: IRequest): Promise<IAgendamento[]> {
+	public async execute({ paciente_id, user_id, agendamentos }: IRequest): Promise<IAgendamentoReturn[]> {
 		const agendamentoRepository = getCustomRepository(AgendamentoRepository);
 		const pacienteRepository = getCustomRepository(PacienteRepository);
 
@@ -33,22 +53,23 @@ class CreateAgendamentoService {
 
 		const agendamentosExistem = await agendamentoRepository.findAllByIds(agendamentos, user_id);
 		if (agendamentosExistem.length > 0) {
-			throw new AppError(`Já existe um agendamento p/ a data ${agendamentosExistem[0].dataHora}`);
+			throw new AppError(`Já existe um agendamento p/ a data ${agendamentosExistem[0].data}`);
 		}
 
-		const serializedAgendamentos = agendamentos.map(agendamento => ({
-			dataHora: agendamento.dataHora,
+		const serializado = agendamentos.map(agendamento => ({
+			dataHora: agendamento.data + 'T' + agendamento.hora,
+			data: GetData(agendamento.data),
+			hora: agendamento.hora,
 			tipo: agendamento.tipo,
 			status: agendamento.status,
-			data: agendamento.data,
 			paciente_id,
 			user_id,
 			excluido: false,
 		}));
 
-		await agendamentoRepository.save(serializedAgendamentos);
+		await agendamentoRepository.save(serializado);
 
-		return serializedAgendamentos;
+		return serializado;
 	}
 }
 export default CreateAgendamentoService;

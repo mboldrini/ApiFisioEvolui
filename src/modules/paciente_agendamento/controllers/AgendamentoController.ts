@@ -92,11 +92,13 @@ export default class AgendamentoController {
 	}
 
 	public async deleteAll(request: Request, response: Response): Promise<Response> {
-		const { paciente_id } = request.body;
+		const { paciente_id } = request.params;
 		const user_id = request.user.id;
 
+		const pctId = parseInt(paciente_id);
+
 		const showAgendamento = new DeleteAllAgendamentoService();
-		const agendamento = await showAgendamento.execute({ paciente_id, user_id });
+		const agendamento = await showAgendamento.execute({ paciente_id: pctId, user_id });
 
 		return response.json(agendamento);
 	}

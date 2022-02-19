@@ -12,7 +12,10 @@ interface ITipo2 {
 }
 
 interface IFindAgendamentos {
-	dataHora: string;
+	data: string;
+	hora: number;
+	tipo: number;
+	status: number;
 }
 
 interface IDateRange {
@@ -58,11 +61,13 @@ export class AgendamentoRepository extends Repository<Agendamento> {
 	}
 
 	public async findAllByIds(agendamentos: IFindAgendamentos[], user_id: string): Promise<Agendamento[]> {
-		const agendamentosIds = agendamentos.map(agendamento => agendamento.dataHora);
+		const agendamentosIds = agendamentos.map(agendamento => agendamento.data);
+		const agendamentoHora = agendamentos.map(agendamento => agendamento.hora);
 
 		const existentAgendamentos = await this.find({
 			where: {
-				dataHora: In(agendamentosIds),
+				data: In(agendamentosIds),
+				hora: In(agendamentoHora),
 				user_id,
 				excluido: false,
 			},

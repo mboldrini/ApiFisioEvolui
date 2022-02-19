@@ -9,8 +9,6 @@ export default class EnderecoController {
 		const { uid } = request.user;
 		const { paciente_id } = request.body;
 
-		console.log('Paciente_id: ', paciente_id);
-
 		const showEndereco = new ShowEnderecoService();
 		const endereco = await showEndereco.findByUidAndIdPaciente({ uid, paciente_id });
 

@@ -9,12 +9,14 @@ import UpdatePacienteService from '../services/UpdatePacienteService';
 
 export default class PacienteController {
 	public async show(request: Request, response: Response): Promise<Response> {
-		const { id } = request.body;
+		const { id } = request.params;
 		const usrId = request.user.id;
+
+		const pctId = parseInt(id);
 
 		const showPaciente = new ShowPacienteService();
 		const pct = await showPaciente.execute({
-			id,
+			id: pctId,
 			user_id: usrId,
 		});
 
