@@ -5,6 +5,7 @@ import tipoAtendimentoRouter from '@modules/tipo_atendimento/routes/tipoAtendime
 import pacienteRouter from '@modules/paciente/routes/paciente.routes';
 import agendamentoRouter from '@modules/paciente_agendamento/routes/agendamento.routes';
 import evolucaoRouter from '@modules/paciente_evolucoes/routes/evolucao.routes';
+import agendaRouter from '@modules/Agenda/routes/agenda.routes';
 
 const routes = Router();
 
@@ -23,5 +24,7 @@ routes.use('/paciente', pacienteRouter);
 routes.use('/agendamento', agendamentoRouter);
 
 routes.use('/evolucao', evolucaoRouter);
+
+routes.use('/agenda', agendaRouter);
 
 export default routes;

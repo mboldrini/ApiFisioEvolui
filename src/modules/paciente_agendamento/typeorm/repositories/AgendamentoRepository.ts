@@ -25,6 +25,12 @@ interface IDateRange {
 	paciente_id?: number;
 }
 
+interface IDataHora {
+	dataInicio: Date;
+	dataFim: Date;
+	user_id: string;
+}
+
 @EntityRepository(Agendamento)
 export class AgendamentoRepository extends Repository<Agendamento> {
 	public async findByIdUser({ id, user_id }: ITipo): Promise<Agendamento | undefined> {
@@ -53,6 +59,17 @@ export class AgendamentoRepository extends Repository<Agendamento> {
 		const agendamento = await this.findOne({
 			where: {
 				dataHora,
+				user_id,
+				excluido: false,
+			},
+		});
+		return agendamento;
+	}
+
+	public async findByDataHora({ dataInicio, dataFim, user_id }: IDataHora): Promise<Agendamento | undefined> {
+		const agendamento = await this.findOne({
+			where: {
+				data: Between(dataInicio, dataFim),
 				user_id,
 				excluido: false,
 			},

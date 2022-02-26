@@ -22,7 +22,7 @@ class ShowPacienteService {
 			throw new AppError('Paciente não encontrado', 404);
 		}
 
-		if (pacienteEncontrado.excluido == 1) {
+		if (pacienteEncontrado.excluido == true) {
 			throw new AppError('Paciente excluído', 404);
 		}
 

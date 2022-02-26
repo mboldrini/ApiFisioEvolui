@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, In, Repository } from 'typeorm';
 import Paciente from '../entities/Paciente';
 
 interface ITipoPesquisa {
@@ -13,6 +13,10 @@ interface IQtdAtendimento {
 interface ITipoAtendimento {
 	tipoAtendimento: number;
 	user_id: string;
+}
+
+interface IFindPacientes {
+	id: number;
 }
 
 @EntityRepository(Paciente)
@@ -31,6 +35,17 @@ export class PacienteRepository extends Repository<Paciente> {
 	public async findAllPacientes(user_id: string): Promise<Paciente[] | undefined> {
 		const pacientes = await this.find({
 			where: {
+				user_id,
+				excluido: false,
+			},
+		});
+		return pacientes;
+	}
+
+	public async findAllByIds(pacient: number[], user_id: string): Promise<Paciente[]> {
+		const pacientes = await this.find({
+			where: {
+				id: In(pacient),
 				user_id,
 				excluido: false,
 			},
