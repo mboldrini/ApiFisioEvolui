@@ -1,3 +1,4 @@
+import { horariosDisponiveisV1 } from './../DTO/index';
 import { PacienteRepository } from '../../paciente/typeorm/repositories/PacienteRepository';
 import { AgendamentoRepository } from '../typeorm/repositories/AgendamentoRepository';
 import AppError from '@shared/errors/AppError';
@@ -30,7 +31,33 @@ class ShowAllDayAgendamentoService {
 			hora: agendamento.hora,
 		}));
 
-		return agendamentos;
+		console.log(agendamentos);
+
+		function horaTaIndisponivel(hora: number, agendamentos: any) {
+			const agendamentoFiltrado = agendamentos
+				.filter(horario => {
+					if (horario.hora == hora) {
+						return true;
+					}
+				})
+				.map(valor => {
+					return valor.hora;
+				});
+
+			if (agendamentoFiltrado[0]) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		const horariosDisponiveis = horariosDisponiveisV1.map(horario => ({
+			id: horario.id,
+			hora: horario.hora,
+			indisponivel: horaTaIndisponivel(horario.hora, agendamentos),
+		}));
+
+		return horariosDisponiveis;
 	}
 }
 export default ShowAllDayAgendamentoService;
