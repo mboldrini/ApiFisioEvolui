@@ -31,8 +31,6 @@ class ShowAllDayAgendamentoService {
 			hora: agendamento.hora,
 		}));
 
-		console.log(agendamentos);
-
 		function horaTaIndisponivel(hora: number, agendamentos: any) {
 			const agendamentoFiltrado = agendamentos
 				.filter(horario => {
