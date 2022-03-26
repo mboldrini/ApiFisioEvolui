@@ -78,7 +78,7 @@ pacienteRouter.put(
 	pacienteController.update,
 );
 
-pacienteRouter.get('/all', isAuthenticated, pacienteController.showAll);
+pacienteRouter.post('/all', isAuthenticated, pacienteController.showAll);
 
 pacienteRouter.delete(
 	'/',
