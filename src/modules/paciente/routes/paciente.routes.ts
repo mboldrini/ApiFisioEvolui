@@ -13,7 +13,7 @@ pacienteRouter.post(
 		[Segments.BODY]: {
 			nome: Joi.string().required(),
 			cpf: Joi.string().required(),
-			dataNascimento: Joi.date().optional(),
+			dataNascimento: Joi.string().optional(),
 			celular: Joi.string().required(),
 			telefoneRecado: Joi.string().optional(),
 			email: Joi.string().optional(),
