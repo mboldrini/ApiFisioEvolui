@@ -16,7 +16,6 @@ interface IRequest {
 	logradouro?: string;
 	uf: string;
 	bairro?: string;
-	numero?: string;
 	referencia?: string;
 	excluido: boolean;
 	user_id: string;
@@ -38,7 +37,6 @@ class CreatePacienteService {
 		logradouro,
 		uf,
 		bairro,
-		numero,
 		referencia,
 		excluido,
 		user_id,
@@ -73,7 +71,6 @@ class CreatePacienteService {
 			logradouro,
 			uf,
 			bairro,
-			numero,
 			referencia,
 			excluido,
 			user_id,

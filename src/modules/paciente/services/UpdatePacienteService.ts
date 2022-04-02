@@ -17,7 +17,6 @@ interface IRequest {
 	logradouro: string; //era opcional
 	uf: string;
 	bairro: string; //era opcional
-	numero: string; //era opcional
 	referencia: string; //era opcional
 	user_id: string;
 	queixamotivo: string;
@@ -39,7 +38,6 @@ class UpdatePacienteService {
 		logradouro,
 		uf,
 		bairro,
-		numero,
 		referencia,
 		user_id,
 		queixamotivo,
@@ -100,9 +98,6 @@ class UpdatePacienteService {
 		}
 		if (pacienteExiste.bairro != bairro) {
 			pacienteExiste.bairro = bairro;
-		}
-		if (pacienteExiste.numero != numero) {
-			pacienteExiste.numero = numero;
 		}
 		if (pacienteExiste.referencia != referencia) {
 			pacienteExiste.referencia = referencia;
