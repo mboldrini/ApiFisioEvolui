@@ -4,7 +4,7 @@ export class TiposPaciente1642960690259 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'tipo_atendimento',
+				name: 'atendimento_tipo',
 				columns: [
 					{
 						name: 'id',

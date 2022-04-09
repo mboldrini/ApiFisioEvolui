@@ -108,7 +108,7 @@ export class Paciente1643462630608 implements MigrationInterface {
 					},
 					{
 						name: 'FkTipoAtendimentoId',
-						referencedTableName: 'tipo_atendimento', // tabela do tipo_atendimento
+						referencedTableName: 'atendimento_tipo', // tabela do tipo_atendimento
 						referencedColumnNames: ['id'], // nome da coluna LA no tipo_atendimento
 						columnNames: ['tipoAtendimento'], //nome da coluna AQUI
 						onDelete: 'CASCADE',
