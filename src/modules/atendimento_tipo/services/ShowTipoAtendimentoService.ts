@@ -1,4 +1,4 @@
-import { TipoAtendimentoRepository } from './../typeorm/repositories/TipoAtendimentoRepository';
+import { TipoAtendimentoRepository } from '../typeorm/repositories/TipoAtendimentoRepository';
 import { Request, Response } from 'express';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
