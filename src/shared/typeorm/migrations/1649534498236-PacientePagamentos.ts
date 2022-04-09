@@ -44,6 +44,11 @@ export class AtendimentoPagamento1649534498236 implements MigrationInterface {
 						isNullable: true,
 					},
 					{
+						name: 'excluido',
+						type: 'boolean',
+						isNullable: true,
+					},
+					{
 						name: 'created_at',
 						type: 'timestamp',
 						default: 'now()',
