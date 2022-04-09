@@ -76,7 +76,7 @@ export class PacienteEvolucoes1644694262402 implements MigrationInterface {
 					},
 					{
 						name: 'FkPacienteId',
-						referencedTableName: 'paciente', // tabela do paciente
+						referencedTableName: 'pacientes', // tabela do paciente
 						referencedColumnNames: ['id'], // nome da coluna LA no tipo_atendimento
 						columnNames: ['paciente_id'], //nome da coluna AQUI
 						onDelete: 'CASCADE',
@@ -84,7 +84,7 @@ export class PacienteEvolucoes1644694262402 implements MigrationInterface {
 					},
 					{
 						name: 'FkAgendamentoId',
-						referencedTableName: 'paciente_agendamento', // tabela do agendamento
+						referencedTableName: 'paciente_agendamentos', // tabela do agendamento
 						referencedColumnNames: ['id'], // nome da coluna LA no paciente_agendamento
 						columnNames: ['agendamento_id'], //nome da coluna AQUI
 						onDelete: 'CASCADE',

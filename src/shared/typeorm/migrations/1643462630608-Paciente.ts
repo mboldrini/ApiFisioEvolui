@@ -4,7 +4,7 @@ export class Paciente1643462630608 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'paciente',
+				name: 'pacientes',
 				columns: [
 					{
 						name: 'id',
@@ -108,7 +108,7 @@ export class Paciente1643462630608 implements MigrationInterface {
 					},
 					{
 						name: 'FkTipoAtendimentoId',
-						referencedTableName: 'atendimento_tipo', // tabela do tipo_atendimento
+						referencedTableName: 'paciente_tipoAtendimento', // tabela do tipo_atendimento
 						referencedColumnNames: ['id'], // nome da coluna LA no tipo_atendimento
 						columnNames: ['tipoAtendimento'], //nome da coluna AQUI
 						onDelete: 'CASCADE',
@@ -120,6 +120,6 @@ export class Paciente1643462630608 implements MigrationInterface {
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropTable('paciente');
+		await queryRunner.dropTable('pacientes');
 	}
 }

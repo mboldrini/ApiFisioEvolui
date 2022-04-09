@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import usersRouter from '@modules/users/routes/users.routes';
 import sessionsRouter from '@modules/users/routes/sessions.routes';
-import tipoAtendimentoRouter from '@modules/atendimento_tipo/routes/tipoAtendimento.routes';
+import tipoAtendimentoRouter from '@modules/paciente_tipoAtendimento/routes/tipoAtendimento.routes';
 import pacienteRouter from '@modules/paciente/routes/paciente.routes';
 import agendamentoRouter from '@modules/paciente_agendamento/routes/agendamento.routes';
 import evolucaoRouter from '@modules/paciente_evolucoes/routes/evolucao.routes';

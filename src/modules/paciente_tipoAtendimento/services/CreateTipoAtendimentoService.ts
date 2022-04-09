@@ -16,7 +16,8 @@ class CreateTipoAtendimentoService {
 
 		const tipoAtendimentoExiste = await tipoAtendimento.findOne({
 			tipo,
-			user_id, // adicionado dia 29/01/2022 - se n funcionar, é por isso
+			user_id,
+			excluido: false,
 		});
 
 		if (tipoAtendimentoExiste) {

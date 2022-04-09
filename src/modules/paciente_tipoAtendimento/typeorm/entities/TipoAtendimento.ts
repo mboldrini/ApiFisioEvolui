@@ -1,15 +1,6 @@
-import {
-	Column,
-	CreateDateColumn,
-	Entity,
-	PrimaryGeneratedColumn,
-	UpdateDateColumn,
-	PrimaryColumn,
-	OneToOne,
-	JoinColumn,
-} from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity('tipo_atendimento')
+@Entity('paciente_tipoAtendimento')
 class TipoAtendimento {
 	@PrimaryGeneratedColumn()
 	id: number;
