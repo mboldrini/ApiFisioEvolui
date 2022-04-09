@@ -40,9 +40,6 @@ class Paciente {
 	bairro: string;
 
 	@Column()
-	numero: string;
-
-	@Column()
 	referencia: string;
 
 	@Column()

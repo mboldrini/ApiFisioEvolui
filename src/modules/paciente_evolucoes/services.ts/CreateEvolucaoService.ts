@@ -1,8 +1,10 @@
+import { PacientePagamentosRepository } from './../../paciente_pagamentos/typeorm/repositories/PacientePagamentosRepository';
 import { EvolucaoRepository } from './../typeorm/repositories/EvolucoesRepository';
 import { PacienteRepository } from './../../paciente/typeorm/repositories/PacienteRepository';
 import { AgendamentoRepository } from './../../paciente_agendamento/typeorm/repositories/AgendamentoRepository';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
+import TipoAtendimentoRepository from '@modules/paciente_tipoAtendimento/typeorm/repositories/TipoAtendimentoRepository';
 
 interface IEvolucao {
 	evolucao: string;
@@ -28,6 +30,8 @@ class CreateEvolucaoService {
 		const evolucaoRepo = getCustomRepository(EvolucaoRepository);
 		const pacienteRepo = getCustomRepository(PacienteRepository);
 		const agendamentoRepo = getCustomRepository(AgendamentoRepository);
+		const pagamentoRepo = getCustomRepository(PacientePagamentosRepository);
+		const tipoAtendimentoRepo = getCustomRepository(TipoAtendimentoRepository);
 
 		const pacienteExiste = await pacienteRepo.findOne({
 			user_id,
@@ -45,6 +49,7 @@ class CreateEvolucaoService {
 			throw new AppError('O agendamento informado não existe!', 404);
 		}
 
+		/* Cria a evolução */
 		const evolucaoCriado = await evolucaoRepo.create({
 			evolucao,
 			observacoes,
@@ -61,8 +66,21 @@ class CreateEvolucaoService {
 
 		await evolucaoRepo.save(evolucaoCriado);
 
-		console.log('Evoluccao criada:');
-		console.log(evolucaoCriado);
+		// Encontra o tipo de atendimento p/ pegar o valor p/ o pagamento
+		const tipoDeAtendimento = await tipoAtendimentoRepo.findOne({
+			excluido: false,
+			user_id,
+			id: pacienteExiste.tipoAtendimento,
+		});
+		const pagamentoCriado = await pagamentoRepo.create({
+			id_evolucao: evolucaoCriado.id,
+			id_paciente: evolucaoCriado.paciente_id,
+			id_user: user_id,
+			status: 0,
+			valor: tipoDeAtendimento?.valor_atendimento,
+			excluido: false,
+		});
+		await pagamentoRepo.save(pagamentoCriado);
 
 		return evolucaoCriado;
 	}

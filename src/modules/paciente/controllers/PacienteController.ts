@@ -36,7 +36,6 @@ export default class PacienteController {
 			logradouro,
 			uf,
 			bairro,
-			numero,
 			referencia,
 			agendamentos,
 			queixamotivo,
@@ -59,7 +58,6 @@ export default class PacienteController {
 			logradouro,
 			uf,
 			bairro,
-			numero,
 			referencia,
 			excluido: false,
 			user_id: id,
@@ -69,6 +67,7 @@ export default class PacienteController {
 		});
 
 		const pacienteAgendamento = new CreateAgendamentoService();
+
 		const agendm = await pacienteAgendamento.execute({
 			paciente_id: pct.id,
 			user_id: id,
@@ -116,7 +115,6 @@ export default class PacienteController {
 			logradouro,
 			uf,
 			bairro,
-			numero,
 			referencia,
 			user_id,
 			queixamotivo,

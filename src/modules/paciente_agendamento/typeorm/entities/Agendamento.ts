@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, UpdateDateColumn, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('paciente_agendamento')
+@Entity('paciente_agendamentos')
 class Agendamento {
 	//@PrimaryColumn('int')
 	@PrimaryGeneratedColumn() //<<<< usar isso ao inves da opcao de cima

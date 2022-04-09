@@ -72,7 +72,7 @@ export class AtendimentoPagamento1649534498236 implements MigrationInterface {
 						name: 'FkIdAtendimento',
 						referencedTableName: 'paciente_evolucoes', // tabela do USERS
 						referencedColumnNames: ['id'], // nome da coluna LA no user
-						columnNames: ['id_paciente'], //nome da coluna AQUI
+						columnNames: ['id_evolucao'], //nome da coluna AQUI
 						onDelete: 'CASCADE',
 						onUpdate: 'CASCADE',
 					},

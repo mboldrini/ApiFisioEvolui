@@ -4,14 +4,13 @@ import { getCustomRepository } from 'typeorm';
 import AppError from '@shared/errors/AppError';
 
 interface IRequest {
-	id_evolucao: number;
-	id_paciente: number;
-	id_user: string;
-	valor: number;
+	id_evolucao: any;
+	id_paciente: any;
+	id_user: any;
 }
 
-class CreatePacienteAgendamentoService {
-	public async execute({ id_evolucao, id_paciente, id_user, valor }: IRequest): Promise<boolean> {
+class CreatePacientePagamentoService {
+	public async execute({ id_evolucao, id_paciente, id_user }: IRequest): Promise<boolean> {
 		const pacientePagamentoRepository = getCustomRepository(PacientePagamentosRepository);
 		const evolucaoRepository = getCustomRepository(EvolucaoRepository);
 
@@ -28,11 +27,12 @@ class CreatePacienteAgendamentoService {
 			id_evolucao,
 			id_paciente,
 			id_user,
-			valor,
+			status: 0,
+			valor: 1.0,
 			excluido: false,
 		});
 
 		return true;
 	}
 }
-export default CreatePacienteAgendamentoService;
+export default CreatePacientePagamentoService;
