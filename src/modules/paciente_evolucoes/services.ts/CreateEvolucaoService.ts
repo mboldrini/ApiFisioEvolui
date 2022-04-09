@@ -61,6 +61,9 @@ class CreateEvolucaoService {
 
 		await evolucaoRepo.save(evolucaoCriado);
 
+		console.log('Evoluccao criada:');
+		console.log(evolucaoCriado);
+
 		return evolucaoCriado;
 	}
 }
