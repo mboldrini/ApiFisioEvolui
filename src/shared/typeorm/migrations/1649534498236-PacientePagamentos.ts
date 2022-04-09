@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class AgendamentoPaciente1643478011671 implements MigrationInterface {
+export class AtendimentoPagamento1649534498236 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'paciente_agendamentos',
+				name: 'paciente_pagamentos',
 				columns: [
 					{
 						name: 'id',
@@ -14,23 +14,18 @@ export class AgendamentoPaciente1643478011671 implements MigrationInterface {
 						generationStrategy: 'increment',
 					},
 					{
-						name: 'dataHora',
-						type: 'varchar(50)',
-						isNullable: false,
-					},
-					{
-						name: 'data',
-						type: 'Date',
-						isNullable: false,
-					},
-					{
-						name: 'hora',
-						type: 'float',
-						isNullable: true,
-					},
-					{
-						name: 'tipo',
+						name: 'id_paciente',
 						type: 'int',
+						isNullable: false,
+					},
+					{
+						name: 'id_evolucao',
+						type: 'int',
+						isNullable: false,
+					},
+					{
+						name: 'id_user',
+						type: 'varchar',
 						isNullable: false,
 					},
 					{
@@ -39,14 +34,14 @@ export class AgendamentoPaciente1643478011671 implements MigrationInterface {
 						isNullable: false,
 					},
 					{
-						name: 'user_id',
-						type: 'varchar',
+						name: 'valor',
+						type: 'float',
 						isNullable: false,
 					},
 					{
-						name: 'paciente_id',
-						type: 'int',
-						isNullable: false,
+						name: 'observacoes',
+						type: 'varchar(2500)',
+						isNullable: true,
 					},
 					{
 						name: 'excluido',
@@ -66,18 +61,26 @@ export class AgendamentoPaciente1643478011671 implements MigrationInterface {
 				],
 				foreignKeys: [
 					{
-						name: 'FkUserUid',
-						referencedTableName: 'users', // tabela do USERS
+						name: 'FkIdPaciente',
+						referencedTableName: 'pacientes', // tabela do USERS
 						referencedColumnNames: ['id'], // nome da coluna LA no user
-						columnNames: ['user_id'], //nome da coluna AQUI
+						columnNames: ['id_paciente'], //nome da coluna AQUI
 						onDelete: 'CASCADE',
 						onUpdate: 'CASCADE',
 					},
 					{
-						name: 'FkPacienteId',
-						referencedTableName: 'pacientes', // tabela do paciente
-						referencedColumnNames: ['id'], // nome da coluna LA no tipo_atendimento
-						columnNames: ['paciente_id'], //nome da coluna AQUI
+						name: 'FkIdAtendimento',
+						referencedTableName: 'paciente_evolucoes', // tabela do USERS
+						referencedColumnNames: ['id'], // nome da coluna LA no user
+						columnNames: ['id_paciente'], //nome da coluna AQUI
+						onDelete: 'CASCADE',
+						onUpdate: 'CASCADE',
+					},
+					{
+						name: 'FkIdUser',
+						referencedTableName: 'users', // tabela do USERS
+						referencedColumnNames: ['id'], // nome da coluna LA no user
+						columnNames: ['id_user'], //nome da coluna AQUI
 						onDelete: 'CASCADE',
 						onUpdate: 'CASCADE',
 					},
@@ -87,6 +90,6 @@ export class AgendamentoPaciente1643478011671 implements MigrationInterface {
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropTable('paciente_agendamentos');
+		await queryRunner.dropTable('paciente_pagamentos');
 	}
 }

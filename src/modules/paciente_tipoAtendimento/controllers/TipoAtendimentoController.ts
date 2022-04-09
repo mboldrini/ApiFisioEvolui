@@ -24,6 +24,8 @@ export default class TipoAtendimentoController {
 
 		const createParams = new CreateTipoAtendimentoService();
 
+		console.log(request.body);
+
 		const usrConfigs = await createParams.execute({
 			tipo,
 			valor_atendimento,
@@ -55,9 +57,13 @@ export default class TipoAtendimentoController {
 		const { id } = request.params;
 		const user_id = request.user.id;
 
-		const updateTipoAtendimento = new DeleteTipoAtendimentoService();
+		let idAtendimento = parseInt(id);
 
-		const tipoAtendimento = await updateTipoAtendimento.execute({
+		const deleteTipoAtendimento = new DeleteTipoAtendimentoService();
+
+		console.log(idAtendimento);
+
+		const tipoAtendimento = await deleteTipoAtendimento.execute({
 			id,
 			user_id,
 		});

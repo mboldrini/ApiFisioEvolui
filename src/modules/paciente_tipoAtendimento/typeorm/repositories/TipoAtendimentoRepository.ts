@@ -14,6 +14,11 @@ interface ITipoPesquisa {
 	user_id: string;
 }
 
+interface IFindIfExist {
+	// tipo: string;
+	user_id: string;
+}
+
 @EntityRepository(TipoAtendimento)
 export class TipoAtendimentoRepository extends Repository<TipoAtendimento> {
 	public async findByIdAndUser({ tipo_id, user_id }: ITipoPesquisa): Promise<TipoAtendimento | undefined> {

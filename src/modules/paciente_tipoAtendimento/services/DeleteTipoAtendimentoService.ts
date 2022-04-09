@@ -5,12 +5,16 @@ import { getCustomRepository } from 'typeorm';
 import TipoAtendimento from '../typeorm/entities/TipoAtendimento';
 
 interface IRequest {
-	id: number;
+	id: string;
 	user_id: string;
 }
 
+interface IRetorno {
+	resultado: string;
+}
+
 class DeleteTipoAtendimentoService {
-	public async execute({ id, user_id }: IRequest): Promise<TipoAtendimento> {
+	public async execute({ id, user_id }: IRequest): Promise<IRetorno> {
 		const tipoAtendimentoRepository = getCustomRepository(TipoAtendimentoRepository);
 		const pacienteRepository = getCustomRepository(PacienteRepository);
 
@@ -26,11 +30,11 @@ class DeleteTipoAtendimentoService {
 		}
 
 		const atendimentosEmPcts = await pacienteRepository.findAllByAtendimento({
-			tipoAtendimento: id,
+			tipoAtendimento: number_id,
 			user_id,
 		});
 
-		if (atendimentosEmPcts.length > 0) {
+		if (atendimentosEmPcts[1] > 0) {
 			throw new AppError(
 				`Não é possivel excluir o tipo de agendamento, existe ${atendimentosEmPcts.length} usuário(s) cadastrado(s) com esse tipo de atendimento`,
 				403,
@@ -41,7 +45,11 @@ class DeleteTipoAtendimentoService {
 
 		await tipoAtendimentoRepository.save(tipoAtendimento);
 
-		return tipoAtendimento;
+		let retorno = {
+			resultado: 'ok',
+		};
+
+		return retorno;
 	}
 }
 
