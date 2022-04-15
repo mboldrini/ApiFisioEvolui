@@ -11,12 +11,13 @@ evolucaoRouter.post(
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			evolucao: Joi.string().required(),
-			observacoes: Joi.string().optional(),
-			status: Joi.number().required(),
 			tipo: Joi.number().optional(),
-			agendamento_id: Joi.number().required(),
+			status: Joi.number().required(),
+			evolucao: Joi.string().required(),
+			pagamento: Joi.boolean().optional(),
+			observacoes: Joi.string().optional(),
 			paciente_id: Joi.number().required(),
+			agendamento_id: Joi.number().required(),
 		},
 	}),
 	evolucaoController.create,
@@ -28,12 +29,12 @@ evolucaoRouter.put(
 	celebrate({
 		[Segments.BODY]: {
 			id: Joi.number().required(),
+			tipo: Joi.number().optional(),
+			status: Joi.number().required(),
 			evolucao: Joi.string().required(),
 			observacoes: Joi.string().optional(),
-			status: Joi.number().required(),
-			tipo: Joi.number().optional(),
-			agendamento_id: Joi.number().required(),
 			paciente_id: Joi.number().required(),
+			agendamento_id: Joi.number().required(),
 		},
 	}),
 	evolucaoController.update,
