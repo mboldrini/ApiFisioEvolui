@@ -1,3 +1,4 @@
+import { PacientePagamentosRepository } from './../../paciente_pagamentos/typeorm/repositories/PacientePagamentosRepository';
 import { EvolucaoRepository } from './../typeorm/repositories/EvolucoesRepository';
 import { PacienteRepository } from './../../paciente/typeorm/repositories/PacienteRepository';
 import { AgendamentoRepository } from './../../paciente_agendamento/typeorm/repositories/AgendamentoRepository';
@@ -16,6 +17,7 @@ class DeleteEvolucaoService {
 		const evolucaoRepo = getCustomRepository(EvolucaoRepository);
 		const pacienteRepo = getCustomRepository(PacienteRepository);
 		const agendamentoRepo = getCustomRepository(AgendamentoRepository);
+		const pagamentoRepo = getCustomRepository(PacientePagamentosRepository);
 
 		const pacienteExiste = await pacienteRepo.findOne({ user_id });
 		if (!pacienteExiste) {
@@ -39,6 +41,16 @@ class DeleteEvolucaoService {
 		}
 
 		evolucaoExiste.excluido = true;
+
+		const pagamentoExiste = await pagamentoRepo.findOne({
+			id_evolucao: id,
+			id_user: user_id,
+			excluido: false,
+		});
+		if (pagamentoExiste) {
+			pagamentoExiste.excluido = true;
+			await pagamentoRepo.save(pagamentoExiste);
+		}
 
 		await evolucaoRepo.save(evolucaoExiste);
 
