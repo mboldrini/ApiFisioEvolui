@@ -11,7 +11,7 @@ evolucaoRouter.post(
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			tipo: Joi.number().optional(),
+			tipo: Joi.number().required(),
 			status: Joi.number().required(),
 			evolucao: Joi.string().required(),
 			pagamento: Joi.boolean().optional(),
