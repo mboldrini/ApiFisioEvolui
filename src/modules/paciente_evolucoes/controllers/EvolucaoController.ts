@@ -78,15 +78,16 @@ export default class EvolucaoController {
 	}
 
 	public async delete(request: Request, response: Response): Promise<Response> {
-		const { id, agendamento_id, paciente_id } = request.body;
+		//const { id, agendamento_id, paciente_id } = request.body;
+		const { id } = request.params;
 		const user_id = request.user.id;
+
+		let idStr = parseInt(id);
 
 		const deleteEvolucao = new DeleteEvolucaoService();
 
 		const evolucao = await deleteEvolucao.execute({
-			id,
-			agendamento_id,
-			paciente_id,
+			id: idStr,
 			user_id,
 		});
 

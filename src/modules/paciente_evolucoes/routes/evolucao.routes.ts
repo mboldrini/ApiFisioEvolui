@@ -41,15 +41,15 @@ evolucaoRouter.put(
 );
 
 evolucaoRouter.delete(
-	'/',
+	'/:id',
 	isAuthenticated,
-	celebrate({
-		[Segments.BODY]: {
-			id: Joi.number().required(),
-			agendamento_id: Joi.number().required(),
-			paciente_id: Joi.number().required(),
-		},
-	}),
+	// celebrate({
+	// 	[Segments.BODY]: {
+	// 		id: Joi.number().required(),
+	// 		agendamento_id: Joi.number().required(),
+	// 		paciente_id: Joi.number().required(),
+	// 	},
+	// }),
 	evolucaoController.delete,
 );
 
