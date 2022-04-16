@@ -15,6 +15,7 @@ interface IEvolucao {
 	paciente_id: number;
 	user_id: string;
 	excluido?: boolean;
+	pagamento?: boolean;
 }
 
 class CreateEvolucaoService {
@@ -26,6 +27,7 @@ class CreateEvolucaoService {
 		agendamento_id,
 		paciente_id,
 		user_id,
+		pagamento,
 	}: IEvolucao): Promise<IEvolucao> {
 		const evolucaoRepo = getCustomRepository(EvolucaoRepository);
 		const pacienteRepo = getCustomRepository(PacienteRepository);
@@ -66,21 +68,23 @@ class CreateEvolucaoService {
 
 		await evolucaoRepo.save(evolucaoCriado);
 
-		// Encontra o tipo de atendimento p/ pegar o valor p/ o pagamento
-		const tipoDeAtendimento = await tipoAtendimentoRepo.findOne({
-			excluido: false,
-			user_id,
-			id: pacienteExiste.tipoAtendimento,
-		});
-		const pagamentoCriado = await pagamentoRepo.create({
-			id_evolucao: evolucaoCriado.id,
-			id_paciente: evolucaoCriado.paciente_id,
-			id_user: user_id,
-			status: 0,
-			valor: tipoDeAtendimento?.valor_atendimento,
-			excluido: false,
-		});
-		await pagamentoRepo.save(pagamentoCriado);
+		if (pagamento == true) {
+			// Encontra o tipo de atendimento p/ pegar o valor p/ o pagamento
+			const tipoDeAtendimento = await tipoAtendimentoRepo.findOne({
+				excluido: false,
+				user_id,
+				id: pacienteExiste.tipoAtendimento,
+			});
+			const pagamentoCriado = await pagamentoRepo.create({
+				id_evolucao: evolucaoCriado.id,
+				id_paciente: evolucaoCriado.paciente_id,
+				id_user: user_id,
+				status: 0,
+				valor: tipoDeAtendimento?.valor_atendimento,
+				excluido: false,
+			});
+			await pagamentoRepo.save(pagamentoCriado);
+		}
 
 		return evolucaoCriado;
 	}

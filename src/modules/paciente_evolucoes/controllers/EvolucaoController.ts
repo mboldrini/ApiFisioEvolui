@@ -27,7 +27,7 @@ export default class EvolucaoController {
 	}
 
 	public async create(request: Request, response: Response): Promise<Response> {
-		const { evolucao, observacoes, status, tipo, agendamento_id, paciente_id } = request.body;
+		const { evolucao, observacoes, status, tipo, agendamento_id, paciente_id, pagamento } = request.body;
 		const user_id = request.user.id;
 
 		const createEvolucao = new CreateEvolucaoService();
@@ -38,6 +38,7 @@ export default class EvolucaoController {
 			status,
 			tipo,
 			agendamento_id,
+			pagamento,
 			paciente_id,
 			user_id,
 		});
@@ -77,15 +78,16 @@ export default class EvolucaoController {
 	}
 
 	public async delete(request: Request, response: Response): Promise<Response> {
-		const { id, agendamento_id, paciente_id } = request.body;
+		//const { id, agendamento_id, paciente_id } = request.body;
+		const { id } = request.params;
 		const user_id = request.user.id;
+
+		let idStr = parseInt(id);
 
 		const deleteEvolucao = new DeleteEvolucaoService();
 
 		const evolucao = await deleteEvolucao.execute({
-			id,
-			agendamento_id,
-			paciente_id,
+			id: idStr,
 			user_id,
 		});
 
