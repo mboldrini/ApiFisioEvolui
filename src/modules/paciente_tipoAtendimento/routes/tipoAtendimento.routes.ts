@@ -19,6 +19,8 @@ tipoAtendimentoRouter.get(
 	tipoAtendimentoController.show,
 );
 
+tipoAtendimentoRouter.get('/all', isAuthenticated, tipoAtendimentoController.showall);
+
 tipoAtendimentoRouter.post(
 	'/',
 	isAuthenticated,

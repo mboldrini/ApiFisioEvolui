@@ -14,8 +14,7 @@ interface ITipoPesquisa {
 	user_id: string;
 }
 
-interface IFindIfExist {
-	// tipo: string;
+interface IFindAll {
 	user_id: string;
 }
 
@@ -30,6 +29,16 @@ export class TipoAtendimentoRepository extends Repository<TipoAtendimento> {
 			},
 		});
 		return atendimento;
+	}
+
+	public async findAll({ user_id }: IFindAll): Promise<TipoAtendimento[] | undefined> {
+		const evolucoes = await this.find({
+			where: {
+				user_id,
+				excluido: false,
+			},
+		});
+		return evolucoes;
 	}
 }
 export default TipoAtendimentoRepository;

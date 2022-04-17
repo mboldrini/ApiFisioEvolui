@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import CreateTipoAtendimentoService from '../services/CreateTipoAtendimentoService';
 import DeleteTipoAtendimentoService from '../services/DeleteTipoAtendimentoService';
+import ShowAllTipoAtendimentoService from '../services/ShowAllTipoAtendimentoService';
 import ShowTipoAtendimentoService from '../services/ShowTipoAtendimentoService';
 import UpdateTipoAtendimentoService from '../services/UpdateTipoAtendimentoService';
 
@@ -16,6 +17,26 @@ export default class TipoAtendimentoController {
 		});
 
 		return response.json(tipo);
+	}
+
+	public async showall(request: Request, response: Response): Promise<Response> {
+		const { id } = request.user;
+
+		const showAll = new ShowAllTipoAtendimentoService();
+		const tipo = await showAll.execute({
+			user_id: id,
+		});
+
+		const tipoAtendimentoNovo = tipo.map(atend => {
+			return {
+				id: atend.id,
+				tipo: atend.tipo,
+				valor_atendimento: atend.valor_atendimento,
+				descricao: atend.descricao,
+			};
+		});
+
+		return response.json(tipoAtendimentoNovo);
 	}
 
 	public async create(request: Request, response: Response): Promise<Response> {
