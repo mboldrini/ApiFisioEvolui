@@ -14,7 +14,6 @@ interface IRequest {
 	tipoAtendimento: number;
 	temComorbidade: boolean;
 	logradouro?: string;
-	uf: string;
 	bairro?: string;
 	referencia?: string;
 	excluido: boolean;
@@ -35,7 +34,6 @@ class CreatePacienteService {
 		tipoAtendimento,
 		temComorbidade,
 		logradouro,
-		uf,
 		bairro,
 		referencia,
 		excluido,
@@ -69,7 +67,6 @@ class CreatePacienteService {
 			tipoAtendimento,
 			temComorbidade,
 			logradouro,
-			uf,
 			bairro,
 			referencia,
 			excluido,

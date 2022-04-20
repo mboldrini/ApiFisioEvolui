@@ -20,7 +20,6 @@ pacienteRouter.post(
 			tipoAtendimento: Joi.number().required(),
 			temComorbidade: Joi.bool().required(),
 			logradouro: Joi.string().optional(),
-			uf: Joi.number().required(),
 			bairro: Joi.string().optional(),
 			referencia: Joi.string().optional(),
 			queixamotivo: Joi.string().optional().max(2490),

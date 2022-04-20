@@ -34,9 +34,6 @@ class Paciente {
 	logradouro: string;
 
 	@Column()
-	uf: string;
-
-	@Column()
 	bairro: string;
 
 	@Column()

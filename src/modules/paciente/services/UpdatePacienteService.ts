@@ -15,7 +15,6 @@ interface IRequest {
 	tipoAtendimento: number;
 	temComorbidade: boolean;
 	logradouro: string; //era opcional
-	uf: string;
 	bairro: string; //era opcional
 	referencia: string; //era opcional
 	user_id: string;
@@ -36,7 +35,6 @@ class UpdatePacienteService {
 		tipoAtendimento,
 		temComorbidade,
 		logradouro,
-		uf,
 		bairro,
 		referencia,
 		user_id,
@@ -92,9 +90,6 @@ class UpdatePacienteService {
 		}
 		if (pacienteExiste.logradouro != logradouro) {
 			pacienteExiste.logradouro = logradouro;
-		}
-		if (pacienteExiste.uf != uf) {
-			pacienteExiste.uf = uf;
 		}
 		if (pacienteExiste.bairro != bairro) {
 			pacienteExiste.bairro = bairro;
