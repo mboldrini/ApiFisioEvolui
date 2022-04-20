@@ -8,8 +8,15 @@ interface IRequest {
 	user_id: string;
 }
 
+interface IPctLista {
+	id: number;
+	nome: string;
+	tipoAtendimento: number;
+	logradouro: string;
+}
+
 class ShowAllPacienteService {
-	public async execute({ user_id }: IRequest): Promise<Paciente[]> {
+	public async execute({ user_id }: IRequest): Promise<IPctLista[]> {
 		const pacienteRepo = getCustomRepository(PacienteRepository);
 
 		const pacienteEncontrado = await pacienteRepo.findAllPacientes(user_id);
@@ -18,7 +25,14 @@ class ShowAllPacienteService {
 			throw new AppError('Nenhum paciente cadastrado', 404);
 		}
 
-		return pacienteEncontrado;
+		let pacienteLista = pacienteEncontrado.map(pct => ({
+			id: pct.id,
+			nome: pct.nome,
+			tipoAtendimento: 1,
+			logradouro: pct.logradouro,
+		}));
+
+		return pacienteLista;
 	}
 }
 export default ShowAllPacienteService;
