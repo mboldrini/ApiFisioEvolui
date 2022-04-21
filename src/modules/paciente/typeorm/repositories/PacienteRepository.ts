@@ -38,6 +38,9 @@ export class PacienteRepository extends Repository<Paciente> {
 				user_id,
 				excluido: false,
 			},
+			order: {
+				nome: 'ASC',
+			},
 		});
 		return pacientes;
 	}
