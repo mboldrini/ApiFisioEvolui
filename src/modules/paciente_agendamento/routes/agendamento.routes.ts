@@ -62,6 +62,18 @@ agendamentoRouter.post(
 	agendamentoControler.showAllHoursDay,
 );
 
+agendamentoRouter.post(
+	'/allappointments',
+	isAuthenticated,
+	celebrate({
+		[Segments.BODY]: {
+			dataInicio: Joi.date().required(),
+			dataFim: Joi.date().required(),
+		},
+	}),
+	agendamentoControler.showAllAppointmentsDay,
+);
+
 agendamentoRouter.put(
 	'/',
 	isAuthenticated,

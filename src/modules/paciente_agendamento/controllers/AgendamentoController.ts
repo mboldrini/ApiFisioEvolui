@@ -5,6 +5,7 @@ import DeleteAllAgendamentoService from '../services/DeleteAllAgendamentoService
 import ShowAgendamentoService from '../services/ShowAgendamentoService';
 import ShowAllAgendamentoService from '../services/ShowAllAgendamentoService';
 import ShowAllDayAgendamentoService from '../services/ShowAllDayAgendamentoService';
+import ShowAllAppointmentsDayAgendamentoService from '../services/ShowAllAppointmentsOfDayService';
 import UpdateAgendamentoService from '../services/UpdateAgendamentoService';
 
 interface IAgendamento {
@@ -78,6 +79,17 @@ export default class AgendamentoController {
 
 		const showAllDayAgendamentos = new ShowAllDayAgendamentoService();
 		const agendamentos = await showAllDayAgendamentos.execute({ dataInicio, dataFim, user_id });
+
+		return response.json(agendamentos);
+	}
+
+	public async showAllAppointmentsDay(request: Request, response: Response): Promise<Response> {
+		// Exibe os AGENDAMENTOS disponiveis no dia
+		const { dataInicio, dataFim } = request.body;
+		const user_id = request.user.id;
+
+		const showAllAppDayAgendamentos = new ShowAllAppointmentsDayAgendamentoService();
+		const agendamentos = await showAllAppDayAgendamentos.execute({ dataInicio, dataFim, user_id });
 
 		return response.json(agendamentos);
 	}
