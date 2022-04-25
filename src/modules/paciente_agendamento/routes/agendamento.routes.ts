@@ -51,7 +51,7 @@ agendamentoRouter.post(
 );
 
 agendamentoRouter.post(
-	'/allday',
+	'/allhoursday',
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
@@ -59,7 +59,7 @@ agendamentoRouter.post(
 			dataFim: Joi.date().required(),
 		},
 	}),
-	agendamentoControler.showAllDay,
+	agendamentoControler.showAllHoursDay,
 );
 
 agendamentoRouter.put(

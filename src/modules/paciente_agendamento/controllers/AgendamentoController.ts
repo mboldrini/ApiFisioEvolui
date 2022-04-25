@@ -71,7 +71,8 @@ export default class AgendamentoController {
 		return response.json(agendamentos);
 	}
 
-	public async showAllDay(request: Request, response: Response): Promise<Response> {
+	public async showAllHoursDay(request: Request, response: Response): Promise<Response> {
+		// Exibe os horarios disponiveis no dia
 		const { dataInicio, dataFim } = request.body;
 		const user_id = request.user.id;
 
