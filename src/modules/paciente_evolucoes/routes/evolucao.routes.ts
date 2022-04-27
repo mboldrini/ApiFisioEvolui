@@ -29,11 +29,10 @@ evolucaoRouter.put(
 	celebrate({
 		[Segments.BODY]: {
 			id: Joi.number().required(),
-			tipo: Joi.number().optional(),
+			tipo: Joi.number().required(),
 			status: Joi.number().required(),
 			evolucao: Joi.string().required(),
 			observacoes: Joi.string().optional(),
-			paciente_id: Joi.number().required(),
 			agendamento_id: Joi.number().required(),
 		},
 	}),

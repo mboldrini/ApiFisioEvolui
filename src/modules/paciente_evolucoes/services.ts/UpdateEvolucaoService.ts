@@ -24,17 +24,10 @@ class UpdateEvolucaoService {
 		status,
 		tipo,
 		agendamento_id,
-		paciente_id,
 		user_id,
 	}: IEvolucao): Promise<IEvolucao> {
 		const evolucaoRepo = getCustomRepository(EvolucaoRepository);
-		const pacienteRepo = getCustomRepository(PacienteRepository);
 		const agendamentoRepo = getCustomRepository(AgendamentoRepository);
-
-		const pacienteExiste = await pacienteRepo.findOne({ user_id });
-		if (!pacienteExiste) {
-			throw new AppError('O Paciente informado não existe!', 404);
-		}
 
 		const agendamentoExiste = await agendamentoRepo.findByIdUser({ id: agendamento_id, user_id });
 		if (!agendamentoExiste) {
@@ -43,9 +36,7 @@ class UpdateEvolucaoService {
 
 		const evolucaoExiste = await evolucaoRepo.findOne({
 			id,
-			paciente_id,
 			user_id,
-			agendamento_id,
 			excluido: false,
 		});
 		if (!evolucaoExiste) {
@@ -69,6 +60,9 @@ class UpdateEvolucaoService {
 		}
 
 		agendamentoExiste.status = status;
+		if (tipo != agendamentoExiste.tipo) {
+			agendamentoExiste.tipo = tipo || 0;
+		}
 		await agendamentoRepo.save(agendamentoExiste);
 
 		await evolucaoRepo.save(evolucaoExiste);
