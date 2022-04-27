@@ -1,3 +1,4 @@
+import { EvolucaoRepository } from './../../paciente_evolucoes/typeorm/repositories/EvolucoesRepository';
 import { PacienteRepository } from '../../paciente/typeorm/repositories/PacienteRepository';
 import { AgendamentoRepository } from '../typeorm/repositories/AgendamentoRepository';
 import AppError from '@shared/errors/AppError';
@@ -42,6 +43,8 @@ class CreateAgendamentoService {
 		const agendamentoRepository = getCustomRepository(AgendamentoRepository);
 		const pacienteRepository = getCustomRepository(PacienteRepository);
 
+		const evolucaoRepository = getCustomRepository(EvolucaoRepository);
+
 		/* Paciente Existe*/
 		const pacienteExiste = await pacienteRepository.findByIdAndUser({
 			id: paciente_id,
@@ -68,6 +71,21 @@ class CreateAgendamentoService {
 		}));
 
 		await agendamentoRepository.save(serializado);
+
+		const evolucoes = serializado.map(agendamento => ({
+			evolucao: '',
+			observacoes: '',
+			status: agendamento.status,
+			tipo: agendamento.status,
+			agendamento_id: agendamento?.id,
+			paciente_id: paciente_id,
+			user_id: user_id,
+			excluido: false,
+		}));
+
+		console.log(evolucoes);
+
+		await evolucaoRepository.save(evolucoes);
 
 		return serializado;
 	}
