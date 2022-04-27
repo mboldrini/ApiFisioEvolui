@@ -11,7 +11,6 @@ interface IEvolucao {
 	status: number;
 	tipo?: number;
 	agendamento_id: number;
-	paciente_id: number;
 	user_id: string;
 	excluido?: boolean;
 }

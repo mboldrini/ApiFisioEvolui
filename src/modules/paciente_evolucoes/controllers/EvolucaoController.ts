@@ -19,7 +19,6 @@ export default class EvolucaoController {
 			status,
 			tipo,
 			agendamento_id,
-			paciente_id,
 			user_id,
 		});
 
