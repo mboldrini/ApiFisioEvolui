@@ -104,7 +104,7 @@ export default class AgendamentoController {
 		const deleteAgendamento = new DeleteAgendamentoService();
 		const agendamento = await deleteAgendamento.execute({ id: idUrl, user_id });
 
-		return response.json({ mensagem: 'ok' });
+		return response.json(agendamento);
 	}
 
 	public async deleteAll(request: Request, response: Response): Promise<Response> {
@@ -116,6 +116,6 @@ export default class AgendamentoController {
 		const showAgendamento = new DeleteAllAgendamentoService();
 		const agendamento = await showAgendamento.execute({ paciente_id: pctId, user_id });
 
-		return response.json({ mensagem: 'ok' });
+		return response.json(agendamento);
 	}
 }
