@@ -8,6 +8,11 @@ interface IById {
 	paciente_id: number;
 }
 
+interface IByOneId {
+	id: number;
+	user_id: string;
+}
+
 interface IFindAll {
 	paciente_id: number;
 	user_id: string;
@@ -35,6 +40,17 @@ export class EvolucaoRepository extends Repository<Evolucao> {
 				agendamento_id,
 				paciente_id,
 				excluido: 0,
+			},
+		});
+		return evolucao;
+	}
+
+	public async findOneById({ id, user_id }: IByOneId): Promise<Evolucao | undefined> {
+		const evolucao = await this.findOne({
+			where: {
+				id,
+				user_id,
+				excluido: false,
 			},
 		});
 		return evolucao;

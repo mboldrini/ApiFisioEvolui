@@ -46,14 +46,15 @@ export default class EvolucaoController {
 	}
 
 	public async show(request: Request, response: Response): Promise<Response> {
-		const { agendamento_id, paciente_id } = request.body;
+		const { id } = request.params;
 		const user_id = request.user.id;
 
 		const showEvolucao = new ShowEvolucaoService();
 
+		let agendamentoId = parseInt(id);
+
 		const evolucao = await showEvolucao.execute({
-			agendamento_id,
-			paciente_id,
+			id: agendamentoId,
 			user_id,
 		});
 

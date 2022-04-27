@@ -52,15 +52,15 @@ evolucaoRouter.delete(
 	evolucaoController.delete,
 );
 
-evolucaoRouter.post(
-	'/show',
+evolucaoRouter.get(
+	'/:id',
 	isAuthenticated,
-	celebrate({
-		[Segments.BODY]: {
-			agendamento_id: Joi.number().required(),
-			paciente_id: Joi.number().required(),
-		},
-	}),
+	// celebrate({
+	// 	[Segments.BODY]: {
+	// 		agendamento_id: Joi.number().required(),
+	// 		paciente_id: Joi.number().required(),
+	// 	},
+	// }),
 	evolucaoController.show,
 );
 
