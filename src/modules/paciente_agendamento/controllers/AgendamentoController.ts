@@ -95,13 +95,16 @@ export default class AgendamentoController {
 	}
 
 	public async delete(request: Request, response: Response): Promise<Response> {
-		const { id, paciente_id }: IUpdate = request.body;
+		// const { id, paciente_id }: IUpdate = request.body;
+		const { id } = request.params;
 		const user_id = request.user.id;
 
-		const showAgendamento = new DeleteAgendamentoService();
-		const agendamento = await showAgendamento.execute({ id, paciente_id, user_id });
+		let idUrl = parseInt(id);
 
-		return response.json(agendamento);
+		const deleteAgendamento = new DeleteAgendamentoService();
+		const agendamento = await deleteAgendamento.execute({ id: idUrl, user_id });
+
+		return response.json({ mensagem: 'ok' });
 	}
 
 	public async deleteAll(request: Request, response: Response): Promise<Response> {
@@ -113,6 +116,6 @@ export default class AgendamentoController {
 		const showAgendamento = new DeleteAllAgendamentoService();
 		const agendamento = await showAgendamento.execute({ paciente_id: pctId, user_id });
 
-		return response.json(agendamento);
+		return response.json({ mensagem: 'ok' });
 	}
 }
