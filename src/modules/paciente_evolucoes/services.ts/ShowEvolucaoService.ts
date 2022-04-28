@@ -55,6 +55,7 @@ class ShowEvolucaoService {
 			status: evolucaoExiste.status,
 			tipo: evolucaoExiste.tipo,
 			agendamento_id: evolucaoExiste.agendamento_id,
+			paciente_id: pacienteExiste?.id,
 			paciente_nome: pacienteExiste?.nome,
 			tipo_atendimento: atendimentoExiste?.tipo,
 		};
