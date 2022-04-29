@@ -33,7 +33,6 @@ evolucaoRouter.put(
 			status: Joi.number().required(),
 			evolucao: Joi.string().required(),
 			observacoes: Joi.string().optional(),
-			agendamento_id: Joi.number().required(),
 		},
 	}),
 	evolucaoController.update,

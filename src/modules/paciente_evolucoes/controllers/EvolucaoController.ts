@@ -7,7 +7,7 @@ import UpdateEvolucaoService from '../services.ts/UpdateEvolucaoService';
 
 export default class EvolucaoController {
 	public async update(request: Request, response: Response): Promise<Response> {
-		const { id, evolucao, observacoes, status, tipo, agendamento_id, paciente_id } = request.body;
+		const { id, evolucao, observacoes, status, tipo } = request.body;
 		const user_id = request.user.id;
 
 		const updateEvolucao = new UpdateEvolucaoService();
@@ -18,7 +18,6 @@ export default class EvolucaoController {
 			observacoes,
 			status,
 			tipo,
-			agendamento_id,
 			user_id,
 		});
 

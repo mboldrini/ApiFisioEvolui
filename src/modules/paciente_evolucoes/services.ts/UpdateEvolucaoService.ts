@@ -1,5 +1,4 @@
 import { EvolucaoRepository } from './../typeorm/repositories/EvolucoesRepository';
-import { PacienteRepository } from './../../paciente/typeorm/repositories/PacienteRepository';
 import { AgendamentoRepository } from './../../paciente_agendamento/typeorm/repositories/AgendamentoRepository';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
@@ -9,29 +8,18 @@ interface IEvolucao {
 	evolucao: string;
 	observacoes: string;
 	status: number;
-	tipo?: number;
-	agendamento_id: number;
+	tipo: number;
 	user_id: string;
-	excluido?: boolean;
+}
+
+interface IRetorno {
+	mensagem: string;
 }
 
 class UpdateEvolucaoService {
-	public async execute({
-		id,
-		evolucao,
-		observacoes,
-		status,
-		tipo,
-		agendamento_id,
-		user_id,
-	}: IEvolucao): Promise<IEvolucao> {
+	public async execute({ id, evolucao, observacoes, status, tipo, user_id }: IEvolucao): Promise<IRetorno> {
 		const evolucaoRepo = getCustomRepository(EvolucaoRepository);
 		const agendamentoRepo = getCustomRepository(AgendamentoRepository);
-
-		const agendamentoExiste = await agendamentoRepo.findByIdUser({ id: agendamento_id, user_id });
-		if (!agendamentoExiste) {
-			throw new AppError('O agendamento informado não existe!', 404);
-		}
 
 		const evolucaoExiste = await evolucaoRepo.findOne({
 			id,
@@ -42,31 +30,24 @@ class UpdateEvolucaoService {
 			throw new AppError('A evolução selecionada não existe', 404);
 		}
 
-		if (evolucaoExiste.evolucao != evolucao) {
-			evolucaoExiste.evolucao = evolucao;
+		const agendamentoExiste = await agendamentoRepo.findByIdUser({ id: evolucaoExiste.agendamento_id, user_id });
+		if (!agendamentoExiste) {
+			throw new AppError('O agendamento informado não existe!', 404);
 		}
 
-		if (evolucaoExiste.observacoes != observacoes) {
-			evolucaoExiste.observacoes = observacoes;
-		}
-
-		if (evolucaoExiste.status != status) {
-			evolucaoExiste.status = status;
-		}
-
-		if (tipo && evolucaoExiste.tipo != tipo) {
-			evolucaoExiste.tipo = tipo;
-		}
+		evolucaoExiste.evolucao = evolucao;
+		evolucaoExiste.observacoes = observacoes;
+		evolucaoExiste.status = status;
+		evolucaoExiste.tipo = tipo;
 
 		agendamentoExiste.status = status;
-		if (tipo != agendamentoExiste.tipo) {
-			agendamentoExiste.tipo = tipo || 0;
-		}
+		agendamentoExiste.tipo = tipo;
+
 		await agendamentoRepo.save(agendamentoExiste);
 
 		await evolucaoRepo.save(evolucaoExiste);
 
-		return evolucaoExiste;
+		return { mensagem: 'ok' };
 	}
 }
 export default UpdateEvolucaoService;
