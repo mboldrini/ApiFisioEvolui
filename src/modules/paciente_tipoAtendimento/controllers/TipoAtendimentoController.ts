@@ -30,8 +30,8 @@ export default class TipoAtendimentoController {
 		const tipoAtendimentoNovo = tipo.map(atend => {
 			return {
 				id: atend.id,
-				tipo: atend.tipo,
-				valor_atendimento: atend.valor_atendimento,
+				nome: atend.tipo,
+				valor: atend.valor_atendimento,
 				descricao: atend.descricao,
 			};
 		});
