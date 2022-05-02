@@ -24,8 +24,6 @@ export default class TipoAtendimentoController {
 	public async showall(request: Request, response: Response): Promise<Response> {
 		const { id } = request.user;
 
-		console.log('KDDDDDDDDDD');
-
 		const showAll = new ShowAllTipoAtendimentoService();
 		const tipo = await showAll.execute({
 			user_id: id,

@@ -16,7 +16,7 @@ class UpdateTipoAtendimentoService {
 		const tipoAtendimentoRepository = getCustomRepository(TipoAtendimentoRepository);
 
 		const tipoAtendimento = await tipoAtendimentoRepository.findByIdAndUser({
-			tipo_id: id_tipo,
+			id: id_tipo,
 			user_id,
 		});
 
