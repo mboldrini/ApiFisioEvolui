@@ -6,12 +6,7 @@ export default class PacientePagamentoController {
 		const { id_paciente, id_evolucao } = request.body;
 		const user_id = request.user.id;
 
-		console.log('Recebeu o pagamento pra criar?');
-
 		const createPagamento = new CreatePacientePagamentoService();
-
-		console.log(`Id paciente: ${id_paciente}`);
-		console.log(`id evolucao: ${id_evolucao}`);
 
 		return true;
 

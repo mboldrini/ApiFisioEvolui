@@ -24,6 +24,8 @@ export default class TipoAtendimentoController {
 	public async showall(request: Request, response: Response): Promise<Response> {
 		const { id } = request.user;
 
+		console.log('KDDDDDDDDDD');
+
 		const showAll = new ShowAllTipoAtendimentoService();
 		const tipo = await showAll.execute({
 			user_id: id,
@@ -46,8 +48,6 @@ export default class TipoAtendimentoController {
 		const { id } = request.user;
 
 		const createParams = new CreateTipoAtendimentoService();
-
-		console.log(request.body);
 
 		const usrConfigs = await createParams.execute({
 			tipo,
@@ -83,8 +83,6 @@ export default class TipoAtendimentoController {
 		let idAtendimento = parseInt(id);
 
 		const deleteTipoAtendimento = new DeleteTipoAtendimentoService();
-
-		console.log(idAtendimento);
 
 		const tipoAtendimento = await deleteTipoAtendimento.execute({
 			id,

@@ -6,9 +6,7 @@ import TipoAtendimentoController from '../controllers/TipoAtendimentoController'
 const tipoAtendimentoRouter = Router();
 const tipoAtendimentoController = new TipoAtendimentoController();
 
-//tipoAtendimentoRouter.get('/', isAuthenticated, tipoAtendimentoController.show);
-
-tipoAtendimentoRouter.get('/:id', isAuthenticated, tipoAtendimentoController.show);
+tipoAtendimentoRouter.get('/id/:id', isAuthenticated, tipoAtendimentoController.show);
 
 tipoAtendimentoRouter.get('/all', isAuthenticated, tipoAtendimentoController.showall);
 

@@ -83,8 +83,6 @@ class CreateAgendamentoService {
 			excluido: false,
 		}));
 
-		console.log(evolucoes);
-
 		await evolucaoRepository.save(evolucoes);
 
 		return serializado;
