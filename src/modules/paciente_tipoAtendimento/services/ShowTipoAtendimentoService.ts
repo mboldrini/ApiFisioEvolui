@@ -2,7 +2,7 @@ import { TipoAtendimentoRepository } from '../typeorm/repositories/TipoAtendimen
 import { Request, Response } from 'express';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
-import UserConfigs from '../typeorm/entities/TipoAtendimento';
+import PacienteRepository from '@modules/paciente/typeorm/repositories/PacienteRepository';
 
 interface IRequest {
 	id: number;
@@ -21,6 +21,7 @@ interface IReturn {
 class ShowTipoAtendimentoService {
 	public async execute({ id, user_id }: IRequest): Promise<IReturn> {
 		const tipoAtendimentoRepository = getCustomRepository(TipoAtendimentoRepository);
+		const pacientesRepo = getCustomRepository(PacienteRepository);
 
 		const tipoAtendimento = await tipoAtendimentoRepository.findByIdAndUser({
 			id,
@@ -31,6 +32,11 @@ class ShowTipoAtendimentoService {
 			throw new AppError('Tipo de atendimento não encontrado');
 		}
 
+		const qtdPcts = await pacientesRepo.findAllByAtendimento({
+			tipoAtendimento: tipoAtendimento.id,
+			user_id,
+		});
+
 		let tipoAtendimentoInfos = {
 			id: tipoAtendimento.id,
 			nome: tipoAtendimento.tipo,
@@ -38,6 +44,7 @@ class ShowTipoAtendimentoService {
 			descricao: tipoAtendimento.descricao,
 			created_at: tipoAtendimento.created_at,
 			updated_at: tipoAtendimento.updated_at,
+			qtdPacientes: qtdPcts[1],
 		};
 
 		return tipoAtendimentoInfos;
