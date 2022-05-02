@@ -7,13 +7,15 @@ import UpdateTipoAtendimentoService from '../services/UpdateTipoAtendimentoServi
 
 export default class TipoAtendimentoController {
 	public async show(request: Request, response: Response): Promise<Response> {
-		const { tipo_id } = request.body;
-		const { id } = request.user;
+		const { id } = request.params;
+		const user_id = request.user.id;
+
+		let idTipo = parseInt(id);
 
 		const showTipo = new ShowTipoAtendimentoService();
 		const tipo = await showTipo.execute({
-			tipo_id,
-			user_id: id,
+			id: idTipo,
+			user_id,
 		});
 
 		return response.json(tipo);

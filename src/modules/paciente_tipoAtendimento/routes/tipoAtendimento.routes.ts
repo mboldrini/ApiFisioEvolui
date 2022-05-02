@@ -8,16 +8,7 @@ const tipoAtendimentoController = new TipoAtendimentoController();
 
 //tipoAtendimentoRouter.get('/', isAuthenticated, tipoAtendimentoController.show);
 
-tipoAtendimentoRouter.get(
-	'/',
-	isAuthenticated,
-	celebrate({
-		[Segments.BODY]: {
-			id: Joi.number().required(),
-		},
-	}),
-	tipoAtendimentoController.show,
-);
+tipoAtendimentoRouter.get('/:id', isAuthenticated, tipoAtendimentoController.show);
 
 tipoAtendimentoRouter.get('/all', isAuthenticated, tipoAtendimentoController.showall);
 

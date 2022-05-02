@@ -10,7 +10,7 @@ interface IRequest {
 }
 
 interface ITipoPesquisa {
-	tipo_id: number;
+	id: number;
 	user_id: string;
 }
 
@@ -20,10 +20,10 @@ interface IFindAll {
 
 @EntityRepository(TipoAtendimento)
 export class TipoAtendimentoRepository extends Repository<TipoAtendimento> {
-	public async findByIdAndUser({ tipo_id, user_id }: ITipoPesquisa): Promise<TipoAtendimento | undefined> {
+	public async findByIdAndUser({ id, user_id }: ITipoPesquisa): Promise<TipoAtendimento | undefined> {
 		const atendimento = await this.findOne({
 			where: {
-				id: tipo_id,
+				id: id,
 				user_id,
 				excluido: false,
 			},
