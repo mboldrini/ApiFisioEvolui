@@ -11,8 +11,12 @@ interface IRequest {
 	user_id: string;
 }
 
+interface IRetorno {
+	mensagem: string;
+}
+
 class UpdateTipoAtendimentoService {
-	public async execute({ id_tipo, tipo, valor_atendimento, descricao, user_id }: IRequest): Promise<TipoAtendimento> {
+	public async execute({ id_tipo, tipo, valor_atendimento, descricao, user_id }: IRequest): Promise<IRetorno> {
 		const tipoAtendimentoRepository = getCustomRepository(TipoAtendimentoRepository);
 
 		const tipoAtendimento = await tipoAtendimentoRepository.findByIdAndUser({
@@ -35,7 +39,7 @@ class UpdateTipoAtendimentoService {
 
 		await tipoAtendimentoRepository.save(tipoAtendimento);
 
-		return tipoAtendimento;
+		return { mensagem: 'ok' };
 	}
 }
 
