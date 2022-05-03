@@ -21,7 +21,7 @@ class DeleteTipoAtendimentoService {
 		const number_id = Number(id);
 
 		const tipoAtendimento = await tipoAtendimentoRepository.findByIdAndUser({
-			tipo_id: number_id,
+			id: number_id,
 			user_id,
 		});
 
