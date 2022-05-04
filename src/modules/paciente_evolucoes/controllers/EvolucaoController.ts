@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import CreateEvolucaoService from '../services.ts/CreateEvolucaoService';
 import DeleteEvolucaoService from '../services.ts/DeleteEvolucaoService';
 import ShowAllEvolucoesService from '../services.ts/ShowAllEvolucoesService';
+import ShowEvolucaoByAgendamentoService from '../services.ts/ShowEvolucaoByAgendamentoService';
 import ShowEvolucaoService from '../services.ts/ShowEvolucaoService';
 import UpdateEvolucaoService from '../services.ts/UpdateEvolucaoService';
 
@@ -49,6 +50,22 @@ export default class EvolucaoController {
 		const user_id = request.user.id;
 
 		const showEvolucao = new ShowEvolucaoService();
+
+		let agendamentoId = parseInt(id);
+
+		const evolucao = await showEvolucao.execute({
+			id: agendamentoId,
+			user_id,
+		});
+
+		return response.json(evolucao);
+	}
+
+	public async showByAgendamentoId(request: Request, response: Response): Promise<Response> {
+		const { id } = request.params;
+		const user_id = request.user.id;
+
+		const showEvolucao = new ShowEvolucaoByAgendamentoService();
 
 		let agendamentoId = parseInt(id);
 

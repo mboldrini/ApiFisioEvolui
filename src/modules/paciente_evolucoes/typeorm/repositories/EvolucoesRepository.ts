@@ -56,6 +56,17 @@ export class EvolucaoRepository extends Repository<Evolucao> {
 		return evolucao;
 	}
 
+	public async findOneByAgendamentoId({ id, user_id }: IByOneId): Promise<Evolucao | undefined> {
+		const evolucao = await this.findOne({
+			where: {
+				agendamento_id: id,
+				user_id,
+				excluido: false,
+			},
+		});
+		return evolucao;
+	}
+
 	public async findAll({ paciente_id, user_id }: IFindAll): Promise<IEvolucao[] | undefined> {
 		const evolucoes = await this.find({
 			where: {

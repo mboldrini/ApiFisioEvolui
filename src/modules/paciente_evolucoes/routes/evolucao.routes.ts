@@ -64,6 +64,18 @@ evolucaoRouter.get(
 );
 
 evolucaoRouter.get(
+	'/agendamentoId/:id',
+	isAuthenticated,
+	// celebrate({
+	// 	[Segments.BODY]: {
+	// 		agendamento_id: Joi.number().required(),
+	// 		paciente_id: Joi.number().required(),
+	// 	},
+	// }),
+	evolucaoController.showByAgendamentoId,
+);
+
+evolucaoRouter.get(
 	'/all/:paciente_id',
 	isAuthenticated,
 	// celebrate({
