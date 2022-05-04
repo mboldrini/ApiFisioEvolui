@@ -76,7 +76,7 @@ class CreateAgendamentoService {
 			evolucao: '',
 			observacoes: '',
 			status: agendamento.status,
-			tipo: agendamento.status,
+			tipo: agendamento.tipo,
 			agendamento_id: agendamento?.id,
 			paciente_id: paciente_id,
 			user_id: user_id,
