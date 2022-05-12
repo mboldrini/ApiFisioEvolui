@@ -8,6 +8,8 @@ const usersController = new UsersController();
 
 usersRouter.get('/', isAuthenticated, usersController.show);
 
+usersRouter.get('/profilestatistics', isAuthenticated, usersController.showProfileStatistics);
+
 usersRouter.post(
 	'/',
 	celebrate({

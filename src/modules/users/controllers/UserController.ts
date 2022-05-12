@@ -1,9 +1,6 @@
-import CreateEnderecoService from '@modules/OLD_endereco/services/CreateEnderecoService';
-import CreateUserAgendaService from '@modules/user_horarios/services/CreateUserAgendaService';
-import CreateUserConfigsService from '@modules/user_configs/services/CreateUserConfigsService';
-import ShowUserConfigsService from '@modules/user_configs/services/ShowUserConfigsService';
 import { Request, Response } from 'express';
 import CreateUserService from '../services/CreateUserService';
+import ShowUserProfileStatisticsService from '../services/ShowUserProfileStatisticsService';
 import ShowUserService from '../services/ShowUserService';
 import UpdateUserService from '../services/UpdateUserService';
 
@@ -12,6 +9,15 @@ export default class UsersController {
 		const { id } = request.user;
 
 		const showUser = new ShowUserService();
+		const user = await showUser.execute({ id });
+
+		return response.json(user);
+	}
+
+	public async showProfileStatistics(request: Request, response: Response): Promise<Response> {
+		const { id } = request.user;
+
+		const showUser = new ShowUserProfileStatisticsService();
 		const user = await showUser.execute({ id });
 
 		return response.json(user);
