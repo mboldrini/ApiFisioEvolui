@@ -37,7 +37,7 @@ class ShowUserProfileStatisticsService {
 			qtdAtendimentos: qtdAtendimentos[1],
 		};
 
-		return { result };
+		return result;
 	}
 }
 
