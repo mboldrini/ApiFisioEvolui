@@ -27,6 +27,7 @@ class ShowEvolucaoService {
 		const evolucaoRepo = getCustomRepository(EvolucaoRepository);
 		const pacienteRepo = getCustomRepository(PacienteRepository);
 		const tipoAtendimentoRepo = getCustomRepository(TipoAtendimentoRepository);
+		const agendamentoRepo = getCustomRepository(AgendamentoRepository);
 
 		const evolucaoExiste = await evolucaoRepo.findOneById({
 			id,
@@ -48,6 +49,12 @@ class ShowEvolucaoService {
 			excluido: false,
 		});
 
+		const agendamentoExiste = await agendamentoRepo.findOne({
+			id: evolucaoExiste.agendamento_id,
+			user_id,
+			excluido: false,
+		});
+
 		let infosEvolucao = {
 			id: evolucaoExiste.id,
 			evolucao: evolucaoExiste.evolucao,
@@ -58,6 +65,7 @@ class ShowEvolucaoService {
 			paciente_id: pacienteExiste?.id,
 			paciente_nome: pacienteExiste?.nome,
 			nome_tipoAtendimento: atendimentoExiste?.tipo,
+			dataHora: agendamentoExiste?.dataHora,
 		};
 
 		return infosEvolucao;
