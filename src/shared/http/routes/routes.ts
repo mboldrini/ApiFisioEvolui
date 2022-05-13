@@ -7,6 +7,7 @@ import agendamentoRouter from '@modules/paciente_agendamento/routes/agendamento.
 import evolucaoRouter from '@modules/paciente_evolucoes/routes/evolucao.routes';
 import agendaRouter from '@modules/Agenda/routes/agenda.routes';
 import pacientePagamentosRouter from '@modules/paciente_pagamentos/routes/pagamentos.routes';
+import userConfigsRouter from '@modules/user_configs/routes/userconfigs.routes';
 
 const routes = Router();
 
@@ -29,5 +30,7 @@ routes.use('/evolucao', evolucaoRouter);
 routes.use('/agenda', agendaRouter);
 
 routes.use('/pacientePagamentos', pacientePagamentosRouter);
+
+routes.use('/configs', userConfigsRouter);
 
 export default routes;
