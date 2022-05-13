@@ -12,8 +12,9 @@ interface ITipo2 {
 }
 
 interface IFindAgendamentos {
-	data: string;
-	hora: number;
+	// data: string;
+	// hora: number;
+	timestamp: number;
 	tipo: number;
 	status: number;
 }
@@ -78,13 +79,15 @@ export class AgendamentoRepository extends Repository<Agendamento> {
 	}
 
 	public async findAllByIds(agendamentos: IFindAgendamentos[], user_id: string): Promise<Agendamento[]> {
-		const agendamentosIds = agendamentos.map(agendamento => agendamento.data);
-		const agendamentoHora = agendamentos.map(agendamento => agendamento.hora);
+		// const agendamentosIds = agendamentos.map(agendamento => agendamento.data);
+		// const agendamentoHora = agendamentos.map(agendamento => agendamento.hora);
+		const agendamentoTimeStamp = agendamentos.map(agendamento => agendamento.timestamp);
 
 		const existentAgendamentos = await this.find({
 			where: {
-				data: In(agendamentosIds),
-				hora: In(agendamentoHora),
+				// data: In(agendamentosIds),
+				// hora: In(agendamentoHora),
+				dataHora: In(agendamentoTimeStamp),
 				user_id,
 				excluido: false,
 			},

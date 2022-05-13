@@ -6,8 +6,9 @@ import { Double, getCustomRepository } from 'typeorm';
 import Agendamento from '../typeorm/entities/Agendamento';
 
 interface IAgendamentoReceive {
-	data: string;
-	hora: number;
+	// data: string;
+	// hora: number;
+	timestamp: number;
 	tipo: number;
 	status: number;
 	paciente_id: number;
@@ -16,9 +17,9 @@ interface IAgendamentoReceive {
 }
 
 interface IAgendamentoReturn {
-	dataHora: string;
+	dataHora: number;
 	data: Date;
-	hora: Double;
+	hora: string;
 	tipo: number;
 	status: number;
 	paciente_id: number;
@@ -56,13 +57,13 @@ class CreateAgendamentoService {
 
 		const agendamentosExistem = await agendamentoRepository.findAllByIds(agendamentos, user_id);
 		if (agendamentosExistem.length > 0) {
-			throw new AppError(`Já existe um agendamento p/ a data ${agendamentosExistem[0].data}`);
+			throw new AppError(`Já existe um agendamento p/ a data escolhida - ${agendamentosExistem[0].data}`);
 		}
 
 		const serializado = agendamentos.map(agendamento => ({
-			dataHora: agendamento.data + 'T' + agendamento.hora,
-			data: GetData(agendamento.data),
-			hora: agendamento.hora,
+			dataHora: agendamento.timestamp,
+			data: new Date(agendamento.timestamp),
+			hora: new Date(agendamento.timestamp).getHours() + '.' + new Date(agendamento.timestamp).getMinutes(),
 			tipo: agendamento.tipo,
 			status: agendamento.status,
 			paciente_id,

@@ -17,8 +17,9 @@ agendamentoRouter.post(
 					//dataHora: Joi.string().required(),
 					tipo: Joi.number().required(),
 					status: Joi.number().required(),
-					data: Joi.string().required(),
-					hora: Joi.number().required(),
+					timestamp: Joi.number().required(),
+					// data: Joi.string().required(),
+					// hora: Joi.number().required(),
 				})
 				.required(),
 		},
