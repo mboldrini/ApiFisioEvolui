@@ -20,25 +20,31 @@ export class UserConfigs1652479941020 implements MigrationInterface {
 					},
 					{
 						name: 'hora_inicioAtendimento',
-						type: 'int',
+						type: 'numeric',
 						isNullable: true,
 						default: 807274800000,
 					},
 					{
 						name: 'hora_fimAtendimento',
-						type: 'int',
+						type: 'numeric',
 						isNullable: true,
 						default: 807310800000,
 					},
 					{
 						name: 'tempo_atendimento',
-						type: 'int',
+						type: 'numeric',
 						isNullable: true,
 						default: 807249000000,
 					},
 					{
+						name: 'ignorar_tempoDeslocamento',
+						type: 'boolean',
+						isNullable: true,
+						default: true,
+					},
+					{
 						name: 'tempo_deslocamento',
-						type: 'int',
+						type: 'numeric',
 						isNullable: true,
 						default: 807246600000,
 					},
@@ -53,6 +59,16 @@ export class UserConfigs1652479941020 implements MigrationInterface {
 						type: 'boolean',
 						isNullable: true,
 						default: true,
+					},
+					{
+						name: 'created_at',
+						type: 'timestamp',
+						default: 'now()',
+					},
+					{
+						name: 'updated_at',
+						type: 'timestamp',
+						default: 'now()',
 					},
 				],
 				foreignKeys: [
