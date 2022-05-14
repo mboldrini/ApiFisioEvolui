@@ -51,8 +51,8 @@ class ShowAllDayAgendamentoService {
 			tempo_atendimento: agendamento.tempo_atendimento,
 		}));
 
-		console.log('Agendamentos:');
-		console.log(agendamentos);
+		// console.log('Agendamentos:');
+		// console.log(agendamentos);
 
 		/// Encontra as configs desse usuario
 		const configExiste = await userConfigsRepo.findOne({ user_id });
@@ -108,26 +108,27 @@ class ShowAllDayAgendamentoService {
 		function ValidaDisponibilidadeHora(horaDisponivel: number, todosAgendamentos: any) {
 			const agendamentoFiltrado = todosAgendamentos
 				.filter(horarioAgendamento => {
-					if (
-						(horarioAgendamento.inicioAtendimento > horaDisponivel &&
-							horaDisponivel <= horarioAgendamento.fimAtendimento) ||
-						horarioAgendamento.inicioAtendimento == horaDisponivel
-					) {
+					// console.log('----');
+
+					let horarioAgendado = horaDisponivel;
+					// console.log(`_____Horario Agendado: ${horarioAgendado} - ${new Date(Number(horarioAgendado))}`);
+
+					let inicioAtendimento = horarioAgendamento.inicioAtendimento;
+					// console.log(`Inicio do Atendimento: ${inicioAtendimento} - ${new Date(Number(inicioAtendimento))}`);
+					let fimAtendimento = horarioAgendamento.fimAtendimento;
+					// console.log(`______Fim atendimento: ${fimAtendimento} - ${new Date(Number(fimAtendimento))}`);
+					//let tempoAtendimento = horarioAgendamento.
+
+					let atualTempoAtendimento = configExiste?.tempo_atendimento;
+					// console.log(
+					// 	`__Atual tempo de atend: ${atualTempoAtendimento} - ${new Date(Number(atualTempoAtendimento))}`,
+					// );
+
+					if (inicioAtendimento > horarioAgendado || fimAtendimento >= horarioAgendado) {
 						return true;
 					}
 
-					// console.log('--');
-					// console.log(`HoraDisponivel: ${horaDisponivel} + ${new Date(horaDisponivel)}`);
-					// console.log(
-					// 	`HrrioEscolhido: ${horarioAgendamento.timestamp} + ${new Date(
-					// 		Number(horarioAgendamento.timestamp),
-					// 	)}`,
-					// );
-					// console.log(
-					// 	`FinalEscolhido: ${horarioAgendamento.fimAtendimento} + ${new Date(
-					// 		Number(horarioAgendamento.fimAtendimento),
-					// 	)}`,
-					// );
+					// console.log('--*');
 				})
 				.map(valor => {
 					return valor.hora;
