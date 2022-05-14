@@ -1,9 +1,8 @@
 import { UserConfigsRepository } from './../../user_configs/typeorm/repositories/UserConfigsRepository';
-import { horariosDisponiveisV1 } from './../DTO/index';
 import { PacienteRepository } from '../../paciente/typeorm/repositories/PacienteRepository';
 import { AgendamentoRepository } from '../typeorm/repositories/AgendamentoRepository';
 import AppError from '@shared/errors/AppError';
-import { getCustomRepository } from 'typeorm';
+import { ConnectionIsNotSetError, getCustomRepository } from 'typeorm';
 import Agendamento from '../typeorm/entities/Agendamento';
 import { getHours, getMinutes, getTime, addHours, addMinutes } from 'date-fns';
 
@@ -11,6 +10,20 @@ interface IAgendamento {
 	dataInicio: Date;
 	dataFim: Date;
 	user_id: string;
+}
+
+interface IHorariosDisponiveis {
+	id: number;
+	hora: string;
+	indisponivel: boolean;
+	timestamp: number;
+}
+
+function GetCustomDateHour(data: Date, horario: number) {
+	let dt = new Date(data);
+	dt = addHours(dt, getHours(parseInt(horario)));
+	dt = addMinutes(dt, getMinutes(parseInt(horario)));
+	return dt;
 }
 
 class ShowAllDayAgendamentoService {
@@ -32,7 +45,11 @@ class ShowAllDayAgendamentoService {
 			id: agendamento.id,
 			data: agendamento.data,
 			hora: agendamento.hora,
+			timestamp: agendamento.dataHora,
 		}));
+
+		console.log('Agendamentos:');
+		console.log(agendamentos);
 
 		/// Encontra as configs desse usuario
 		const configExiste = await userConfigsRepo.findOne({ user_id });
@@ -40,31 +57,55 @@ class ShowAllDayAgendamentoService {
 			throw new AppError('Não existe configurações definidas p/ o usuário', 404);
 		}
 
-		function FF() {
-			const inicioAtendimento = new Date(parseInt(configExiste.hora_inicioAtendimento));
-			const fimAtendimento = new Date(parseInt(configExiste.hora_fimAtendimento));
-			const tempoAtendimentoHoras = getHours(new Date(parseInt(configExiste.tempo_atendimento)));
-			const tempoAtendimentoMinutos = getMinutes(new Date(parseInt(configExiste.tempo_atendimento)));
+		let horariosDisponiveisV2 = [] as IHorariosDisponiveis[];
 
-			console.log(`Tempo atendimento (H): ${tempoAtendimentoHoras}`);
-			console.log(`Tempo atendimento (M): ${tempoAtendimentoMinutos}`);
+		function GeraListaHorariosDisponiveis(): void {
+			const inicioAtendimento = GetCustomDateHour(dataInicio, configExiste?.hora_inicioAtendimento);
+			const fimAtendimento = GetCustomDateHour(dataFim, configExiste?.hora_fimAtendimento);
 
 			let horarioAtendimento = inicioAtendimento;
+			let id = 0;
 
-			console.log('Original: ' + horarioAtendimento);
+			while (horarioAtendimento <= fimAtendimento) {
+				horariosDisponiveisV2.push({
+					id: id,
+					hora:
+						getHours(horarioAtendimento) +
+						':' +
+						(getMinutes(horarioAtendimento) == 0 ? '00' : getMinutes(horarioAtendimento)),
+					indisponivel: false,
+					timestamp: horarioAtendimento.getTime(),
+				});
 
-			while (horarioAtendimento < fimAtendimento) {
-				horarioAtendimento = addHours(horarioAtendimento, tempoAtendimentoHoras);
-				horarioAtendimento = addMinutes(horarioAtendimento, tempoAtendimentoMinutos);
-				console.log('HorarioAtend: ' + horarioAtendimento);
+				horarioAtendimento = addHours(
+					horarioAtendimento,
+					getHours(new Date(parseInt(configExiste.tempo_atendimento))),
+				);
+				horarioAtendimento = addMinutes(
+					horarioAtendimento,
+					getMinutes(new Date(parseInt(configExiste.tempo_atendimento))),
+				);
+
+				if (!configExiste?.ignorar_tempoDeslocamento) {
+					horarioAtendimento = addHours(
+						horarioAtendimento,
+						getHours(new Date(parseInt(configExiste?.tempo_deslocamento))),
+					);
+					horarioAtendimento = addMinutes(
+						horarioAtendimento,
+						getMinutes(new Date(parseInt(configExiste?.tempo_deslocamento))),
+					);
+				}
+
+				id += 1;
 			}
 		}
-		FF();
+		GeraListaHorariosDisponiveis();
 
 		function horaTaIndisponivel(hora: number, agendamentos: any) {
 			const agendamentoFiltrado = agendamentos
 				.filter(horario => {
-					if (horario.hora == hora) {
+					if (horario.timestamp == hora) {
 						return true;
 					}
 				})
@@ -79,10 +120,11 @@ class ShowAllDayAgendamentoService {
 			}
 		}
 
-		const horariosDisponiveis = horariosDisponiveisV1.map(horario => ({
-			id: horario.id,
-			hora: horario.hora,
-			indisponivel: horaTaIndisponivel(horario.hora, agendamentos),
+		const horariosDisponiveis = horariosDisponiveisV2.map(horarioDisp => ({
+			id: horarioDisp.id,
+			hora: horarioDisp.hora,
+			indisponivel: horaTaIndisponivel(horarioDisp.timestamp, agendamentos),
+			timestamp: horarioDisp.timestamp,
 		}));
 
 		return horariosDisponiveis;

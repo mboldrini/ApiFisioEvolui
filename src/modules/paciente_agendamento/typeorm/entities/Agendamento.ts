@@ -7,7 +7,7 @@ class Agendamento {
 	id: number;
 
 	@Column()
-	dataHora: string;
+	dataHora: number;
 
 	@Column()
 	data: Date;
