@@ -43,7 +43,7 @@ class ShowAllAppointmentsDayAgendamentoService {
 
 		let agendamentos = agendamentoExiste.map(item => ({
 			id: item.id,
-			dataHora: item.dataHora,
+			timestamp: item.dataTimestamp,
 			data: item.data,
 			hora: item.hora,
 			tipo: tipoAtendimentos

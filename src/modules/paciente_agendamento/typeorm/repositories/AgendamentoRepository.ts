@@ -79,15 +79,11 @@ export class AgendamentoRepository extends Repository<Agendamento> {
 	}
 
 	public async findAllByIds(agendamentos: IFindAgendamentos[], user_id: string): Promise<Agendamento[]> {
-		// const agendamentosIds = agendamentos.map(agendamento => agendamento.data);
-		// const agendamentoHora = agendamentos.map(agendamento => agendamento.hora);
 		const agendamentoTimeStamp = agendamentos.map(agendamento => agendamento.timestamp);
 
 		const existentAgendamentos = await this.find({
 			where: {
-				// data: In(agendamentosIds),
-				// hora: In(agendamentoHora),
-				dataHora: In(agendamentoTimeStamp),
+				dataTimestamp: In(agendamentoTimeStamp),
 				user_id,
 				excluido: false,
 			},

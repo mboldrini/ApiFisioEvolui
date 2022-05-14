@@ -21,8 +21,8 @@ interface IHorariosDisponiveis {
 
 function GetCustomDateHour(data: Date, horario: number) {
 	let dt = new Date(data);
-	dt = addHours(dt, getHours(parseInt(horario)));
-	dt = addMinutes(dt, getMinutes(parseInt(horario)));
+	dt = addHours(dt, getHours(Number(horario)));
+	dt = addMinutes(dt, getMinutes(Number(horario)));
 	return dt;
 }
 
@@ -45,7 +45,10 @@ class ShowAllDayAgendamentoService {
 			id: agendamento.id,
 			data: agendamento.data,
 			hora: agendamento.hora,
-			timestamp: agendamento.dataHora,
+			timestamp: agendamento.dataTimestamp,
+			inicioAtendimento: agendamento.horario_inicioAtendimento,
+			fimAtendimento: agendamento.horario_fimAtendimento,
+			tempo_atendimento: agendamento.tempo_atendimento,
 		}));
 
 		console.log('Agendamentos:');
@@ -102,12 +105,29 @@ class ShowAllDayAgendamentoService {
 		}
 		GeraListaHorariosDisponiveis();
 
-		function horaTaIndisponivel(hora: number, agendamentos: any) {
-			const agendamentoFiltrado = agendamentos
-				.filter(horario => {
-					if (horario.timestamp == hora) {
+		function ValidaDisponibilidadeHora(horaDisponivel: number, todosAgendamentos: any) {
+			const agendamentoFiltrado = todosAgendamentos
+				.filter(horarioAgendamento => {
+					if (
+						(horarioAgendamento.inicioAtendimento > horaDisponivel &&
+							horaDisponivel <= horarioAgendamento.fimAtendimento) ||
+						horarioAgendamento.inicioAtendimento == horaDisponivel
+					) {
 						return true;
 					}
+
+					// console.log('--');
+					// console.log(`HoraDisponivel: ${horaDisponivel} + ${new Date(horaDisponivel)}`);
+					// console.log(
+					// 	`HrrioEscolhido: ${horarioAgendamento.timestamp} + ${new Date(
+					// 		Number(horarioAgendamento.timestamp),
+					// 	)}`,
+					// );
+					// console.log(
+					// 	`FinalEscolhido: ${horarioAgendamento.fimAtendimento} + ${new Date(
+					// 		Number(horarioAgendamento.fimAtendimento),
+					// 	)}`,
+					// );
 				})
 				.map(valor => {
 					return valor.hora;
@@ -123,7 +143,7 @@ class ShowAllDayAgendamentoService {
 		const horariosDisponiveis = horariosDisponiveisV2.map(horarioDisp => ({
 			id: horarioDisp.id,
 			hora: horarioDisp.hora,
-			indisponivel: horaTaIndisponivel(horarioDisp.timestamp, agendamentos),
+			indisponivel: ValidaDisponibilidadeHora(horarioDisp.timestamp, agendamentos),
 			timestamp: horarioDisp.timestamp,
 		}));
 

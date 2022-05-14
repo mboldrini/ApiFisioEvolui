@@ -28,10 +28,13 @@ class ShowAllAgendamentoService {
 
 		const agendamentos = agendamentoExiste.map(agendamento => ({
 			id: agendamento.id,
-			timestamp: agendamento.dataHora,
+			timestamp: agendamento.dataTimestamp,
 			data: agendamento.data,
 			tipo: agendamento.tipo,
 			status: agendamento.status,
+			tempoAtendimento: agendamento.tempo_atendimento,
+			horarioInicio: agendamento.horario_fimAtendimento,
+			horarioFim: agendamento.horario_fimAtendimento,
 		}));
 
 		return agendamentos;

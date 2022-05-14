@@ -7,7 +7,7 @@ class Agendamento {
 	id: number;
 
 	@Column()
-	dataHora: number;
+	dataTimestamp: number;
 
 	@Column()
 	data: Date;
@@ -20,6 +20,15 @@ class Agendamento {
 
 	@Column()
 	status: number;
+
+	@Column()
+	tempo_atendimento: number;
+
+	@Column()
+	horario_inicioAtendimento: number;
+
+	@Column()
+	horario_fimAtendimento: number;
 
 	@Column()
 	paciente_id: number;

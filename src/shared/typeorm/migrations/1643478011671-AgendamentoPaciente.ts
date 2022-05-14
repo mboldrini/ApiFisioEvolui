@@ -14,8 +14,8 @@ export class AgendamentoPaciente1643478011671 implements MigrationInterface {
 						generationStrategy: 'increment',
 					},
 					{
-						name: 'dataHora',
-						type: 'varchar(50)',
+						name: 'dataTimestamp',
+						type: 'numeric',
 						isNullable: false,
 					},
 					{
@@ -36,6 +36,21 @@ export class AgendamentoPaciente1643478011671 implements MigrationInterface {
 					{
 						name: 'status',
 						type: 'int',
+						isNullable: false,
+					},
+					{
+						name: 'tempo_atendimento',
+						type: 'numeric',
+						isNullable: false,
+					},
+					{
+						name: 'horario_inicioAtendimento',
+						type: 'numeric',
+						isNullable: false,
+					},
+					{
+						name: 'horario_fimAtendimento',
+						type: 'numeric',
 						isNullable: false,
 					},
 					{
