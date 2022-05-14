@@ -18,6 +18,9 @@ class UserConfigs {
 	tempo_atendimento: number;
 
 	@Column()
+	ignorar_tempoDeslocamento: boolean;
+
+	@Column()
 	tempo_deslocamento: number;
 
 	@Column()

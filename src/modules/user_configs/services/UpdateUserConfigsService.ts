@@ -6,16 +6,16 @@ import AppError from '@shared/errors/AppError';
 
 interface IRequest {
 	user_id: string;
-	hora_inicioAtendimento?: number;
-	hora_fimAtendimento?: number;
-	tempo_atendimento?: number;
-	ignorar_tempoDeslocamento?: boolean;
-	tempo_deslocamento?: number;
-	data_retroativa?: boolean;
-	notificacoes?: boolean;
+	hora_inicioAtendimento: number;
+	hora_fimAtendimento: number;
+	tempo_atendimento: number;
+	ignorar_tempoDeslocamento: boolean;
+	tempo_deslocamento: number;
+	data_retroativa: boolean;
+	notificacoes: boolean;
 }
 
-class CreateUserConfigsService {
+class UpdateUserConfigsService {
 	public async execute({
 		user_id,
 		hora_inicioAtendimento,
@@ -37,24 +37,21 @@ class CreateUserConfigsService {
 		const configExists = await usersConfigRepository.findOne({
 			user_id,
 		});
-		if (configExists) {
-			throw new AppError('Já existe uma configuração criada p/ esse usuário', 404);
+		if (!configExists) {
+			throw new AppError('não foi encontrado uma configuração p/ esse usuário', 404);
 		}
 
-		const userConfigs = usersConfigRepository.create({
-			user_id,
-			hora_inicioAtendimento,
-			hora_fimAtendimento,
-			tempo_atendimento,
-			ignorar_tempoDeslocamento,
-			tempo_deslocamento,
-			data_retroativa,
-			notificacoes,
-		});
+		configExists.hora_inicioAtendimento = hora_inicioAtendimento;
+		configExists.hora_fimAtendimento = hora_fimAtendimento;
+		configExists.tempo_atendimento = tempo_atendimento;
+		configExists.ignorar_tempoDeslocamento = ignorar_tempoDeslocamento;
+		configExists.tempo_deslocamento = tempo_deslocamento;
+		configExists.data_retroativa = data_retroativa;
+		configExists.notificacoes = notificacoes;
 
-		await usersConfigRepository.save(userConfigs);
+		await usersConfigRepository.save(configExists);
 
-		return userConfigs;
+		return configExists;
 	}
 }
-export default CreateUserConfigsService;
+export default UpdateUserConfigsService;
