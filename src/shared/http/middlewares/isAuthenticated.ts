@@ -4,7 +4,7 @@ import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 
 interface ITokenPayload {
-	id: string;
+	user_code: string;
 	email: string;
 }
 
@@ -20,10 +20,10 @@ export default function isAuthenticated(request: Request, response: Response, ne
 	try {
 		const decodeToken = verify(token, authConfig.jwt.secret);
 
-		const { id, email } = decodeToken as ITokenPayload;
+		const { user_code, email } = decodeToken as ITokenPayload;
 
 		request.user = {
-			id,
+			user_code,
 			email,
 		};
 

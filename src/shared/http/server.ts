@@ -17,7 +17,7 @@ app.use(routes);
 
 app.use(errors()); //se o celebrate der erro, vem por aqui
 
-//Middleware de erros
+///Middleware de erros
 app.use((error: Error, request: Request, response: Response, next: NextFunction) => {
 	if (error instanceof AppError) {
 		return response.status(error.statusCode).json({

@@ -7,48 +7,50 @@ export class CreateUsers1629138793563 implements MigrationInterface {
 				name: 'users',
 				columns: [
 					{
-						name: 'id',
-						type: 'varchar',
+						name: 'user_id',
+						type: 'int',
 						isPrimary: true,
 						isNullable: false,
+						isGenerated: true,
+						generationStrategy: 'increment',
 					},
 					{
-						name: 'family_name',
-						type: 'varchar',
-					},
-					{
-						name: 'given_name',
-						type: 'varchar',
+						name: 'user_code',
+						type: 'varchar(250)',
 						isNullable: false,
 					},
 					{
 						name: 'name',
-						type: 'varchar',
+						type: 'varchar(50)',
 						isNullable: false,
 					},
 					{
+						name: 'family_name',
+						type: 'varchar(50)',
+						isNullable: true,
+					},
+					{
+						name: 'given_name',
+						type: 'varchar(45)',
+						isNullable: true,
+					},
+
+					{
 						name: 'picture',
-						type: 'varchar',
-						isNullable: false,
+						type: 'varchar(250)',
+						isNullable: true,
 					},
 					{
 						name: 'email',
-						type: 'varchar',
+						type: 'varchar(200)',
 						isUnique: true,
 						isNullable: false,
 					},
 					{
-						name: 'crefito',
-						type: 'varchar',
-					},
-					{
-						name: 'celular',
-						type: 'varchar',
-					},
-					{
-						name: 'excluido',
+						name: 'enabled',
 						type: 'boolean',
 						isNullable: true,
+						default: false,
 					},
 					{
 						name: 'created_at',

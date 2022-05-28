@@ -1,13 +1,17 @@
 import { Router } from 'express';
-import usersRouter from '@modules/users/routes/users.routes';
-import sessionsRouter from '@modules/users/routes/sessions.routes';
-import tipoAtendimentoRouter from '@modules/paciente_tipoAtendimento/routes/tipoAtendimento.routes';
-import pacienteRouter from '@modules/paciente/routes/paciente.routes';
-import agendamentoRouter from '@modules/paciente_agendamento/routes/agendamento.routes';
-import evolucaoRouter from '@modules/paciente_evolucoes/routes/evolucao.routes';
-import agendaRouter from '@modules/Agenda/routes/agenda.routes';
-import pacientePagamentosRouter from '@modules/paciente_pagamentos/routes/pagamentos.routes';
-import userConfigsRouter from '@modules/user_configs/routes/userconfigs.routes';
+import usersRouter from '@modules/users/users/routes/users.routes';
+import sessionsRouter from '@modules/users/users/routes/sessions.routes';
+import usersAddressRouter from '@modules/users/users_address/routes/usersaddress.routes';
+import usersInfosRouter from '@modules/users/users_infos/routes/usersInfos.routes';
+import clientsRouter from '@modules/clients/clients/routes/clients.routes';
+import clientAddressRouter from '@modules/clients/clients_address/routes/clientaddress.routes';
+import paymentMethodRouter from '@modules/payment_method/payment_method/routes/paymentmethod.routes';
+import paymentMethodUserRouter from '@modules/payment_method/paymentMethod_user/routes/paymentMethodUser.routes';
+import servicesTypesRouter from '@modules/services_types/routes/servicesTypes.routes';
+import appointmentsRouter from '@modules/appointments/routes/appointments.routes';
+import usersConfigsRouter from '@modules/users/users_configs/routes/usersConfigs.routes';
+import userWorkDaysRouter from '@modules/users/user_workDays/routes/userWorkDays.routes';
+import servicePaymentRouter from '@modules/service_payment/routes/servicepayment.routes';
 
 const routes = Router();
 
@@ -19,18 +23,26 @@ routes.use('/sessions', sessionsRouter);
 
 routes.use('/users', usersRouter);
 
-routes.use('/tipoAtendimento', tipoAtendimentoRouter);
+routes.use('/users/address', usersAddressRouter);
 
-routes.use('/paciente', pacienteRouter);
+routes.use('/users/infos', usersInfosRouter);
 
-routes.use('/agendamento', agendamentoRouter);
+routes.use('/users/configs', usersConfigsRouter);
 
-routes.use('/evolucao', evolucaoRouter);
+routes.use('/users/workdays/', userWorkDaysRouter);
 
-routes.use('/agenda', agendaRouter);
+routes.use('/clients', clientsRouter);
 
-routes.use('/pacientePagamentos', pacientePagamentosRouter);
+routes.use('/clients/address', clientAddressRouter);
 
-routes.use('/configs', userConfigsRouter);
+routes.use('/paymentMethodname/', paymentMethodRouter);
+
+routes.use('/paymentMethod/', paymentMethodUserRouter);
+
+routes.use('/servicesTypes', servicesTypesRouter);
+
+routes.use('/servicepayment', servicePaymentRouter);
+
+routes.use('/appointments', appointmentsRouter);
 
 export default routes;
