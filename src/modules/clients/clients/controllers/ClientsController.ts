@@ -34,6 +34,8 @@ export default class ClientsController {
 			district: address.district,
 			state: address.state,
 			country: address.country,
+			latitude: address.latitude,
+			longitude: address.longitude,
 		});
 
 		return response.json({ messsage: 'ok' });
@@ -68,6 +70,8 @@ export default class ClientsController {
 			district: address.district,
 			state: address.state,
 			country: address.country,
+			latitude: address.latitude,
+			longitude: address.longitude,
 		});
 
 		return response.json({ messsage: 'ok' });

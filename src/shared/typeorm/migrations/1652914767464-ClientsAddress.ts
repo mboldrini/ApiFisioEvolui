@@ -45,6 +45,16 @@ export class ClientsAddress1652914767464 implements MigrationInterface {
 						isNullable: true,
 					},
 					{
+						name: 'latitude',
+						type: 'varchar(100)',
+						isNullable: true,
+					},
+					{
+						name: 'longitude',
+						type: 'varchar(100)',
+						isNullable: true,
+					},
+					{
 						name: 'client_id',
 						type: 'int',
 						isNullable: false,

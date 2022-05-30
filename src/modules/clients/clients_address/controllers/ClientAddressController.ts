@@ -6,7 +6,7 @@ import UpdateClientAddressService from '../services/UpdateClientAddressService';
 
 export default class ClientsAddressController {
 	public async create(request: Request, response: Response): Promise<Response> {
-		const { address, number, city, district, state, country } = request.body;
+		const { client_id, address, number, city, district, state, country, latitude, longitude } = request.body;
 		const { user_code } = request.user;
 
 		const createClientAddress = new CreateClientAddressService();
@@ -18,14 +18,16 @@ export default class ClientsAddressController {
 			district,
 			state,
 			country,
-			client_id: 1,
+			client_id: client_id,
+			latitude,
+			longitude,
 		});
 
 		return response.json({ messsage: 'ok' });
 	}
 
 	public async update(request: Request, response: Response): Promise<Response> {
-		const { address, number, city, district, state, country } = request.body;
+		const { address, number, city, district, state, country, latitude, longitude } = request.body;
 		const { user_code } = request.user;
 		const { id } = request.params;
 
@@ -41,6 +43,8 @@ export default class ClientsAddressController {
 			district,
 			state,
 			country,
+			latitude,
+			longitude,
 		});
 
 		return response.json(clientAddress);

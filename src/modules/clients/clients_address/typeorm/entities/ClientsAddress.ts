@@ -33,6 +33,12 @@ class ClientsAddress {
 	@Column()
 	country: string;
 
+	@Column()
+	latitude: string;
+
+	@Column()
+	longitude: string;
+
 	@OneToOne(() => User)
 	@JoinColumn({ name: 'user_id' })
 	@Column()

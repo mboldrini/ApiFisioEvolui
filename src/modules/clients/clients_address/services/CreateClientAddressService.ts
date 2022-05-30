@@ -14,6 +14,8 @@ interface IRequest {
 	district?: string;
 	state?: string;
 	country?: string;
+	latitude?: string;
+	longitude?: string;
 }
 
 class CreateClientAddressService {
@@ -26,6 +28,8 @@ class CreateClientAddressService {
 		district,
 		state,
 		country,
+		latitude,
+		longitude,
 	}: IRequest): Promise<ClientsAddress> {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const clientRepo = getCustomRepository(ClientsRepository);
@@ -49,6 +53,8 @@ class CreateClientAddressService {
 			country,
 			client_id: clientExists.id,
 			user_id: userExists.user_id,
+			latitude,
+			longitude,
 		});
 
 		await clientAddressRepo.save(clientAddress);

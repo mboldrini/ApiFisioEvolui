@@ -13,6 +13,8 @@ interface IRequest {
 	district: string;
 	state: string;
 	country: string;
+	latitude: string;
+	longitude: string;
 }
 
 class UpdateClientAddressService {
@@ -25,6 +27,8 @@ class UpdateClientAddressService {
 		district,
 		state,
 		country,
+		latitude,
+		longitude,
 	}: IRequest): Promise<ClientsAddress | Object> {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const clientAddressRepo = getCustomRepository(ClientsAddressRepository);
@@ -44,6 +48,8 @@ class UpdateClientAddressService {
 		clientAddressExists.district = district;
 		clientAddressExists.state = state;
 		clientAddressExists.country = country;
+		clientAddressExists.latitude = latitude;
+		clientAddressExists.longitude = longitude;
 
 		await clientAddressRepo.save(clientAddressExists);
 

@@ -31,6 +31,8 @@ class GetClientAddressService {
 			district: clientAddressExists.district,
 			state: clientAddressExists.state,
 			country: clientAddressExists.country,
+			latitude: clientAddressExists.latitude,
+			longitude: clientAddressExists.longitude,
 			created_at: clientAddressExists.created_at.toLocaleString(TIMEZONE_LANGUAGE),
 			updated_at: clientAddressExists.updated_at.toLocaleString(TIMEZONE_LANGUAGE),
 		};
