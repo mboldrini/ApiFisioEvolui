@@ -68,7 +68,7 @@ class ShowUserService {
 			created_at: user.created_at.toLocaleString(TIMEZONE_LANGUAGE, TIMEZONE_LOCALE),
 			address: userAddressMap,
 			configs: userConfigsMap,
-			infos: userInfosMap,
+			personal_infos: userInfosMap,
 		};
 
 		return mapUser;
