@@ -1,3 +1,4 @@
+import { UsersInfosRepository } from './../../users_infos/typeorm/repositories/UsersInfosRepository';
 import { UsersConfigsRepository } from './../../users_configs/typeorm/repositories/UsersConfigsRepository';
 import { number } from 'joi';
 import { UsersAddressRepository } from './../../users_address/typeorm/repositories/UsersAddressRepository';
@@ -17,6 +18,7 @@ class ShowUserService {
 		const userRepository = getCustomRepository(UsersRepository);
 		const userAddressRepo = getCustomRepository(UsersAddressRepository);
 		const userConfigsRepo = getCustomRepository(UsersConfigsRepository);
+		const userInfosRepo = getCustomRepository(UsersInfosRepository);
 
 		const user = await userRepository.findOne({ user_code });
 		if (!user) throw new AppError("This user don't exist");
@@ -43,6 +45,18 @@ class ShowUserService {
 			premium_until: userConfigs?.premium_until.toLocaleString(TIMEZONE_LANGUAGE),
 		};
 
+		const userInfosExist = await userInfosRepo.findOne({ user_id: user.user_id });
+		const userInfosMap = {
+			description: userInfosExist?.description,
+			professional_mail: userInfosExist?.professional_mail,
+			celphone: userInfosExist?.celphone,
+			second_celphone: userInfosExist?.second_celphone,
+			website: userInfosExist?.website,
+			instagram: userInfosExist?.instagram,
+			twitter: userInfosExist?.twitter,
+			tiktok: userInfosExist?.tiktok,
+		};
+
 		let mapUser = {
 			user_code: user.user_code,
 			name: user.name,
@@ -54,6 +68,7 @@ class ShowUserService {
 			created_at: user.created_at.toLocaleString(TIMEZONE_LANGUAGE, TIMEZONE_LOCALE),
 			address: userAddressMap,
 			configs: userConfigsMap,
+			infos: userInfosMap,
 		};
 
 		return mapUser;
