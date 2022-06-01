@@ -36,6 +36,8 @@ servicePaymentRouter.patch(
 	servicePaymentController.update,
 );
 
+servicePaymentRouter.get('/all', isAuthenticated, servicePaymentController.getAll);
+
 servicePaymentRouter.get('/:id', isAuthenticated, servicePaymentController.get);
 
 servicePaymentRouter.patch(

@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import CancelServicePaymentService from '../services/CancelServicePaymentService';
 import CreateServicePaymentService from '../services/CreateServicePaymentService';
 import DeleteServicePaymentService from '../services/DeleteServicePaymentService';
+import GetAllServicesPaymentService from '../services/GetAllServicesPaymentService';
 import GetServicePaymentService from '../services/GetServicePaymentService';
 import UpdateServicePaymentService from '../services/UpdateServicePaymentService';
 
@@ -25,7 +26,7 @@ export default class ServicePaymentController {
 	}
 
 	public async update(request: Request, response: Response): Promise<Response> {
-		const { appointment_id, comments, status, scheduled, paymentMethod_id } = request.body;
+		const { appointment_id, comments, status, scheduled, serviceType_id } = request.body;
 		const { user_code } = request.user;
 		const { id } = request.params;
 
@@ -39,7 +40,7 @@ export default class ServicePaymentController {
 			comments,
 			status,
 			scheduled,
-			paymentMethod_id,
+			serviceType_id,
 		});
 
 		return response.json(appointment);
@@ -54,6 +55,17 @@ export default class ServicePaymentController {
 		const servicePayment = new GetServicePaymentService();
 		const appointment = await servicePayment.get({
 			id: payment_id,
+			user_code,
+		});
+
+		return response.json(appointment);
+	}
+
+	public async getAll(request: Request, response: Response): Promise<Response> {
+		const { user_code } = request.user;
+
+		const servicePayment = new GetAllServicesPaymentService();
+		const appointment = await servicePayment.get({
 			user_code,
 		});
 
