@@ -12,7 +12,7 @@ paymentMethodUserRouter.post(
 	celebrate({
 		[Segments.BODY]: {
 			name: Joi.string().required(),
-			description: Joi.string().required(),
+			description: Joi.string().optional(),
 		},
 	}),
 	paymentMethodUserController.create,
