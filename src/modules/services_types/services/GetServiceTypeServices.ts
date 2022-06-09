@@ -26,7 +26,7 @@ class GetServicesTypeService {
 		if (!serviceExist) throw new AppError("This service don't exist", 404);
 
 		const paymentMethodUserExist = await paymentMethodUserRepo.findOne({
-			id: serviceExist.id,
+			id: serviceExist.paymentMethod_id,
 			user_id: userExist.user_id,
 		});
 		if (!paymentMethodUserExist) throw new AppError('Tipo de pagamento não encontrado', 404);

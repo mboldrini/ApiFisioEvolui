@@ -27,10 +27,12 @@ class ServicesTypes {
 	@Column()
 	price: number;
 
+	@Column({ name: 'user_id' })
 	@OneToOne(() => User)
 	@JoinColumn({ name: 'user_id' })
 	user_id: number;
 
+	@Column({ name: 'paymentMethod_id' })
 	@OneToOne(() => PaymentMethodUser)
 	@JoinColumn({ name: 'paymentMethod_id' })
 	paymentMethod_id: number;
