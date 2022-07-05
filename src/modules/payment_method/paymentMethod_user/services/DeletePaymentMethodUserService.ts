@@ -25,11 +25,7 @@ class DeletePaymentMethodUserService {
 			user_id: userExist.user_id,
 			paymentMethod_id: paymentUserExists.id,
 		});
-		if (serviceExist[1] > 0)
-			throw new AppError(
-				'It is not possible to exclude this type of payment as there is one or more services using it',
-				404,
-			);
+		if (serviceExist[1] > 0) throw new AppError('Não é possível excluir uma forma de pagamento em uso', 404);
 
 		await paymentMethodUserRepo.delete(paymentUserExists);
 
