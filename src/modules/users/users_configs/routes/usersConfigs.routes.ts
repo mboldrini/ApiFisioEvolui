@@ -6,25 +6,25 @@ import UserConfigsController from '../controllers/UserConfigsController';
 const usersConfigsRouter = Router();
 const usersConfigsController = new UserConfigsController();
 
-usersConfigsRouter.post(
-	'/',
-	isAuthenticated,
-	celebrate({
-		[Segments.BODY]: {
-			start_workHour: Joi.string().optional(),
-			end_workHour: Joi.string().optional(),
-			allow_retroactiveDate: Joi.boolean().optional(),
-			allow_notifications: Joi.boolean().optional(),
-			schedule_startDay: Joi.boolean().optional(),
-			user_premium: Joi.boolean().optional(),
-			premium_type: Joi.number().optional(),
-			premium_until: Joi.string().optional(),
-		},
-	}),
-	usersConfigsController.create,
-);
+// usersConfigsRouter.post(
+// 	'/',
+// 	isAuthenticated,
+// 	celebrate({
+// 		[Segments.BODY]: {
+// 			start_workHour: Joi.string().optional(),
+// 			end_workHour: Joi.string().optional(),
+// 			allow_retroactiveDate: Joi.boolean().optional(),
+// 			allow_notifications: Joi.boolean().optional(),
+// 			schedule_startDay: Joi.boolean().optional(),
+// 			user_premium: Joi.boolean().optional(),
+// 			premium_type: Joi.number().optional(),
+// 			premium_until: Joi.string().optional(),
+// 		},
+// 	}),
+// 	usersConfigsController.create,
+// );
 
-usersConfigsRouter.patch(
+usersConfigsRouter.post(
 	'/',
 	isAuthenticated,
 	celebrate({

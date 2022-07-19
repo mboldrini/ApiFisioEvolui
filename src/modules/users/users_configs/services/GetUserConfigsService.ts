@@ -40,7 +40,7 @@ class GetUserConfigsService {
 			schedule_startDay: userConfigsExist.schedule_startDay,
 			user_premium: userConfigsExist.user_premium,
 			premium_type: userConfigsExist.premium_type,
-			premium_until: userConfigsExist.premium_until.toLocaleString(TIMEZONE_LANGUAGE),
+			premium_until: TIMEZONE_LANGUAGE,
 			created_at: userConfigsExist.created_at.toLocaleString(TIMEZONE_LANGUAGE),
 			updated_at: userConfigsExist.updated_at.toLocaleString(TIMEZONE_LANGUAGE),
 		};
