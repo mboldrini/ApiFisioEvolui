@@ -26,7 +26,6 @@ interface IReturn {
 	schedule_startDay: boolean;
 	user_premium: boolean;
 	premium_type: number;
-	premium_until: string;
 }
 
 class UpdateUserConfigsService {
@@ -39,7 +38,6 @@ class UpdateUserConfigsService {
 		schedule_startDay,
 		user_premium,
 		premium_type,
-		premium_until,
 	}: IRequest): Promise<IReturn> {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const userConfigRepo = getCustomRepository(UsersConfigsRepository);
@@ -57,7 +55,6 @@ class UpdateUserConfigsService {
 		userConfigsExist.schedule_startDay = schedule_startDay;
 		userConfigsExist.user_premium = user_premium;
 		userConfigsExist.premium_type = premium_type;
-		userConfigsExist.premium_until = premium_until;
 
 		await userConfigRepo.save(userConfigsExist);
 
@@ -69,9 +66,6 @@ class UpdateUserConfigsService {
 			schedule_startDay: userConfigsExist.schedule_startDay,
 			user_premium: userConfigsExist.user_premium,
 			premium_type: userConfigsExist.premium_type,
-			premium_until: userConfigsExist.premium_until.toLocaleString(TIMEZONE_LANGUAGE),
-			created_at: userConfigsExist.created_at.toLocaleString(TIMEZONE_LANGUAGE),
-			updated_at: userConfigsExist.updated_at.toLocaleString(TIMEZONE_LANGUAGE),
 		};
 
 		return updatedConfigs;

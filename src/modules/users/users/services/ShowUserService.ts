@@ -23,6 +23,8 @@ class ShowUserService {
 		const user = await userRepository.findOne({ user_code });
 		if (!user) throw new AppError("This user don't exist");
 
+		console.log('AAAA');
+
 		const userAddress = await userAddressRepo.findOne({ user_id: user.user_id });
 		const userAddressMap = {
 			address: userAddress?.address,
