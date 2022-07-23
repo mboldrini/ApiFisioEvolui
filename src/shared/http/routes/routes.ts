@@ -16,6 +16,7 @@ import diagnosticRouter from '@modules/clients/diagnostic/routes/diagnostic.rout
 import complaintRouter from '@modules/clients/complaint/routes/complaint.routes';
 import clientHdaRouter from '@modules/clients/hda/routes/clientHda.routes';
 import clientHppRouter from '@modules/clients/hpp/routes/clientHpp.routes';
+import functionalDiagnosisRouter from '@modules/clients/funcionalDiagnosis/routes/functionalDiagnosis.routes';
 
 const routes = Router();
 
@@ -44,6 +45,7 @@ routes.use('/clients/diagnostic', diagnosticRouter);
 routes.use('/clients/complaint', complaintRouter);
 routes.use('/clients/hda', clientHdaRouter);
 routes.use('/clients/hpp', clientHppRouter);
+routes.use('/clients/fcdiagnosis', functionalDiagnosisRouter);
 
 routes.use('/paymentMethodname/', paymentMethodRouter);
 
