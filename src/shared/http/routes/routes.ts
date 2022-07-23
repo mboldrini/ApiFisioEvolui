@@ -14,6 +14,7 @@ import userWorkDaysRouter from '@modules/users/user_workDays/routes/userWorkDays
 import servicePaymentRouter from '@modules/service_payment/routes/servicepayment.routes';
 import diagnosticRouter from '@modules/clients/diagnostic/routes/diagnostic.routes';
 import complaintRouter from '@modules/clients/complaint/routes/complaint.routes';
+import clientHdaRouter from '@modules/clients/hda/routes/clientHda.routes';
 
 const routes = Router();
 
@@ -40,6 +41,8 @@ routes.use('/clients/address', clientAddressRouter);
 routes.use('/clients/diagnostic', diagnosticRouter);
 
 routes.use('/clients/complaint', complaintRouter);
+
+routes.use('/clients/hda', clientHdaRouter);
 
 routes.use('/paymentMethodname/', paymentMethodRouter);
 
