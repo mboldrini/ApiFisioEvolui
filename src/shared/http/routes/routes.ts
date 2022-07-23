@@ -13,6 +13,7 @@ import usersConfigsRouter from '@modules/users/users_configs/routes/usersConfigs
 import userWorkDaysRouter from '@modules/users/user_workDays/routes/userWorkDays.routes';
 import servicePaymentRouter from '@modules/service_payment/routes/servicepayment.routes';
 import diagnosticRouter from '@modules/clients/diagnostic/routes/diagnostic.routes';
+import complaintRouter from '@modules/clients/complaint/routes/complaint.routes';
 
 const routes = Router();
 
@@ -36,7 +37,9 @@ routes.use('/clients', clientsRouter);
 
 routes.use('/clients/address', clientAddressRouter);
 
-routes.use('/diagnostic', diagnosticRouter);
+routes.use('/clients/diagnostic', diagnosticRouter);
+
+routes.use('/clients/complaint', complaintRouter);
 
 routes.use('/paymentMethodname/', paymentMethodRouter);
 
