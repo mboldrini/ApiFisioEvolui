@@ -10,13 +10,13 @@ import {
 import User from '../../../../users/users/typeorm/entities/User';
 import Client from '../../../clients/typeorm/entities/Clients';
 
-@Entity('clients_clinicalDiagnosis')
-class Diagnostic {
+@Entity('clients_funcionalDiagnosis')
+class ClientFunctionalDiagnosis {
 	@PrimaryGeneratedColumn('increment')
 	id: number;
 
 	@Column()
-	diagnostic: string;
+	diagnosis: string;
 
 	@Column()
 	comments: string;
@@ -40,4 +40,4 @@ class Diagnostic {
 	@UpdateDateColumn({ type: 'timestamp' })
 	updated_at: Date;
 }
-export default Diagnostic;
+export default ClientFunctionalDiagnosis;
