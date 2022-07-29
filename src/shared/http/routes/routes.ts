@@ -18,6 +18,7 @@ import clientHdaRouter from '@modules/clients/hda/routes/clientHda.routes';
 import clientHppRouter from '@modules/clients/hpp/routes/clientHpp.routes';
 import functionalDiagnosisRouter from '@modules/clients/funcionalDiagnosis/routes/functionalDiagnosis.routes';
 import clientPEvalRouter from '@modules/clients/physical_evaluation/routes/clientPhysicalEval.routes';
+import clientResEvalRouter from '@modules/clients/respiratory_evaluation/routes/clientRespiratoryEval.routes';
 
 const routes = Router();
 
@@ -48,6 +49,7 @@ routes.use('/clients/hda', clientHdaRouter);
 routes.use('/clients/hpp', clientHppRouter);
 routes.use('/clients/fcdiagnosis', functionalDiagnosisRouter);
 routes.use('/clients/pevaluation', clientPEvalRouter);
+routes.use('/clients/respevaluation', clientResEvalRouter);
 
 routes.use('/paymentMethodname/', paymentMethodRouter);
 
