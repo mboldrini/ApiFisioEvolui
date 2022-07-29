@@ -1,9 +1,10 @@
-import { ClientPhysicalEvalRepository } from './../typeorm/repositories/PhysicalEval';
+import { ClientRespiratoryEvalRepository } from './../typeorm/repositories/RespiratoryEval';
+import { ClientPhysicalEvalRepository } from './../../physical_evaluation/typeorm/repositories/PhysicalEval';
 import { UsersRepository } from './../../../users/users/typeorm/repositories/UsersRepository';
 import { ClientsRepository } from './../../clients/typeorm/repositories/ClientsRepository';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
-import ClientPhysicalEval from '../typeorm/entities/PhysicalEvaluation';
+import ClientRespiratoryEval from '../typeorm/entities/RespiratoryEvatuation';
 
 interface IRequest {
 	id: number;
@@ -14,7 +15,7 @@ interface IRequest {
 	user_code: string;
 }
 
-class UpdatePhysicalEvalService {
+class UpdateRespiratoryEvalService {
 	public async execute({
 		id,
 		evaluation,
@@ -22,10 +23,10 @@ class UpdatePhysicalEvalService {
 		date,
 		client_id,
 		user_code,
-	}: IRequest): Promise<ClientPhysicalEval> {
+	}: IRequest): Promise<ClientRespiratoryEval> {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const clientsRepo = getCustomRepository(ClientsRepository);
-		const hppRepo = getCustomRepository(ClientPhysicalEvalRepository);
+		const respRepo = getCustomRepository(ClientRespiratoryEvalRepository);
 
 		const userExists = await usersRepo.findOne({ user_code });
 		if (!userExists) throw new AppError("User don't exist", 404);
@@ -33,18 +34,18 @@ class UpdatePhysicalEvalService {
 		const clientExist = await clientsRepo.findOne({ id: client_id, user_id: userExists.user_id });
 		if (!clientExist) throw new AppError("This client don't exist", 404);
 
-		const hppExist = await hppRepo.findOne({ id, client_id: clientExist.id });
-		if (!hppExist) throw new AppError('Essa avaliação física não existe!', 404);
+		const respExist = await respRepo.findOne({ id, client_id: clientExist.id });
+		if (!respExist) throw new AppError('Essa  não existe!', 404);
 
-		hppExist.evaluation = evaluation;
+		respExist.evaluation = evaluation;
 		if (comments) {
-			hppExist.comments = comments;
+			respExist.comments = comments;
 		}
-		hppExist.date = date;
+		respExist.date = date;
 
-		await hppRepo.save(hppExist);
+		await respRepo.save(respExist);
 
-		return hppExist;
+		return respExist;
 	}
 }
-export default UpdatePhysicalEvalService;
+export default UpdateRespiratoryEvalService;
