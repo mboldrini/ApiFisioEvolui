@@ -12,6 +12,9 @@ interface IRequest {
 	celphone?: string;
 	second_celphone?: string;
 	instagram?: string;
+	address: string;
+	latitude?: string;
+	longitude?: string;
 }
 
 class CreateClientService {
@@ -23,6 +26,9 @@ class CreateClientService {
 		celphone,
 		second_celphone,
 		instagram,
+		address,
+		latitude,
+		longitude,
 	}: IRequest): Promise<Clients> {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const clientRepo = getCustomRepository(ClientsRepository);
@@ -30,8 +36,8 @@ class CreateClientService {
 		const userExists = await usersRepo.findOne({ user_code });
 		if (!userExists) throw new AppError("User don't exist", 404);
 
-		const clientExists = await clientRepo.findOne({ email: email });
-		if (clientExists) throw new AppError('Alread exist a client with this email', 404);
+		const clientExists = await clientRepo.findOne({ email: email, user_id: userExists.user_id });
+		if (clientExists) throw new AppError('Já existe um paciente cadastrado com esse email', 404);
 
 		const clientInfos = clientRepo.create({
 			name: name,
@@ -40,6 +46,9 @@ class CreateClientService {
 			celphone,
 			second_celphone,
 			instagram,
+			address,
+			latitude,
+			longitude,
 			user_id: userExists.user_id,
 			enabled: true,
 		});

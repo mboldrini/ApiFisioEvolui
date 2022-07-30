@@ -33,6 +33,15 @@ class Clients {
 	instagram: string;
 
 	@Column()
+	address: string;
+
+	@Column()
+	latitude: string;
+
+	@Column()
+	longitude: string;
+
+	@Column()
 	enabled: boolean;
 
 	@OneToOne(() => User)

@@ -1,5 +1,3 @@
-import CreateClientAddressService from '@modules/clients/clients_address/services/CreateClientAddressService';
-import UpdateClientAddressService from '@modules/clients/clients_address/services/UpdateClientAddressService';
 import CreateComplaintService from '@modules/clients/complaint/services/CreateComplaintService';
 import CreateDiagnosticService from '@modules/clients/diagnostic/services/CreateDiagnosticService';
 import CreateFunctionalDiagnosisService from '@modules/clients/funcionalDiagnosis/services/CreateFunctionalDiagnosisService';
@@ -16,16 +14,6 @@ import GetAllClientsService from '../services/GetAllClientsService';
 import GetClientService from '../services/GetClientService.ts';
 import UpdateClientService from '../services/UpdateClientService';
 
-interface IAddress {
-	address?: string;
-	number?: number;
-	city?: string;
-	district?: string;
-	state?: string;
-	country?: string;
-	latitude?: string;
-	longitude?: string;
-}
 interface IDiagnostic {
 	diagnostic: string;
 	date: Date;
@@ -70,7 +58,9 @@ interface IParams {
 	celphone: string;
 	second_celphone: string;
 	instagram?: string;
-	address: IAddress;
+	address: string;
+	latitude?: string;
+	longitude?: string;
 	diagnostic?: IDiagnostic;
 	complaint?: IComplaint;
 	hda?: IHda;
@@ -92,6 +82,8 @@ export default class ClientsController {
 			second_celphone,
 			instagram,
 			address,
+			latitude,
+			longitude,
 			diagnostic,
 			complaint,
 			hda,
@@ -113,20 +105,9 @@ export default class ClientsController {
 			celphone,
 			second_celphone,
 			instagram,
-		});
-
-		const createAddress = new CreateClientAddressService();
-		const newAddress = await createAddress.execute({
-			client_id: newClient.id,
-			user_code: user_code,
-			address: address.address,
-			number: address.number,
-			city: address.city,
-			district: address.district,
-			state: address.state,
-			country: address.country,
-			latitude: address.latitude,
-			longitude: address.longitude,
+			address,
+			latitude,
+			longitude,
 		});
 
 		let newDiagnosis;
@@ -240,7 +221,6 @@ export default class ClientsController {
 
 		const retorno = {
 			client: newClient,
-			address: newAddress,
 			diagnostic: newDiagnosis,
 			complaint: newComplaint,
 			hda: newHda,
@@ -256,7 +236,7 @@ export default class ClientsController {
 	}
 
 	public async update(request: Request, response: Response): Promise<Response> {
-		const { name, document, email, celphone, second_celphone, instagram, address } = request.body;
+		const { name, document, email, celphone, second_celphone, instagram } = request.body;
 		const { id } = request.params;
 		const { user_code } = request.user;
 
@@ -272,20 +252,6 @@ export default class ClientsController {
 			celphone,
 			second_celphone,
 			instagram,
-		});
-
-		const updateAddressClient = new UpdateClientAddressService();
-		const updateAddress = await updateAddressClient.execute({
-			client_id: updatedClient.id,
-			user_code: user_code,
-			address: address.address,
-			number: address.number,
-			city: address.city,
-			district: address.district,
-			state: address.state,
-			country: address.country,
-			latitude: address.latitude,
-			longitude: address.longitude,
 		});
 
 		return response.json({ messsage: 'ok' });

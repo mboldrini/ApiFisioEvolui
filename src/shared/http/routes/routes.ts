@@ -4,7 +4,6 @@ import sessionsRouter from '@modules/users/users/routes/sessions.routes';
 import usersAddressRouter from '@modules/users/users_address/routes/usersaddress.routes';
 import usersInfosRouter from '@modules/users/users_infos/routes/usersInfos.routes';
 import clientsRouter from '@modules/clients/clients/routes/clients.routes';
-import clientAddressRouter from '@modules/clients/clients_address/routes/clientaddress.routes';
 import paymentMethodRouter from '@modules/payment_method/payment_method/routes/paymentmethod.routes';
 import paymentMethodUserRouter from '@modules/payment_method/paymentMethod_user/routes/paymentMethodUser.routes';
 import servicesTypesRouter from '@modules/services_types/routes/servicesTypes.routes';
@@ -41,8 +40,6 @@ routes.use('/users/configs', usersConfigsRouter);
 routes.use('/users/workdays/', userWorkDaysRouter);
 
 routes.use('/clients', clientsRouter);
-
-routes.use('/clients/address', clientAddressRouter);
 
 routes.use('/clients/diagnostic', diagnosticRouter);
 
