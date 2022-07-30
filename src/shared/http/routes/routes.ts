@@ -20,6 +20,7 @@ import functionalDiagnosisRouter from '@modules/clients/funcionalDiagnosis/route
 import clientPEvalRouter from '@modules/clients/physical_evaluation/routes/clientPhysicalEval.routes';
 import clientResEvalRouter from '@modules/clients/respiratory_evaluation/routes/clientRespiratoryEval.routes';
 import clientObjectiveRouter from '@modules/clients/objectives_goals/routes/clientObjectives.routes';
+import guidelineRouter from '@modules/clients/guideline/routes/guidelines.routes';
 
 const routes = Router();
 
@@ -52,6 +53,7 @@ routes.use('/clients/fcdiagnosis', functionalDiagnosisRouter);
 routes.use('/clients/pevaluation', clientPEvalRouter);
 routes.use('/clients/respevaluation', clientResEvalRouter);
 routes.use('/clients/objectives', clientObjectiveRouter);
+routes.use('/clients/guideline', guidelineRouter);
 
 routes.use('/paymentMethodname/', paymentMethodRouter);
 
