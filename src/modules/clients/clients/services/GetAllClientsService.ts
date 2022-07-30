@@ -39,6 +39,9 @@ class GetAllClientsService {
 			celphone: client.celphone,
 			second_celphone: client.second_celphone,
 			instagram: client.instagram,
+			address: client.address,
+			latitude: client.latitude,
+			longitude: client.longitude,
 			created_at: client.created_at.toLocaleString(TIMEZONE_LANGUAGE),
 			updated_at: client.updated_at.toLocaleString(TIMEZONE_LANGUAGE),
 		}));

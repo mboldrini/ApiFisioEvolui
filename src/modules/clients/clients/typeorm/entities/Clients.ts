@@ -1,3 +1,4 @@
+import ServicesTypes from '@modules/services_types/typeorm/entities/ServicesTypes';
 import {
 	Column,
 	CreateDateColumn,
@@ -47,6 +48,11 @@ class Clients {
 	@OneToOne(() => User)
 	@JoinColumn({ name: 'user_id' })
 	user_id: number;
+
+	@Column({ name: 'serviceType_id' })
+	@OneToOne(() => ServicesTypes)
+	@JoinColumn({ name: 'serviceType_id' })
+	serviceType_id: number;
 
 	@CreateDateColumn({ type: 'timestamp' })
 	created_at: Date;

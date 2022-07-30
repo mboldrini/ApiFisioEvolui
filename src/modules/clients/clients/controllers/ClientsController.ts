@@ -59,6 +59,7 @@ interface IParams {
 	second_celphone: string;
 	instagram?: string;
 	address: string;
+	serviceType_id: number;
 	latitude?: string;
 	longitude?: string;
 	diagnostic?: IDiagnostic;
@@ -82,6 +83,7 @@ export default class ClientsController {
 			second_celphone,
 			instagram,
 			address,
+			serviceType_id,
 			latitude,
 			longitude,
 			diagnostic,
@@ -105,6 +107,7 @@ export default class ClientsController {
 			celphone,
 			second_celphone,
 			instagram,
+			serviceType_id,
 			address,
 			latitude,
 			longitude,
@@ -236,7 +239,18 @@ export default class ClientsController {
 	}
 
 	public async update(request: Request, response: Response): Promise<Response> {
-		const { name, document, email, celphone, second_celphone, instagram } = request.body;
+		const {
+			name,
+			document,
+			email,
+			celphone,
+			second_celphone,
+			instagram,
+			serviceType_id,
+			address,
+			latitude,
+			longitude,
+		} = request.body;
 		const { id } = request.params;
 		const { user_code } = request.user;
 
@@ -252,6 +266,10 @@ export default class ClientsController {
 			celphone,
 			second_celphone,
 			instagram,
+			serviceType_id,
+			address,
+			latitude,
+			longitude,
 		});
 
 		return response.json({ messsage: 'ok' });

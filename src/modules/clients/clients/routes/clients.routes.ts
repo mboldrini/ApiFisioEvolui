@@ -20,6 +20,7 @@ clientsRouter.post(
 			address: Joi.string().required(),
 			latitude: Joi.string().optional(),
 			longitude: Joi.string().optional(),
+			serviceType_id: Joi.number().required(),
 			diagnostic: Joi.object().optional().keys({
 				diagnostic: Joi.string().required(),
 				date: Joi.date().required(),
@@ -72,6 +73,10 @@ clientsRouter.patch(
 			celphone: Joi.string().required(),
 			second_celphone: Joi.string().optional(),
 			instagram: Joi.string().optional(),
+			address: Joi.string().required(),
+			latitude: Joi.string().optional(),
+			longitude: Joi.string().optional(),
+			serviceType_id: Joi.number().required(),
 		},
 	}),
 	clientsController.update,
