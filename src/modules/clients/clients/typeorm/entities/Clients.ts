@@ -19,6 +19,9 @@ class Clients {
 	name: string;
 
 	@Column()
+	dataNascimento: Date;
+
+	@Column()
 	document: string;
 
 	@Column()

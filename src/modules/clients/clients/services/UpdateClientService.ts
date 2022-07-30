@@ -1,3 +1,4 @@
+import { TIMEZONE_LANGUAGE } from './../../../../shared/DTO';
 import { ServicesTypesRepository } from '@modules/services_types/typeorm/repositories/ServicesTypesRepository';
 import { ClientsRepository } from '../typeorm/repositories/ClientsRepository';
 import { UsersRepository } from '@modules/users/users/typeorm/repositories/UsersRepository';
@@ -9,6 +10,7 @@ interface IRequest {
 	id: number;
 	user_code: string;
 	name: string;
+	dataNascimento: Date;
 	document: string;
 	email: string;
 	celphone: string;
@@ -25,6 +27,7 @@ class UpdateClientService {
 		id,
 		user_code,
 		name,
+		dataNascimento,
 		document,
 		email,
 		celphone,
@@ -49,6 +52,7 @@ class UpdateClientService {
 		if (!serviceExists) throw new AppError('O tipo de atendimento informado não existe.');
 
 		clientExist.name = name;
+		clientExist.dataNascimento = dataNascimento;
 		clientExist.document = document;
 		clientExist.email = email;
 		clientExist.celphone = celphone;

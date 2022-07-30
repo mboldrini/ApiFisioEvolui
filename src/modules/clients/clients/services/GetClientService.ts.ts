@@ -47,6 +47,7 @@ class GetClientService {
 		let client = {
 			id: clientExist.id,
 			name: clientExist.name,
+			dataNascimento: clientExist.dataNascimento,
 			document: clientExist.document,
 			email: clientExist.email,
 			celphone: clientExist.celphone,

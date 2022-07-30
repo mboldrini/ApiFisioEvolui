@@ -53,6 +53,7 @@ interface IGuideline {
 
 interface IParams {
 	name: string;
+	dataNascimento: Date;
 	document: string;
 	email: string;
 	celphone: string;
@@ -77,6 +78,7 @@ export default class ClientsController {
 	public async create(request: Request, response: Response): Promise<Response> {
 		const {
 			name,
+			dataNascimento,
 			document,
 			email,
 			celphone,
@@ -102,6 +104,7 @@ export default class ClientsController {
 		const newClient = await createClient.execute({
 			user_code,
 			name,
+			dataNascimento,
 			document,
 			email,
 			celphone,
@@ -241,6 +244,7 @@ export default class ClientsController {
 	public async update(request: Request, response: Response): Promise<Response> {
 		const {
 			name,
+			dataNascimento,
 			document,
 			email,
 			celphone,
@@ -261,6 +265,7 @@ export default class ClientsController {
 			id: client_id,
 			user_code,
 			name,
+			dataNascimento,
 			document,
 			email,
 			celphone,

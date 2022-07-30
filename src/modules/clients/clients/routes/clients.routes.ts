@@ -12,6 +12,7 @@ clientsRouter.post(
 	celebrate({
 		[Segments.BODY]: {
 			name: Joi.string().required(),
+			dataNascimento: Joi.date().required(),
 			document: Joi.string().optional(),
 			email: Joi.string().optional(),
 			celphone: Joi.string().required(),
@@ -68,6 +69,7 @@ clientsRouter.patch(
 	celebrate({
 		[Segments.BODY]: {
 			name: Joi.string().required(),
+			dataNascimento: Joi.date().required(),
 			document: Joi.string().optional(),
 			email: Joi.string().optional(),
 			celphone: Joi.string().required(),

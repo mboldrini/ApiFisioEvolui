@@ -8,6 +8,7 @@ import Clients from '../typeorm/entities/Clients';
 interface IRequest {
 	user_code: string;
 	name: string;
+	dataNascimento: Date;
 	document?: string;
 	email?: string;
 	celphone?: string;
@@ -23,6 +24,7 @@ class CreateClientService {
 	public async execute({
 		user_code,
 		name,
+		dataNascimento,
 		document,
 		email,
 		celphone,
@@ -51,6 +53,7 @@ class CreateClientService {
 
 		const clientInfos = clientRepo.create({
 			name: name,
+			dataNascimento,
 			document,
 			email,
 			celphone,

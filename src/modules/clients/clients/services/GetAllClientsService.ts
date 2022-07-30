@@ -34,6 +34,7 @@ class GetAllClientsService {
 		let clientList = clientsList.map(client => ({
 			id: client.id,
 			name: client.name,
+			dataNascimento: client.dataNascimento,
 			document: client.document,
 			email: client.email,
 			celphone: client.celphone,
