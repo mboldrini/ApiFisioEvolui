@@ -27,6 +27,42 @@ clientsRouter.post(
 				latitude: Joi.string().optional(),
 				longitude: Joi.string().optional(),
 			}),
+			diagnostic: Joi.object().optional().keys({
+				diagnostic: Joi.string().required(),
+				date: Joi.date().required(),
+			}),
+			complaint: Joi.object().optional().keys({
+				complaint: Joi.string().required(),
+				date: Joi.date().required(),
+			}),
+			hda: Joi.object().optional().keys({
+				hda: Joi.string().required(),
+				date: Joi.date().required(),
+			}),
+			hpp: Joi.object().optional().keys({
+				hpp: Joi.string().required(),
+				date: Joi.date().required(),
+			}),
+			funcionalDiagnosis: Joi.object().optional().keys({
+				diagnostic: Joi.string().required(),
+				date: Joi.date().required(),
+			}),
+			physicalEval: Joi.object().optional().keys({
+				evaluation: Joi.string().required(),
+				date: Joi.date().required(),
+			}),
+			respiratoryEval: Joi.object().optional().keys({
+				evaluation: Joi.string().required(),
+				date: Joi.date().required(),
+			}),
+			objective: Joi.object().optional().keys({
+				objective: Joi.string().required(),
+				date: Joi.date().required(),
+			}),
+			guideline: Joi.object().optional().keys({
+				guideline: Joi.string().required(),
+				date: Joi.date().required(),
+			}),
 		},
 	}),
 	clientsController.create,
