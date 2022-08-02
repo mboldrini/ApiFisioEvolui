@@ -44,8 +44,8 @@ class GetAppointmentAvailabilityService {
 		const userConfigs = await userConfigsRepo.findOne({ user_id: userExist.user_id });
 		if (!userConfigs) throw new AppError("Don't exist an user config for this user", 404);
 
-		const clientExist = await clientRepo.findOne({ id: client_id });
-		if (!clientExist) throw new AppError("This client don't exist");
+		// const clientExist = await clientRepo.findOne({ id: client_id });
+		// if (!clientExist) throw new AppError("This client don't exist");
 
 		const serviceTypeExist = await serviceTypeRepo.findOne({ id: serviceType_id });
 		if (!serviceTypeExist) throw new AppError("This service type don't exist", 404);
@@ -66,42 +66,46 @@ class GetAppointmentAvailabilityService {
 			price: serviceTypeExist?.price,
 			scheduled: true,
 			user_id: userExist?.user_id,
-			client_id,
+			// client_id,
 			serviceType_id,
 		};
 
-		if (VerifyAllDaySchedules(allDayAppointments, theAppointment)) {
-			return {
-				available: true,
-			};
-		} else {
-			let infos = {
-				startHour: workDayInfos.start_hour,
-				endHour: workDayInfos.end_hour,
-				serviceDuration: serviceTypeExist.duration,
-				dateScheduled: date_scheduled,
-				user_id: userExist.user_id,
-				serviceType_id: serviceTypeExist.id,
-				client_id: clientExist.id,
-			};
+		let isAvailable = VerifyAllDaySchedules(allDayAppointments, theAppointment);
 
-			let allPossibleHours = GetAllPossibleAppointmentsHours(infos);
+		let infos = {
+			startHour: workDayInfos.start_hour,
+			endHour: workDayInfos.end_hour,
+			serviceDuration: serviceTypeExist.duration,
+			dateScheduled: date_scheduled,
+			user_id: userExist.user_id,
+			serviceType_id: serviceTypeExist.id,
+			// client_id: clientExist.id,
+		};
 
-			let availableHoursList = [] as IAppointmentsList[];
+		let allPossibleHours = GetAllPossibleAppointmentsHours(infos);
 
-			allPossibleHours.forEach(hoursAvailabled => {
-				if (VerifyAllDaySchedules(allDayAppointments, hoursAvailabled)) {
-					availableHoursList.push(hoursAvailabled);
-				}
-			});
+		let availableHoursList = [] as IAppointmentsList[];
 
-			let result = {
-				available: false,
-				hours_availabled: availableHoursList,
-			};
+		allPossibleHours.forEach(hoursAvailabled => {
+			if (VerifyAllDaySchedules(allDayAppointments, hoursAvailabled)) {
+				availableHoursList.push(hoursAvailabled);
+			}
+		});
 
-			return result;
-		}
+		let result = {
+			available: isAvailable,
+			hours_availabled: availableHoursList,
+		};
+
+		return result;
+
+		// if (VerifyAllDaySchedules(allDayAppointments, theAppointment)) {
+		// 	return {
+		// 		available: true,
+		// 	};
+		// } else {
+
+		// }
 	}
 }
 

@@ -47,7 +47,7 @@ appointmentsRouter.post(
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			client_id: Joi.number().required(),
+			// client_id: Joi.number().required(),
 			serviceType_id: Joi.number().required(),
 			date_scheduled: Joi.string().required(),
 			start_hour: Joi.string().required(),

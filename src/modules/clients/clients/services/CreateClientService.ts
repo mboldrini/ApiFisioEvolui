@@ -45,9 +45,6 @@ class CreateClientService {
 		const clientExists = await clientRepo.findOne({ email: email, user_id: userExists.user_id });
 		if (clientExists) throw new AppError('Já existe um paciente cadastrado com esse email.', 404);
 
-		console.log('ServiceType_id: ' + serviceType_id);
-		console.log('User_id:' + userExists.user_id);
-
 		const serviceExists = await serviceTypeRepo.findOne({ id: serviceType_id, user_id: userExists.user_id });
 		if (!serviceExists) throw new AppError('O tipo de atendimento informado não existe.');
 
