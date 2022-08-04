@@ -22,6 +22,11 @@ clientsRouter.post(
 			latitude: Joi.string().optional(),
 			longitude: Joi.string().optional(),
 			serviceType_id: Joi.number().required(),
+			appointment: Joi.array().optional().items({
+				type: Joi.number().required(),
+				date_scheduled: Joi.string().required(),
+				start_hour: Joi.string().required(),
+			}),
 			diagnostic: Joi.object().optional().keys({
 				diagnostic: Joi.string().required(),
 				date: Joi.date().required(),

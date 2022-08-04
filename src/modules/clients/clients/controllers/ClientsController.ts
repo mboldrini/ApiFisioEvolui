@@ -1,3 +1,4 @@
+import CreateMutipleAppointmentService from '@modules/appointments/services/CreateMultipleAppointmentService copy';
 import CreateComplaintService from '@modules/clients/complaint/services/CreateComplaintService';
 import CreateDiagnosticService from '@modules/clients/diagnostic/services/CreateDiagnosticService';
 import CreateFunctionalDiagnosisService from '@modules/clients/funcionalDiagnosis/services/CreateFunctionalDiagnosisService';
@@ -50,6 +51,11 @@ interface IGuideline {
 	guideline: string;
 	date: Date;
 }
+interface IAppointment {
+	type: number;
+	date_scheduled: string;
+	start_hour: string;
+}
 
 interface IParams {
 	name: string;
@@ -72,6 +78,7 @@ interface IParams {
 	respiratoryEval?: IRespiratoryEval;
 	objective?: IObjectives;
 	guideline?: IGuideline;
+	appointment?: IAppointment[];
 }
 
 export default class ClientsController {
@@ -97,6 +104,7 @@ export default class ClientsController {
 			respiratoryEval,
 			objective,
 			guideline,
+			appointment,
 		}: IParams = request.body;
 		const { user_code } = request.user;
 
@@ -225,6 +233,17 @@ export default class ClientsController {
 			});
 		}
 
+		let newAppointments;
+		if (appointment) {
+			const createAppointment = new CreateMutipleAppointmentService();
+			newAppointments = await createAppointment.execute({
+				user_code: user_code,
+				client_id: newClient.id,
+				serviceType_id: serviceType_id,
+				appointments: appointment,
+			});
+		}
+
 		const retorno = {
 			client: newClient,
 			diagnostic: newDiagnosis,
@@ -236,6 +255,7 @@ export default class ClientsController {
 			respiratoryEval: newRespiratoryEval,
 			objective: newObjective,
 			guideline: newGuideline,
+			appointment: newAppointments,
 		};
 
 		return response.json(retorno);
