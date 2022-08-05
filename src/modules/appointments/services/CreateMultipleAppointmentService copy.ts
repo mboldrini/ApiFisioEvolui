@@ -6,7 +6,7 @@ import { AppointmentsRepository } from '../typeorm/repositories/AppointmentsRepo
 import { ClientsRepository } from '../../clients/clients/typeorm/repositories/ClientsRepository';
 import { UsersRepository } from '@modules/users/users/typeorm/repositories/UsersRepository';
 import AppError from '@shared/errors/AppError';
-import { getCustomRepository, SimpleConsoleLogger } from 'typeorm';
+import { getCustomRepository, SimpleConsoleLogger, UsingJoinColumnOnlyOnOneSideAllowedError } from 'typeorm';
 
 interface IAppointment {
 	type: number;
@@ -56,14 +56,14 @@ class CreateMutipleAppointmentService {
 			scheduled: true,
 		}));
 
+		console.log('a2');
+
 		let newAppointmentsList2 = newAppointmentsList.filter(
 			(a, i) =>
 				newAppointmentsList.findIndex(
 					s => a.start_hour === s.start_hour && a.date_scheduled === s.date_scheduled,
 				) === i,
 		);
-		console.log(new Date());
-		console.log(newAppointmentsList2);
 
 		const appointment = await appointmentRepo.create(newAppointmentsList2);
 
