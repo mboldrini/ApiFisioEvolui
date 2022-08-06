@@ -1,22 +1,22 @@
-import { ClientsRepository } from './../../clients/clients/typeorm/repositories/ClientsRepository';
+import { ClientsRepository } from '../../clients/clients/typeorm/repositories/ClientsRepository';
 import { TIMEZONE_LANGUAGE, TIMEZONE_LOCALE } from '../../../shared/DTO';
 import { AppointmentsRepository } from '../typeorm/repositories/AppointmentsRepository';
 import { UsersRepository } from '@modules/users/users/typeorm/repositories/UsersRepository';
 import AppError from '@shared/errors/AppError';
-import { getCustomRepository } from 'typeorm';
+import { getCustomRepository, Between } from 'typeorm';
 import { startOfMonth, endOfMonth, format } from 'date-fns';
 
 interface IRequest {
 	user_code: string;
-	date: Date;
+	date_scheduled: Date;
 }
 
 function GetDateString(date: Date) {
 	return format(date, 'yyyy-MM-dd');
 }
 
-class GetAllMonthAppointmentService {
-	public async execute({ user_code, date }: IRequest): Promise<Object> {
+class GetAllDayAppoinntmentsService {
+	public async execute({ user_code, date_scheduled }: IRequest): Promise<Object> {
 		const userRepo = getCustomRepository(UsersRepository);
 		const appointmentRepo = getCustomRepository(AppointmentsRepository);
 		const clientsRepo = getCustomRepository(ClientsRepository);
@@ -26,15 +26,11 @@ class GetAllMonthAppointmentService {
 
 		const clients = await clientsRepo.find({ user_id: userExist.user_id });
 
-		console.log(clients);
-
-		const appointments = await appointmentRepo.findByMonth({
-			start_month: startOfMonth(new Date(date)),
-			end_month: endOfMonth(new Date(date)),
+		const appointments = await appointmentRepo.find({
+			date_scheduled,
 			user_id: userExist.user_id,
+			scheduled: true,
 		});
-
-		let dates: any = {};
 
 		let appointmentsList = appointments.map(appointment => ({
 			id: appointment.id,
@@ -56,16 +52,16 @@ class GetAllMonthAppointmentService {
 				})[0],
 		}));
 
-		appointmentsList.forEach(appoint => {
-			console.log(appoint.id);
-			if (!(GetDateString(appoint.date_scheduled) in dates)) {
-				dates[GetDateString(appoint.date_scheduled)] = [];
-			}
-			dates[GetDateString(appoint.date_scheduled)] = [...dates[GetDateString(appoint.date_scheduled)], appoint];
-		});
+		// appointmentsList.forEach(appoint => {
+		// 	console.log(appoint.id);
+		// 	if (!(GetDateString(appoint.date_scheduled) in dates)) {
+		// 		dates[GetDateString(appoint.date_scheduled)] = [];
+		// 	}
+		// 	dates[GetDateString(appoint.date_scheduled)] = [...dates[GetDateString(appoint.date_scheduled)], appoint];
+		// });
 
-		return dates;
+		return appointmentsList;
 	}
 }
 
-export default GetAllMonthAppointmentService;
+export default GetAllDayAppoinntmentsService;

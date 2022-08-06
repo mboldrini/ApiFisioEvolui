@@ -57,14 +57,14 @@ appointmentsRouter.post(
 );
 
 appointmentsRouter.post(
-	'/month',
+	'/day',
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			date_scheduled: Joi.date().required(),
+			date: Joi.date().required(),
 		},
 	}),
-	appointmentsController.getAllMonthAppointments,
+	appointmentsController.getAllDayAppointments,
 );
 
 appointmentsRouter.patch('/cancel/:id', isAuthenticated, appointmentsController.cancelAppointment);
