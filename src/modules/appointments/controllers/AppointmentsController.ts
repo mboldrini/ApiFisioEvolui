@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import CancelAppointmentService from '../services/CancelAppointmentService';
 import CreateAppointmentService from '../services/CreateAppointmentService';
 import DeleteAppointmentService from '../services/DeleteAppointmentService';
-import GetAllDayAppointmentService from '../services/GetAllDayAppoinntmentService';
+import GetAllDayAppointmentService from '../services/GetAllMonthAppoinntmentService';
 import GetAppointmentAvailabilityService from '../services/GetAppointmentAvailabilityService';
 import UpdateAppointmentService from '../services/UpdateAppointmentService';
 
@@ -101,7 +101,7 @@ export default class AppointmentsController {
 		return response.json(appointment);
 	}
 
-	public async getAllDayAppointments(request: Request, response: Response): Promise<Response> {
+	public async getAllMonthAppointments(request: Request, response: Response): Promise<Response> {
 		const { date_scheduled } = request.body;
 		const { user_code } = request.user;
 

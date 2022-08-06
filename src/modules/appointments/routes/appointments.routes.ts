@@ -64,7 +64,7 @@ appointmentsRouter.get(
 			date_scheduled: Joi.date().required(),
 		},
 	}),
-	appointmentsController.getAllDayAppointments,
+	appointmentsController.getAllMonthAppointments,
 );
 
 appointmentsRouter.patch('/cancel/:id', isAuthenticated, appointmentsController.cancelAppointment);
