@@ -56,8 +56,8 @@ appointmentsRouter.post(
 	appointmentsController.getAvailability,
 );
 
-appointmentsRouter.get(
-	'/',
+appointmentsRouter.post(
+	'/month',
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {

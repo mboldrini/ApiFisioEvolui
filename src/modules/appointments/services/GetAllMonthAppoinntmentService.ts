@@ -1,3 +1,4 @@
+import { ClientsRepository } from './../../clients/clients/typeorm/repositories/ClientsRepository';
 import { TIMEZONE_LANGUAGE, TIMEZONE_LOCALE } from '../../../shared/DTO';
 import { AppointmentsRepository } from '../typeorm/repositories/AppointmentsRepository';
 import { UsersRepository } from '@modules/users/users/typeorm/repositories/UsersRepository';
@@ -18,16 +19,22 @@ class GetAllMonthAppointmentService {
 	public async execute({ user_code, date }: IRequest): Promise<Object> {
 		const userRepo = getCustomRepository(UsersRepository);
 		const appointmentRepo = getCustomRepository(AppointmentsRepository);
+		const clientsRepo = getCustomRepository(ClientsRepository);
 
 		const userExist = await userRepo.findOne({ user_code });
 		if (!userExist) throw new AppError("This user don't exist");
 
+		const clients = await clientsRepo.find({ user_id: userExist.user_id });
+
+		console.log(clients);
+
 		const appointments = await appointmentRepo.findByMonth({
 			start_month: startOfMonth(new Date(date)),
 			end_month: endOfMonth(new Date(date)),
+			user_id: userExist.user_id,
 		});
 
-		let dates = {};
+		let dates: any = {};
 
 		let appointmentsList = appointments.map(appointment => ({
 			id: appointment.id,
@@ -39,6 +46,14 @@ class GetAllMonthAppointmentService {
 			duration: appointment.duration,
 			scheduled: appointment.scheduled,
 			serviceType_id: appointment.serviceType_id,
+			client_id: appointment.client_id,
+			client_name: clients
+				.filter(client => {
+					if (client.id == appointment.client_id) return client.name;
+				})
+				.map(client => {
+					return client.name;
+				})[0],
 		}));
 
 		appointmentsList.forEach(appoint => {
@@ -48,7 +63,6 @@ class GetAllMonthAppointmentService {
 			}
 			dates[GetDateString(appoint.date_scheduled)] = [...dates[GetDateString(appoint.date_scheduled)], appoint];
 		});
-		console.log(dates);
 
 		return dates;
 	}
