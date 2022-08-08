@@ -11,6 +11,7 @@ import CreateClientRespiratoryEvalService from '@modules/clients/respiratory_eva
 import { Request, Response } from 'express';
 import CreateClientService from '../services/CreateClientService';
 import DeleteClientService from '../services/DeleteClientService';
+import GetAllClientsInfosService from '../services/GetAllClientsInfosService';
 import GetAllClientsService from '../services/GetAllClientsService';
 import GetClientService from '../services/GetClientService.ts';
 import UpdateClientService from '../services/UpdateClientService';
@@ -339,5 +340,21 @@ export default class ClientsController {
 		});
 
 		return response.json({ message: 'ok' });
+	}
+
+	public async getInfos(request: Request, response: Response): Promise<Response> {
+		const { client_id, date } = request.body;
+		const { user_code } = request.user;
+
+		const client_idD = parseInt(client_id);
+
+		const getclient = new GetAllClientsInfosService();
+		const client = await getclient.execute({
+			client_id: client_idD,
+			date,
+			user_code,
+		});
+
+		return response.json(client);
 	}
 }

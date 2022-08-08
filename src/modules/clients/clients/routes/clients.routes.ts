@@ -95,4 +95,18 @@ clientsRouter.get('/user/all', isAuthenticated, clientsController.getAll);
 
 clientsRouter.delete('/:id', isAuthenticated, clientsController.delete);
 
+// clientsRouter.get('/infos/:id?:date', isAuthenticated, clientsController.getInfos);
+
+clientsRouter.post(
+	'/infos',
+	isAuthenticated,
+	celebrate({
+		[Segments.BODY]: {
+			client_id: Joi.number().required(),
+			date: Joi.date().required(),
+		},
+	}),
+	clientsController.getInfos,
+);
+
 export default clientsRouter;
