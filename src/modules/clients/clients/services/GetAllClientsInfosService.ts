@@ -105,9 +105,11 @@ class GetAllClientsInfosService {
 			user_id: userExist.user_id,
 		});
 
-		const appointmentList = await appointmentRepo.find({
+		const appointmentList = await appointmentRepo.findOrderBy({
 			client_id: clientExist.id,
-			date_scheduled: date,
+			user_id: userExist.user_id,
+			start_date: startDate,
+			end_date: endDate,
 		});
 
 		let newAppointmentList = appointmentList.map(appointment => ({
