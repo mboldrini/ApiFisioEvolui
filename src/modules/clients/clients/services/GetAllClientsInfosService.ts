@@ -56,58 +56,49 @@ class GetAllClientsInfosService {
 		const clientExist = await clientsRepo.findOne({ user_id: userExist?.user_id, id: client_id, enabled: true });
 		if (!clientExist) throw new AppError('Esse cliente não existe!');
 
-		const complaintList = await complaintRepo.find({
+		const complaintList = await complaintRepo.findOrderBy({
 			client_id: clientExist.id,
 			user_id: userExist.user_id,
-			date: Between(startDate, endDate),
 		});
 
-		const diagnosticList = await diagnosticRepo.find({
+		const diagnosticList = await diagnosticRepo.findOrderBy({
 			client_id: clientExist.id,
 			user_id: userExist.user_id,
-			date: Between(startDate, endDate),
 		});
 
-		const funcionalList = await funcionalDiagRepo.find({
+		const funcionalList = await funcionalDiagRepo.findOrderBy({
 			client_id: clientExist.id,
 			user_id: userExist.user_id,
-			date: Between(startDate, endDate),
 		});
 
-		const guidelineList = await guidelineRepo.find({
+		const guidelineList = await guidelineRepo.findOrderBy({
 			client_id: clientExist.id,
 			user_id: userExist.user_id,
-			date: Between(startDate, endDate),
 		});
 
-		const hdaList = await hdaRepo.find({
+		const hdaList = await hdaRepo.findOrderBy({
 			client_id: clientExist.id,
 			user_id: userExist.user_id,
-			date: Between(startDate, endDate),
 		});
 
-		const hppList = await hppRepo.find({
+		const hppList = await hppRepo.findOrderBy({
 			client_id: clientExist.id,
 			user_id: userExist.user_id,
-			date: Between(startDate, endDate),
 		});
 
-		const objectivesList = await objectivesRepo.find({
+		const objectivesList = await objectivesRepo.findOrderBy({
 			client_id: clientExist.id,
 			user_id: userExist.user_id,
-			date: Between(startDate, endDate),
 		});
 
-		const physicalList = await physicalEvalRepo.find({
+		const physicalList = await physicalEvalRepo.findOrderBy({
 			client_id: clientExist.id,
 			user_id: userExist.user_id,
-			date: Between(startDate, endDate),
 		});
 
-		const respiratoryList = await respiratoryEvalRepo.find({
+		const respiratoryList = await respiratoryEvalRepo.findOrderBy({
 			client_id: clientExist.id,
 			user_id: userExist.user_id,
-			date: Between(startDate, endDate),
 		});
 
 		const servicesTypesList = await serviceTypeRepo.find({
@@ -148,10 +139,10 @@ class GetAllClientsInfosService {
 			objectives: objectivesList,
 			physical: physicalList,
 			respiratory: respiratoryList,
-			appointment: appointmentList,
+			appointment: newAppointmentList,
 		};
 
-		return newAppointmentList;
+		return infos;
 	}
 }
 
