@@ -1,3 +1,4 @@
+import { ServicesTypesRepository } from './../../../services_types/typeorm/repositories/ServicesTypesRepository';
 import { ClientRespiratoryEvalRepository } from '../../respiratory_evaluation/typeorm/repositories/RespiratoryEval';
 import { ClientPhysicalEvalRepository } from '../../physical_evaluation/typeorm/repositories/PhysicalEval';
 import { ClientObjectivesRepository } from '../../objectives_goals/typeorm/repositories/ClientObjectives';
@@ -44,6 +45,7 @@ class GetAllClientsInfosService {
 		const physicalEvalRepo = getCustomRepository(ClientPhysicalEvalRepository);
 		const respiratoryEvalRepo = getCustomRepository(ClientRespiratoryEvalRepository);
 		const appointmentRepo = getCustomRepository(AppointmentsRepository);
+		const serviceTypeRepo = getCustomRepository(ServicesTypesRepository);
 
 		const startDate = GetDate(date, 'start');
 		const endDate = GetDate(date, 'end');
@@ -108,10 +110,33 @@ class GetAllClientsInfosService {
 			date: Between(startDate, endDate),
 		});
 
+		const servicesTypesList = await serviceTypeRepo.find({
+			user_id: userExist.user_id,
+		});
+
 		const appointmentList = await appointmentRepo.find({
 			client_id: clientExist.id,
 			date_scheduled: date,
 		});
+
+		let newAppointmentList = appointmentList.map(appointment => ({
+			id: appointment.id,
+			status: appointment.status,
+			type: appointment.type,
+			date_scheduled: appointment.date_scheduled,
+			start_hour: appointment.start_hour,
+			end_hour: appointment.end_hour,
+			duration: appointment.duration,
+			client_id: appointment.client_id,
+			serviceType_id: appointment.serviceType_id,
+			serviceType_name: servicesTypesList
+				.filter(service => {
+					if (service.id == appointment.serviceType_id) return service.description;
+				})
+				.map(service => {
+					return service.description;
+				})[0],
+		}));
 
 		const infos = {
 			complaints: complaintList,
@@ -126,7 +151,7 @@ class GetAllClientsInfosService {
 			appointment: appointmentList,
 		};
 
-		return infos;
+		return newAppointmentList;
 	}
 }
 
