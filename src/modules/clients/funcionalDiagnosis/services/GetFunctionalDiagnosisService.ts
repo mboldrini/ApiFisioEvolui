@@ -12,7 +12,7 @@ interface IRequest {
 }
 
 class GetFunctionalDiagnosisService {
-	public async execute({ id, client_id, user_code }: IRequest): Promise<ClientFunctionalDiagnosis> {
+	public async execute({ id, client_id, user_code }: IRequest): Promise<Object> {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const clientsRepo = getCustomRepository(ClientsRepository);
 		const fcDiagnosisRepo = getCustomRepository(ClientFunctionalDiagnosisRepository);
@@ -26,7 +26,17 @@ class GetFunctionalDiagnosisService {
 		const diagnosticExist = await fcDiagnosisRepo.findOne({ id, client_id: clientExist.id });
 		if (!diagnosticExist) throw new AppError('Esse diagnostico funcional não existe!', 404);
 
-		return diagnosticExist;
+		const newDiagnostic = {
+			id: diagnosticExist.id,
+			about: diagnosticExist.diagnosis,
+			comments: diagnosticExist.comments,
+			date: diagnosticExist.date,
+			client_id: diagnosticExist.client_id,
+			created_at: diagnosticExist.created_at,
+			updated_at: diagnosticExist.updated_at,
+		};
+
+		return newDiagnostic;
 	}
 }
 export default GetFunctionalDiagnosisService;

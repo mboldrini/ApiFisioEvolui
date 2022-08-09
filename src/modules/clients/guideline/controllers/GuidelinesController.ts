@@ -8,12 +8,12 @@ import UpdateGuidelineService from '../services/UpdateGuidelineService';
 
 export default class GuidelinesController {
 	public async create(request: Request, response: Response): Promise<Response> {
-		const { guideline, comments, date, client_id } = request.body;
+		const { about, comments, date, client_id } = request.body;
 		const { user_code } = request.user;
 
 		const createGuideline = new CreateGuidelineService();
 		const clientGuideline = await createGuideline.execute({
-			guideline,
+			guideline: about,
 			comments,
 			date,
 			client_id,
@@ -39,13 +39,13 @@ export default class GuidelinesController {
 
 	public async update(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
-		const { guideline, comments, date, client_id } = request.body;
+		const { about, comments, date, client_id } = request.body;
 		const { user_code } = request.user;
 
 		const updateGuideline = new UpdateGuidelineService();
 		const updateClientGuideline = await updateGuideline.execute({
 			id: parseInt(id),
-			guideline,
+			guideline: about,
 			comments,
 			date,
 			client_id,

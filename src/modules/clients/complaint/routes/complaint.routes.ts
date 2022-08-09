@@ -11,7 +11,7 @@ complaintRouter.post(
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			complaint: Joi.string().required(),
+			about: Joi.string().required(),
 			comments: Joi.string().optional(),
 			date: Joi.date().required(),
 			client_id: Joi.number().required(),
@@ -27,7 +27,7 @@ complaintRouter.patch(
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			complaint: Joi.string().required(),
+			about: Joi.string().required(),
 			comments: Joi.string().optional(),
 			date: Joi.date().required(),
 			client_id: Joi.number().required(),

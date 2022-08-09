@@ -8,12 +8,12 @@ import UpdateHDAService from '../services/UpdateHDAService';
 
 export default class ClientHdaController {
 	public async create(request: Request, response: Response): Promise<Response> {
-		const { hda, comments, date, client_id } = request.body;
+		const { about, comments, date, client_id } = request.body;
 		const { user_code } = request.user;
 
 		const createHda = new CreateClientHDAService();
 		const newClientHda = await createHda.execute({
-			hda,
+			hda: about,
 			comments,
 			date,
 			client_id,
@@ -39,13 +39,13 @@ export default class ClientHdaController {
 
 	public async update(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
-		const { hda, comments, date, client_id } = request.body;
+		const { about, comments, date, client_id } = request.body;
 		const { user_code } = request.user;
 
 		const updateHDA = new UpdateHDAService();
 		const updateClientHda = await updateHDA.execute({
 			id: parseInt(id),
-			hda,
+			hda: about,
 			comments,
 			date,
 			client_id,

@@ -11,7 +11,7 @@ interface IRequest {
 }
 
 class ListFunctionalDiagnosticService {
-	public async execute({ client_id, user_code }: IRequest): Promise<ClientFunctionalDiagnosis[]> {
+	public async execute({ client_id, user_code }: IRequest): Promise<Object> {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const clientsRepo = getCustomRepository(ClientsRepository);
 		const diagnosticRepo = getCustomRepository(ClientFunctionalDiagnosisRepository);
@@ -25,7 +25,17 @@ class ListFunctionalDiagnosticService {
 		const diagnosticExist = await diagnosticRepo.find({ client_id: clientExist.id });
 		if (!diagnosticExist) throw new AppError('Esse diagnostico não existe!', 404);
 
-		return diagnosticExist;
+		const newDiagnosticList = diagnosticExist.map(diagnostic => ({
+			id: diagnostic.id,
+			about: diagnostic.diagnosis,
+			comments: diagnostic.comments,
+			date: diagnostic.date,
+			client_id: diagnostic.client_id,
+			created_at: diagnostic.created_at,
+			updated_at: diagnostic.updated_at,
+		}));
+
+		return newDiagnosticList;
 	}
 }
 export default ListFunctionalDiagnosticService;

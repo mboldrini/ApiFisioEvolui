@@ -12,7 +12,7 @@ interface IRequest {
 }
 
 class GetHPPService {
-	public async execute({ id, client_id, user_code }: IRequest): Promise<ClientHPP> {
+	public async execute({ id, client_id, user_code }: IRequest): Promise<Object> {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const clientsRepo = getCustomRepository(ClientsRepository);
 		const hppRepo = getCustomRepository(ClientHPPRepository);
@@ -26,7 +26,17 @@ class GetHPPService {
 		const hppExist = await hppRepo.findOne({ id, client_id: clientExist.id });
 		if (!hppExist) throw new AppError('Esse HPP não existe!', 404);
 
-		return hppExist;
+		const newHpp = {
+			id: hppExist.id,
+			about: hppExist.hpp,
+			comments: hppExist.comments,
+			date: hppExist.date,
+			client_id: hppExist.client_id,
+			created_at: hppExist.created_at,
+			updated_at: hppExist.updated_at,
+		};
+
+		return newHpp;
 	}
 }
 export default GetHPPService;

@@ -12,7 +12,7 @@ clientObjectiveRouter.post(
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			objectives: Joi.string().required(),
+			about: Joi.string().required(),
 			comments: Joi.string().optional(),
 			date: Joi.date().required(),
 			client_id: Joi.number().required(),
@@ -28,7 +28,7 @@ clientObjectiveRouter.patch(
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			objectives: Joi.string().required(),
+			about: Joi.string().required(),
 			comments: Joi.string().optional(),
 			date: Joi.date().required(),
 			client_id: Joi.number().required(),

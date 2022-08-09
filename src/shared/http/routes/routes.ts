@@ -42,7 +42,6 @@ routes.use('/users/workdays/', userWorkDaysRouter);
 routes.use('/clients', clientsRouter);
 
 routes.use('/clients/diagnostic', diagnosticRouter);
-
 routes.use('/clients/complaint', complaintRouter);
 routes.use('/clients/hda', clientHdaRouter);
 routes.use('/clients/hpp', clientHppRouter);

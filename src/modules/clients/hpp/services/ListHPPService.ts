@@ -11,7 +11,7 @@ interface IRequest {
 }
 
 class ListHPPService {
-	public async execute({ client_id, user_code }: IRequest): Promise<ClientHPP[]> {
+	public async execute({ client_id, user_code }: IRequest): Promise<Object> {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const clientsRepo = getCustomRepository(ClientsRepository);
 		const hppRepo = getCustomRepository(ClientHPPRepository);
@@ -25,7 +25,17 @@ class ListHPPService {
 		const clientHppExist = await hppRepo.find({ client_id: clientExist.id });
 		if (!clientHppExist) throw new AppError('Esse HDA não existe!', 404);
 
-		return clientHppExist;
+		const newHppList = clientHppExist.map(hppExist => ({
+			id: hppExist.id,
+			about: hppExist.hpp,
+			comments: hppExist.comments,
+			date: hppExist.date,
+			client_id: hppExist.client_id,
+			created_at: hppExist.created_at,
+			updated_at: hppExist.updated_at,
+		}));
+
+		return newHppList;
 	}
 }
 export default ListHPPService;

@@ -12,7 +12,7 @@ interface IRequest {
 }
 
 class GetRespiratoryEvalService {
-	public async execute({ id, client_id, user_code }: IRequest): Promise<ClientRespiratoryEval> {
+	public async execute({ id, client_id, user_code }: IRequest): Promise<Object> {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const clientsRepo = getCustomRepository(ClientsRepository);
 		const respEvalRepo = getCustomRepository(ClientRespiratoryEvalRepository);
@@ -26,7 +26,17 @@ class GetRespiratoryEvalService {
 		const evalExist = await respEvalRepo.findOne({ id, client_id: clientExist.id });
 		if (!evalExist) throw new AppError('Essa avaliação respiratória não existe!', 404);
 
-		return evalExist;
+		const newEval = {
+			id: evalExist.id,
+			about: evalExist.evaluation,
+			comments: evalExist.comments,
+			date: evalExist.date,
+			client_id: evalExist.client_id,
+			created_at: evalExist.created_at,
+			updated_at: evalExist.updated_at,
+		};
+
+		return newEval;
 	}
 }
 export default GetRespiratoryEvalService;

@@ -11,7 +11,7 @@ interface IRequest {
 }
 
 class ListGuidelineService {
-	public async execute({ client_id, user_code }: IRequest): Promise<ClientGuideline[]> {
+	public async execute({ client_id, user_code }: IRequest): Promise<Object> {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const clientsRepo = getCustomRepository(ClientsRepository);
 		const guidelineRepo = getCustomRepository(ClientGuidelineRepository);
@@ -25,7 +25,17 @@ class ListGuidelineService {
 		const guidelineExist = await guidelineRepo.find({ client_id: clientExist.id });
 		if (!guidelineExist) throw new AppError('Essa orientação não existe!', 404);
 
-		return guidelineExist;
+		const newGuidelineList = guidelineExist.map(guideline => ({
+			id: guideline.id,
+			about: guideline.guideline,
+			comments: guideline.comments,
+			date: guideline.date,
+			client_id: guideline.client_id,
+			created_at: guideline.created_at,
+			updated_at: guideline.updated_at,
+		}));
+
+		return newGuidelineList;
 	}
 }
 export default ListGuidelineService;

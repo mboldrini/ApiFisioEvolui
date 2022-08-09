@@ -7,12 +7,12 @@ import UpdateRespiratoryEvalService from '../services/UpdateRespiratoryEvalServi
 
 export default class ClientRespiratoryEvalController {
 	public async create(request: Request, response: Response): Promise<Response> {
-		const { evaluation, comments, date, client_id } = request.body;
+		const { about, comments, date, client_id } = request.body;
 		const { user_code } = request.user;
 
 		const createRespEval = new CreateClientRespiratoryEvalService();
 		const newClientRespEval = await createRespEval.execute({
-			evaluation,
+			evaluation: about,
 			comments,
 			date,
 			client_id,
@@ -38,13 +38,13 @@ export default class ClientRespiratoryEvalController {
 
 	public async update(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
-		const { evaluation, comments, date, client_id } = request.body;
+		const { about, comments, date, client_id } = request.body;
 		const { user_code } = request.user;
 
 		const updateHDA = new UpdateRespiratoryEvalService();
 		const updateClientHda = await updateHDA.execute({
 			id: parseInt(id),
-			evaluation,
+			evaluation: about,
 			comments,
 			date,
 			client_id,

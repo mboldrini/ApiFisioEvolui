@@ -12,7 +12,7 @@ interface IRequest {
 }
 
 class GetHDAService {
-	public async execute({ id, client_id, user_code }: IRequest): Promise<ClientHDA> {
+	public async execute({ id, client_id, user_code }: IRequest): Promise<Object> {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const clientsRepo = getCustomRepository(ClientsRepository);
 		const hdaRepo = getCustomRepository(ClientHDARepository);
@@ -26,7 +26,17 @@ class GetHDAService {
 		const hdaExist = await hdaRepo.findOne({ id, client_id: clientExist.id });
 		if (!hdaExist) throw new AppError('Esse HDA não existe!', 404);
 
-		return hdaExist;
+		let newHda = {
+			id: hdaExist.id,
+			about: hdaExist.hda,
+			comments: hdaExist.comments,
+			date: hdaExist.date,
+			client_id: hdaExist.client_id,
+			created_at: hdaExist.created_at,
+			updated_at: hdaExist.updated_at,
+		};
+
+		return newHda;
 	}
 }
 export default GetHDAService;

@@ -12,7 +12,7 @@ interface IRequest {
 }
 
 class GetObjectiveService {
-	public async execute({ id, client_id, user_code }: IRequest): Promise<ClientObjectives> {
+	public async execute({ id, client_id, user_code }: IRequest): Promise<Object> {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const clientsRepo = getCustomRepository(ClientsRepository);
 		const objectiveRepo = getCustomRepository(ClientObjectivesRepository);
@@ -26,7 +26,17 @@ class GetObjectiveService {
 		const objectiveExist = await objectiveRepo.findOne({ id, client_id: clientExist.id });
 		if (!objectiveExist) throw new AppError('Esse objetivo/meta não existe!', 404);
 
-		return objectiveExist;
+		const newObjectives = {
+			id: objectiveExist.id,
+			about: objectiveExist.objectives,
+			comments: objectiveExist.comments,
+			date: objectiveExist.date,
+			client_id: objectiveExist.client_id,
+			created_at: objectiveExist.created_at,
+			updated_at: objectiveExist.updated_at,
+		};
+
+		return newObjectives;
 	}
 }
 export default GetObjectiveService;

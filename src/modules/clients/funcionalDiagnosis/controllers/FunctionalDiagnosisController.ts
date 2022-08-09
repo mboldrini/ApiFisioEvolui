@@ -8,12 +8,12 @@ import UpdateFunctionalDiagnosisService from '../services/UpdateFunctionalDiagno
 
 export default class FunctionalDiagnosisController {
 	public async create(request: Request, response: Response): Promise<Response> {
-		const { diagnostic, comments, date, client_id } = request.body;
+		const { about, comments, date, client_id } = request.body;
 		const { user_code } = request.user;
 
 		const createDiagnostic = new CreateFunctionalDiagnosisService();
 		const clientDiagnostic = await createDiagnostic.execute({
-			diagnostic,
+			diagnostic: about,
 			comments,
 			date,
 			client_id,
@@ -39,13 +39,13 @@ export default class FunctionalDiagnosisController {
 
 	public async update(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
-		const { diagnostic, comments, date, client_id } = request.body;
+		const { about, comments, date, client_id } = request.body;
 		const { user_code } = request.user;
 
 		const updateDiagnostic = new UpdateFunctionalDiagnosisService();
 		const updateClientDiagnostic = await updateDiagnostic.execute({
 			id: parseInt(id),
-			diagnostic,
+			diagnostic: about,
 			comments,
 			date,
 			client_id,

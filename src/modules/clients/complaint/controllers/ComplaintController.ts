@@ -8,12 +8,12 @@ import UpdateComplaintService from '../services/UpdateComplaintService';
 
 export default class ComplaintController {
 	public async create(request: Request, response: Response): Promise<Response> {
-		const { complaint, comments, date, client_id } = request.body;
+		const { about, comments, date, client_id } = request.body;
 		const { user_code } = request.user;
 
 		const complaintDiagnostic = new CreateComplaintService();
 		const clientComplaintDiagnostic = await complaintDiagnostic.execute({
-			complaint,
+			complaint: about,
 			comments,
 			date,
 			client_id,
@@ -39,13 +39,13 @@ export default class ComplaintController {
 
 	public async update(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
-		const { complaint, comments, date, client_id } = request.body;
+		const { about, comments, date, client_id } = request.body;
 		const { user_code } = request.user;
 
 		const updateComplaint = new UpdateComplaintService();
 		const updateClientComplaint = await updateComplaint.execute({
 			id: parseInt(id),
-			complaint,
+			complaint: about,
 			comments,
 			date,
 			client_id,

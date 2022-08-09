@@ -11,7 +11,7 @@ clientResEvalRouter.post(
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			evaluation: Joi.string().required(),
+			about: Joi.string().required(),
 			comments: Joi.string().optional(),
 			date: Joi.date().required(),
 			client_id: Joi.number().required(),
@@ -27,7 +27,7 @@ clientResEvalRouter.patch(
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			evaluation: Joi.string().required(),
+			about: Joi.string().required(),
 			comments: Joi.string().optional(),
 			date: Joi.date().required(),
 			client_id: Joi.number().required(),

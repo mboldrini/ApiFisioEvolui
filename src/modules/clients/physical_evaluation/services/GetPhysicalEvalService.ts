@@ -12,7 +12,7 @@ interface IRequest {
 }
 
 class GetPhysicalEvalService {
-	public async execute({ id, client_id, user_code }: IRequest): Promise<ClientPhysicalEval> {
+	public async execute({ id, client_id, user_code }: IRequest): Promise<Object> {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const clientsRepo = getCustomRepository(ClientsRepository);
 		const pEvalRepo = getCustomRepository(ClientPhysicalEvalRepository);
@@ -26,7 +26,17 @@ class GetPhysicalEvalService {
 		const evalExist = await pEvalRepo.findOne({ id, client_id: clientExist.id });
 		if (!evalExist) throw new AppError('Essa avaliação física não existe!', 404);
 
-		return evalExist;
+		const newEval = {
+			id: evalExist.id,
+			about: evalExist.evaluation,
+			comments: evalExist.comments,
+			date: evalExist.date,
+			client_id: evalExist.client_id,
+			created_at: evalExist.created_at,
+			updated_at: evalExist.updated_at,
+		};
+
+		return newEval;
 	}
 }
 export default GetPhysicalEvalService;

@@ -25,7 +25,7 @@ class CreateComplaintService {
 		const clientExist = await clientsRepo.findOne({ id: client_id, user_id: userExists.user_id });
 		if (!clientExist) throw new AppError("This client don't exist", 404);
 
-		const newComplaint = complaintRepo.create({
+		const newComplaint = await complaintRepo.create({
 			complaint,
 			comments,
 			date,

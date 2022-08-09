@@ -11,7 +11,7 @@ interface IRequest {
 }
 
 class ListObjectiveService {
-	public async execute({ client_id, user_code }: IRequest): Promise<ClientObjectives[]> {
+	public async execute({ client_id, user_code }: IRequest): Promise<Object> {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const clientsRepo = getCustomRepository(ClientsRepository);
 		const objectiveRepo = getCustomRepository(ClientObjectivesRepository);
@@ -25,7 +25,17 @@ class ListObjectiveService {
 		const clientObjectiveExist = await objectiveRepo.find({ client_id: clientExist.id });
 		if (!clientObjectiveExist) throw new AppError('Esse Objetivo/Meta não existe!', 404);
 
-		return clientObjectiveExist;
+		const newObjectivesList = clientObjectiveExist.map(objectives => ({
+			id: objectives.id,
+			about: objectives.objectives,
+			comments: objectives.comments,
+			date: objectives.date,
+			client_id: objectives.client_id,
+			created_at: objectives.created_at,
+			updated_at: objectives.updated_at,
+		}));
+
+		return newObjectivesList;
 	}
 }
 export default ListObjectiveService;

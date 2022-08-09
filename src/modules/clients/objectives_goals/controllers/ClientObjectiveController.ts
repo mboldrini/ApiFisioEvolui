@@ -8,12 +8,12 @@ import UpdateObjectiveService from '../services/UpdateObjectiveService';
 
 export default class ClientObjectiveController {
 	public async create(request: Request, response: Response): Promise<Response> {
-		const { objectives, comments, date, client_id } = request.body;
+		const { about, comments, date, client_id } = request.body;
 		const { user_code } = request.user;
 
 		const createObjective = new CreateClientObjectiveService();
 		const newClientObjc = await createObjective.execute({
-			objectives,
+			objectives: about,
 			comments,
 			date,
 			client_id,
@@ -39,13 +39,13 @@ export default class ClientObjectiveController {
 
 	public async update(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
-		const { objectives, comments, date, client_id } = request.body;
+		const { about, comments, date, client_id } = request.body;
 		const { user_code } = request.user;
 
 		const updateObjective = new UpdateObjectiveService();
 		const updateClientObj = await updateObjective.execute({
 			id: parseInt(id),
-			objectives,
+			objectives: about,
 			comments,
 			date,
 			client_id,

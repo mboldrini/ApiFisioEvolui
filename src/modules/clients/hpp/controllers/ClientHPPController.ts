@@ -8,12 +8,12 @@ import UpdateHPPService from '../services/UpdateHPPService';
 
 export default class ClientHppController {
 	public async create(request: Request, response: Response): Promise<Response> {
-		const { hpp, comments, date, client_id } = request.body;
+		const { about, comments, date, client_id } = request.body;
 		const { user_code } = request.user;
 
 		const createHda = new CreateClientHPPService();
 		const newClientHpp = await createHda.execute({
-			hpp,
+			hpp: about,
 			comments,
 			date,
 			client_id,
@@ -39,13 +39,13 @@ export default class ClientHppController {
 
 	public async update(request: Request, response: Response): Promise<Response> {
 		const { id } = request.params;
-		const { hpp, comments, date, client_id } = request.body;
+		const { about, comments, date, client_id } = request.body;
 		const { user_code } = request.user;
 
 		const updateHDA = new UpdateHPPService();
 		const updateClientHda = await updateHDA.execute({
 			id: parseInt(id),
-			hpp,
+			hpp: about,
 			comments,
 			date,
 			client_id,

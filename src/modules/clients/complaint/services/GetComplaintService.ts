@@ -12,7 +12,7 @@ interface IRequest {
 }
 
 class GetComplaintService {
-	public async execute({ id, client_id, user_code }: IRequest): Promise<Complaint> {
+	public async execute({ id, client_id, user_code }: IRequest): Promise<Object> {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const clientsRepo = getCustomRepository(ClientsRepository);
 		const complaintRepo = getCustomRepository(ComplaintRepository);
@@ -26,7 +26,17 @@ class GetComplaintService {
 		const complaintExist = await complaintRepo.findOne({ id, client_id: clientExist.id });
 		if (!complaintExist) throw new AppError('Essa queixa não existe!', 404);
 
-		return complaintExist;
+		const newComplaint = {
+			about: complaintExist.complaint,
+			comments: complaintExist.comments,
+			date: complaintExist.date,
+			client_id: complaintExist.client_id,
+			id: complaintExist.id,
+			created_at: complaintExist.created_at,
+			updated_at: complaintExist.updated_at,
+		};
+
+		return newComplaint;
 	}
 }
 export default GetComplaintService;

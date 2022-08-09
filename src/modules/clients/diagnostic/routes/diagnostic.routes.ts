@@ -11,7 +11,7 @@ diagnosticRouter.post(
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			diagnostic: Joi.string().required(),
+			about: Joi.string().required(),
 			comments: Joi.string().optional(),
 			date: Joi.date().required(),
 			client_id: Joi.number().required(),
@@ -22,12 +22,16 @@ diagnosticRouter.post(
 
 diagnosticRouter.get('/:id&:client_id', isAuthenticated, diagnosticController.get);
 
+diagnosticRouter.delete('/:id&:client_id', isAuthenticated, diagnosticController.delete);
+
+diagnosticRouter.get('/list/:id', isAuthenticated, diagnosticController.getList);
+
 diagnosticRouter.patch(
-	'/:id',
+	'/update/:id',
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			diagnostic: Joi.string().required(),
+			about: Joi.string().required(),
 			comments: Joi.string().optional(),
 			date: Joi.date().required(),
 			client_id: Joi.number().required(),
@@ -35,9 +39,5 @@ diagnosticRouter.patch(
 	}),
 	diagnosticController.update,
 );
-
-diagnosticRouter.delete('/:id&:client_id', isAuthenticated, diagnosticController.delete);
-
-diagnosticRouter.get('/list/:id', isAuthenticated, diagnosticController.getList);
 
 export default diagnosticRouter;

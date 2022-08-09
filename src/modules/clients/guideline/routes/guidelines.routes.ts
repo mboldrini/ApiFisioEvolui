@@ -11,7 +11,7 @@ guidelineRouter.post(
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			guideline: Joi.string().required(),
+			about: Joi.string().required(),
 			comments: Joi.string().optional(),
 			date: Joi.date().required(),
 			client_id: Joi.number().required(),
@@ -27,7 +27,7 @@ guidelineRouter.patch(
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			guideline: Joi.string().required(),
+			about: Joi.string().required(),
 			comments: Joi.string().optional(),
 			date: Joi.date().required(),
 			client_id: Joi.number().required(),

@@ -11,7 +11,7 @@ interface IRequest {
 }
 
 class ListComplaintService {
-	public async execute({ client_id, user_code }: IRequest): Promise<Complaint[]> {
+	public async execute({ client_id, user_code }: IRequest): Promise<Object> {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const clientsRepo = getCustomRepository(ClientsRepository);
 		const complaintRepo = getCustomRepository(ComplaintRepository);
@@ -25,7 +25,17 @@ class ListComplaintService {
 		const complaintExist = await complaintRepo.find({ client_id: clientExist.id });
 		if (!complaintExist) throw new AppError('Esse diagnostico não existe!', 404);
 
-		return complaintExist;
+		const newComplaintList = complaintExist.map(complaint => ({
+			about: complaint.complaint,
+			comments: complaint.comments,
+			date: complaint.date,
+			client_id: complaint.client_id,
+			id: complaint.id,
+			created_at: complaint.created_at,
+			updated_at: complaint.updated_at,
+		}));
+
+		return newComplaintList;
 	}
 }
 export default ListComplaintService;

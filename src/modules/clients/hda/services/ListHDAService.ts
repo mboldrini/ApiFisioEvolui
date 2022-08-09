@@ -11,7 +11,7 @@ interface IRequest {
 }
 
 class ListHDAService {
-	public async execute({ client_id, user_code }: IRequest): Promise<ClientHDA[]> {
+	public async execute({ client_id, user_code }: IRequest): Promise<Object> {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const clientsRepo = getCustomRepository(ClientsRepository);
 		const hdaRepo = getCustomRepository(ClientHDARepository);
@@ -25,7 +25,17 @@ class ListHDAService {
 		const clientHdaExist = await hdaRepo.find({ client_id: clientExist.id });
 		if (!clientHdaExist) throw new AppError('Esse HDA não existe!', 404);
 
-		return clientHdaExist;
+		const newClieintHdaList = clientHdaExist.map(hdaExist => ({
+			id: hdaExist.id,
+			about: hdaExist.hda,
+			comments: hdaExist.comments,
+			date: hdaExist.date,
+			client_id: hdaExist.client_id,
+			created_at: hdaExist.created_at,
+			updated_at: hdaExist.updated_at,
+		}));
+
+		return newClieintHdaList;
 	}
 }
 export default ListHDAService;
