@@ -22,7 +22,6 @@ class GetAllPaymentMethodUserService {
 		if (!paymentUserExists) throw new AppError("This payment method don't exist");
 
 		const paymentMethod = await paymentMethodRepo.find();
-		console.log(paymentMethod);
 
 		const payments = paymentUserExists.map(payment => ({
 			id: payment.id,

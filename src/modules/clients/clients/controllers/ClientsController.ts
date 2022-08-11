@@ -195,7 +195,6 @@ export default class ClientsController {
 				client_id: newClient.id,
 				user_code: user_code,
 			});
-			console.log(newPhysicalEval);
 		}
 
 		let newRespiratoryEval;

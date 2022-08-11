@@ -35,9 +35,6 @@ class GetClientService {
 		const clientExist = await clientRepo.findOne({ id, user_id: userExists.user_id, enabled: true });
 		if (!clientExist) throw new AppError("This client don't exist ", 404);
 
-		console.log('UserExists');
-		console.log(clientExist);
-
 		const serviceExists = await serviceTypeRepo.findOne({
 			id: clientExist.serviceType_id,
 			user_id: userExists.user_id,

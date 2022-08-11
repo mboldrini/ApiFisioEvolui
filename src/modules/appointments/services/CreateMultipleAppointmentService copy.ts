@@ -56,8 +56,6 @@ class CreateMutipleAppointmentService {
 			scheduled: true,
 		}));
 
-		console.log('a2');
-
 		let newAppointmentsList2 = newAppointmentsList.filter(
 			(a, i) =>
 				newAppointmentsList.findIndex(
