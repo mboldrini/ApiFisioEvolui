@@ -232,15 +232,16 @@ class GetAllClientsInfosService {
 		}));
 
 		const infos = {
+			clinicalDiagnostic: newDiagnosticList,
 			complaints: newComplaintList,
-			diagnostic: newDiagnosticList,
-			functional: newFuncionalList,
-			guideline: newGuidelineList,
 			hda: newHdaList,
 			hpp: newHppList,
+			physicalEvaluation: newPhysicalList,
+			respiratoryEvaluation: newRespiratoryList,
+			functionalDiagnostic: newFuncionalList,
 			objectives: newObjectivesList,
-			physical: newPhysicalList,
-			respiratory: newRespiratoryList,
+			evolution: 'PRECISO DESENVOLVER',
+			guideline: newGuidelineList,
 			appointment: newAppointmentList,
 		};
 
