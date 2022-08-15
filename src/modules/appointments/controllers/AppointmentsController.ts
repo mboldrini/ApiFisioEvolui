@@ -8,6 +8,9 @@ import GetAllDayAppoinntmentsService from '../services/GetAllDayAppoinntmentsSer
 import GetAppointmentAvailabilityService from '../services/GetAppointmentAvailabilityService';
 import UpdateAppointmentService from '../services/UpdateAppointmentService';
 
+import { startOfMonth, endOfMonth } from 'date-fns';
+import GetAllMonthAppoinntmentsService from '../services/GetAllMonthAppointmentsService';
+
 export default class AppointmentsController {
 	public async create(request: Request, response: Response): Promise<Response> {
 		const { client_id, serviceType_id, description, comments, status, type, date_scheduled, start_hour } =
@@ -109,6 +112,20 @@ export default class AppointmentsController {
 		const appointment = await appointmentSrvc.execute({
 			user_code,
 			date_scheduled: date,
+		});
+
+		return response.json(appointment);
+	}
+
+	public async getAllMonthAppointments(request: Request, response: Response): Promise<Response> {
+		const { client_id, date } = request.params;
+		const { user_code } = request.user;
+
+		const appointmentSrvc = new GetAllMonthAppoinntmentsService();
+		const appointment = await appointmentSrvc.execute({
+			client_id: parseInt(client_id),
+			user_code,
+			date,
 		});
 
 		return response.json(appointment);

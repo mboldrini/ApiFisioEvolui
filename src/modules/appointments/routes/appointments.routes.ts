@@ -71,4 +71,6 @@ appointmentsRouter.patch('/cancel/:id', isAuthenticated, appointmentsController.
 
 appointmentsRouter.delete('/delete/:id', isAuthenticated, appointmentsController.deleteAppointment);
 
+appointmentsRouter.get('/month/:client_id&:date', isAuthenticated, appointmentsController.getAllMonthAppointments);
+
 export default appointmentsRouter;
