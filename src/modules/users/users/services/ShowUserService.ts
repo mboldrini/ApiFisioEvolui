@@ -1,3 +1,6 @@
+import { PaymentMethodUserRepository } from './../../../payment_method/paymentMethod_user/typeorm/repositories/PaymentMethodUserRepository';
+import { PaymentMethodRepository } from './../../../payment_method/payment_method/typeorm/repositories/PaymentMethodRepository';
+import { ServicesTypesRepository } from './../../../services_types/typeorm/repositories/ServicesTypesRepository';
 import { UsersInfosRepository } from './../../users_infos/typeorm/repositories/UsersInfosRepository';
 import { UsersConfigsRepository } from './../../users_configs/typeorm/repositories/UsersConfigsRepository';
 import { number } from 'joi';
@@ -19,6 +22,8 @@ class ShowUserService {
 		const userAddressRepo = getCustomRepository(UsersAddressRepository);
 		const userConfigsRepo = getCustomRepository(UsersConfigsRepository);
 		const userInfosRepo = getCustomRepository(UsersInfosRepository);
+		const serviceTypesRepo = getCustomRepository(ServicesTypesRepository);
+		const paymentTypeRepo = getCustomRepository(PaymentMethodUserRepository);
 
 		const user = await userRepository.findOne({ user_code });
 		if (!user) throw new AppError("This user don't exist");
@@ -57,6 +62,18 @@ class ShowUserService {
 			tiktok: userInfosExist?.tiktok,
 		};
 
+		const servicesTypeList = await serviceTypesRepo.find({ user_id: user.user_id });
+		let newServicesTypeList = servicesTypeList.map(service => ({
+			id: service.id,
+			name: service.name,
+			description: service.description,
+			duration: service.duration,
+			price: service.price,
+			created_at: service.created_at,
+			updated_at: service.updated_at,
+		}));
+		const paymentMethodList = await paymentTypeRepo.find({ user_id: user.user_id });
+
 		let mapUser = {
 			user_code: user.user_code,
 			name: user.name,
@@ -69,6 +86,8 @@ class ShowUserService {
 			address: userAddressMap,
 			configs: userConfigsMap,
 			personal_infos: userInfosMap,
+			serviceType: newServicesTypeList,
+			paymentMethod: paymentMethodList,
 		};
 
 		return mapUser;
