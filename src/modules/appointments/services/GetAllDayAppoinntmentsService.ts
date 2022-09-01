@@ -53,7 +53,6 @@ class GetAllDayAppoinntmentsService {
 		}));
 
 		// appointmentsList.forEach(appoint => {
-		// 	console.log(appoint.id);
 		// 	if (!(GetDateString(appoint.date_scheduled) in dates)) {
 		// 		dates[GetDateString(appoint.date_scheduled)] = [];
 		// 	}

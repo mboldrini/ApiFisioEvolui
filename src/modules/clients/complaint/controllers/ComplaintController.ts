@@ -38,8 +38,8 @@ export default class ComplaintController {
 	}
 
 	public async update(request: Request, response: Response): Promise<Response> {
-		const { id } = request.params;
-		const { about, comments, date, client_id } = request.body;
+		const { id, client_id } = request.params;
+		const { about, comments, date } = request.body;
 		const { user_code } = request.user;
 
 		const updateComplaint = new UpdateComplaintService();
@@ -48,7 +48,7 @@ export default class ComplaintController {
 			complaint: about,
 			comments,
 			date,
-			client_id,
+			client_id: parseInt(client_id),
 			user_code,
 		});
 

@@ -23,14 +23,13 @@ complaintRouter.post(
 complaintRouter.get('/:id&:client_id', isAuthenticated, complaintController.get);
 
 complaintRouter.patch(
-	'/:id',
+	'/:id&:client_id',
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
 			about: Joi.string().required(),
 			comments: Joi.string().optional(),
-			date: Joi.date().required(),
-			client_id: Joi.number().required(),
+			date: Joi.date().optional(),
 		},
 	}),
 	complaintController.update,

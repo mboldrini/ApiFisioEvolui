@@ -19,7 +19,6 @@ class GetAllClientsService {
 		if (!userExists) throw new AppError("User don't exist", 404);
 
 		const servicesList = await servicesRepo.find({ user_id: userExists.user_id });
-		console.log(servicesList);
 
 		const clientsList = await clientRepo.find({ user_id: userExists.user_id, enabled: true });
 
@@ -40,8 +39,6 @@ class GetAllClientsService {
 					return servicesList.name;
 				})[0],
 		}));
-
-		// console.log(clientList);
 
 		return clientList;
 	}

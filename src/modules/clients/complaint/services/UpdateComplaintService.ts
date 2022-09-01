@@ -33,7 +33,9 @@ class UpdateComplaintService {
 		if (comments) {
 			complaintExist.comments = comments;
 		}
-		complaintExist.date = date;
+		if (date) {
+			complaintExist.date = date;
+		}
 
 		await complaintsRepo.save(complaintExist);
 
