@@ -24,6 +24,8 @@ appointmentsRouter.post(
 	appointmentsController.create,
 );
 
+appointmentsRouter.get('/:id&:client_id', isAuthenticated, appointmentsController.getAppointment);
+
 appointmentsRouter.patch(
 	'/:id',
 	isAuthenticated,
