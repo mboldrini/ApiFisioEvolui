@@ -22,6 +22,9 @@ export interface IAppointmentsList {
 }
 
 export function SetEndHour(startHour: string, duration: string) {
+	if (startHour.length == 5) {
+		startHour = startHour + ':00';
+	}
 	const [sHour, sMinute, sSecond] = startHour.split(':');
 	const [hora, minuto, segundo] = duration.split(':');
 	let dateHour = new Date(1995, 6, 1, parseInt(sHour), parseInt(sMinute), parseInt(sSecond));

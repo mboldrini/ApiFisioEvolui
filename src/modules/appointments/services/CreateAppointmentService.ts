@@ -71,6 +71,8 @@ class CreateAppointmentService {
 			throw new AppError('Already exist an appointment for the selected hour');
 		}
 
+		console.log('gg');
+
 		const appointment = await appointmentRepo.create(theAppointment);
 
 		const newAppointment = await appointmentRepo.save(appointment);
