@@ -101,7 +101,7 @@ class UpdateAppointmentService {
 			}
 			appointment.status = status;
 			appointment.type = type;
-			appointment.date_scheduled;
+			appointment.date_scheduled = date_scheduled;
 			appointment.start_hour = start_hour;
 			appointment.duration = serviceTypeExist.duration;
 			appointment.end_hour = SetEndHour(start_hour, serviceTypeExist.duration);
