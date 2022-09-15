@@ -5,104 +5,136 @@ import { getCustomRepository } from 'typeorm';
 import UserWorkDays from '../typeorm/entities/UserWorkDays';
 import UsersConfigsRepository from '@modules/users/users_configs/typeorm/repositories/UsersConfigsRepository';
 
+interface IWorkDay {
+	enabled: boolean;
+	start: string;
+	end: string;
+}
+
 interface IRequest {
 	user_code: string;
 
-	sunday: boolean;
-	sunday_startHour: string;
-	sunday_endHour: string;
-
-	monday: boolean;
-	monday_startHour: string;
-	monday_endHour: string;
-
-	tuesday: boolean;
-	tuesday_startHour: string;
-	tuesday_endHour: string;
-
-	wednesday: boolean;
-	wednesday_startHour: string;
-	wednesday_endHour: string;
-
-	thursday: boolean;
-	thursday_startHour: string;
-	thursday_endHour: string;
-
-	friday: boolean;
-	friday_startHour: string;
-	friday_endHour: string;
-
-	saturday: boolean;
-	saturday_startHour: string;
-	saturday_endHour: string;
+	sunday?: IWorkDay;
+	monday?: IWorkDay;
+	tuesday?: IWorkDay;
+	wednesday?: IWorkDay;
+	thursday?: IWorkDay;
+	friday?: IWorkDay;
+	saturday?: IWorkDay;
 }
 
 class UpdateUserWorkDaysService {
 	public async execute({
 		user_code,
 		sunday,
-		sunday_startHour,
-		sunday_endHour,
 		monday,
-		monday_startHour,
-		monday_endHour,
 		tuesday,
-		tuesday_startHour,
-		tuesday_endHour,
 		wednesday,
-		wednesday_startHour,
-		wednesday_endHour,
 		thursday,
-		thursday_startHour,
-		thursday_endHour,
 		friday,
-		friday_startHour,
-		friday_endHour,
 		saturday,
-		saturday_startHour,
-		saturday_endHour,
-	}: IRequest): Promise<UserWorkDays> {
+	}: IRequest): Promise<Object> {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const userConfigRepo = getCustomRepository(UsersConfigsRepository);
 		const userWorkDayRepo = getCustomRepository(UserWorkDaysRepository);
 
 		const userExists = await usersRepo.findOne({ user_code });
-		if (!userExists) throw new AppError("User don't exist", 404);
+		if (!userExists) throw new AppError('Esse usuário não existe', 404);
 
 		const userConfigExists = await userConfigRepo.findOne({ user_id: userExists.user_id });
-		if (!userConfigExists) throw new AppError("User configs don't exist", 404);
+		if (!userConfigExists) throw new AppError('Não existe configs p/ esse usuário', 404);
 
 		const workdayExist = await userWorkDayRepo.findOne({ user_id: userExists.user_id });
-		if (!workdayExist) throw new AppError('Already exist an workday created for this user');
+		if (!workdayExist) throw new AppError('Não existe configuração de dias p/ esse usuário');
 
-		if (!userConfigExists.user_premium)
-			throw new AppError("Only premium user's can change the work days/hours", 404);
+		// if (!userConfigExists.user_premium)
+		// 	throw new AppError("Only premium user's can change the work days/hours", 404);
 
-		workdayExist.sunday = sunday;
-		workdayExist.sunday_startHour = sunday_startHour;
-		workdayExist.sunday_endHour = sunday_endHour;
-		workdayExist.monday = monday;
-		workdayExist.monday_startHour = monday_startHour;
-		workdayExist.monday_endHour = monday_endHour;
-		workdayExist.tuesday = tuesday;
-		workdayExist.tuesday_startHour = tuesday_startHour;
-		workdayExist.tuesday_endHour = tuesday_endHour;
-		workdayExist.wednesday = wednesday;
-		workdayExist.wednesday_startHour = wednesday_startHour;
-		workdayExist.wednesday_endHour = wednesday_endHour;
-		workdayExist.thursday = thursday;
-		workdayExist.thursday_startHour = thursday_startHour;
-		workdayExist.thursday_endHour = thursday_endHour;
-		workdayExist.friday = friday;
-		workdayExist.friday_startHour = friday_startHour;
-		workdayExist.friday_endHour = friday_endHour;
-		workdayExist.saturday = saturday;
-		workdayExist.saturday_startHour = saturday_startHour;
-		workdayExist.saturday_endHour = saturday_endHour;
+		if (sunday) {
+			workdayExist.sunday = sunday.enabled;
+			workdayExist.sunday_startHour = sunday.start;
+			workdayExist.sunday_endHour = sunday.end;
+		}
+
+		if (monday) {
+			workdayExist.sunday = monday.enabled;
+			workdayExist.sunday_startHour = monday.start;
+			workdayExist.sunday_endHour = monday.end;
+		}
+
+		if (tuesday) {
+			workdayExist.sunday = tuesday.enabled;
+			workdayExist.sunday_startHour = tuesday.start;
+			workdayExist.sunday_endHour = tuesday.end;
+		}
+
+		if (wednesday) {
+			workdayExist.sunday = wednesday.enabled;
+			workdayExist.sunday_startHour = wednesday.start;
+			workdayExist.sunday_endHour = wednesday.end;
+		}
+
+		if (thursday) {
+			workdayExist.sunday = thursday.enabled;
+			workdayExist.sunday_startHour = thursday.start;
+			workdayExist.sunday_endHour = thursday.end;
+		}
+
+		if (friday) {
+			workdayExist.sunday = friday.enabled;
+			workdayExist.sunday_startHour = friday.start;
+			workdayExist.sunday_endHour = friday.end;
+		}
+
+		if (saturday) {
+			workdayExist.sunday = saturday.enabled;
+			workdayExist.sunday_startHour = saturday.start;
+			workdayExist.sunday_endHour = saturday.end;
+		}
 
 		const userWorkDay = userWorkDayRepo.save(workdayExist);
 
-		return userWorkDay;
+		const workDayReturn = {
+			created_at: workdayExist.created_at,
+			updated_at: workdayExist.updated_at,
+			sunday: {
+				enabled: workdayExist.sunday,
+				start: workdayExist.sunday_startHour,
+				end: workdayExist.sunday_endHour,
+			},
+			monday: {
+				enabled: workdayExist.monday,
+				start: workdayExist.monday_startHour,
+				end: workdayExist.monday_endHour,
+			},
+			tuesday: {
+				enabled: workdayExist.tuesday,
+				start: workdayExist.tuesday_startHour,
+				end: workdayExist.tuesday_endHour,
+			},
+			wednesday: {
+				enabled: workdayExist.wednesday,
+				start: workdayExist.wednesday_startHour,
+				end: workdayExist.wednesday_endHour,
+			},
+			thursday: {
+				enabled: workdayExist.thursday,
+				start: workdayExist.thursday_startHour,
+				end: workdayExist.thursday_endHour,
+			},
+			friday: {
+				enabled: workdayExist.friday,
+				start: workdayExist.friday_startHour,
+				end: workdayExist.friday_endHour,
+			},
+			saturday: {
+				enabled: workdayExist.saturday,
+				start: workdayExist.saturday_startHour,
+				end: workdayExist.saturday_endHour,
+			},
+		};
+
+		return workDayReturn;
 	}
 }
 export default UpdateUserWorkDaysService;
