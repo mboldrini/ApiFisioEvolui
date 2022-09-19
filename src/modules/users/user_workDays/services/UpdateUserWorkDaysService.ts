@@ -57,39 +57,39 @@ class UpdateUserWorkDaysService {
 		}
 
 		if (monday) {
-			workdayExist.sunday = monday.enabled;
-			workdayExist.sunday_startHour = monday.start;
-			workdayExist.sunday_endHour = monday.end;
+			workdayExist.monday = monday.enabled;
+			workdayExist.monday_startHour = monday.start;
+			workdayExist.monday_endHour = monday.end;
 		}
 
 		if (tuesday) {
-			workdayExist.sunday = tuesday.enabled;
-			workdayExist.sunday_startHour = tuesday.start;
-			workdayExist.sunday_endHour = tuesday.end;
+			workdayExist.tuesday = tuesday.enabled;
+			workdayExist.tuesday_startHour = tuesday.start;
+			workdayExist.tuesday_endHour = tuesday.end;
 		}
 
 		if (wednesday) {
-			workdayExist.sunday = wednesday.enabled;
-			workdayExist.sunday_startHour = wednesday.start;
-			workdayExist.sunday_endHour = wednesday.end;
+			workdayExist.wednesday = wednesday.enabled;
+			workdayExist.wednesday_startHour = wednesday.start;
+			workdayExist.wednesday_endHour = wednesday.end;
 		}
 
 		if (thursday) {
-			workdayExist.sunday = thursday.enabled;
-			workdayExist.sunday_startHour = thursday.start;
-			workdayExist.sunday_endHour = thursday.end;
+			workdayExist.thursday = thursday.enabled;
+			workdayExist.thursday_startHour = thursday.start;
+			workdayExist.thursday_endHour = thursday.end;
 		}
 
 		if (friday) {
-			workdayExist.sunday = friday.enabled;
-			workdayExist.sunday_startHour = friday.start;
-			workdayExist.sunday_endHour = friday.end;
+			workdayExist.friday = friday.enabled;
+			workdayExist.friday_startHour = friday.start;
+			workdayExist.friday_endHour = friday.end;
 		}
 
 		if (saturday) {
-			workdayExist.sunday = saturday.enabled;
-			workdayExist.sunday_startHour = saturday.start;
-			workdayExist.sunday_endHour = saturday.end;
+			workdayExist.saturday = saturday.enabled;
+			workdayExist.saturday_startHour = saturday.start;
+			workdayExist.saturday_endHour = saturday.end;
 		}
 
 		const userWorkDay = userWorkDayRepo.save(workdayExist);

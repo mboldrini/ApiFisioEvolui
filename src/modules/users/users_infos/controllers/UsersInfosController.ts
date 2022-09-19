@@ -2,6 +2,7 @@ import AppError from '@shared/errors/AppError';
 import { Request, Response } from 'express';
 import CreateUsersInfosService from '../services/CreateUserInfosService';
 import GetUsersInfosService from '../services/GetUserInfosService';
+import GetUsersStatisticsService from '../services/GetUserStatisticsService';
 import UpdateUsersInfosService from '../services/UpdateUserInfosService';
 
 export default class UsersInfosController {
@@ -56,5 +57,16 @@ export default class UsersInfosController {
 		});
 
 		return response.json(userInfos);
+	}
+
+	public async getStatistics(request: Request, response: Response): Promise<Response> {
+		const { user_code } = request.user;
+
+		const getUserStatistic = new GetUsersStatisticsService();
+		const statistic = await getUserStatistic.execute({
+			user_code,
+		});
+
+		return response.json(statistic);
 	}
 }
