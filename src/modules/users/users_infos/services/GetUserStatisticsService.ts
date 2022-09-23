@@ -11,6 +11,7 @@ interface IRequest {
 interface IRetorno {
 	qtdPacientes: number;
 	qtdAtendimentos: number;
+	qtdEvolucoes: number;
 }
 
 class GetUsersStatisticsService {
@@ -18,6 +19,7 @@ class GetUsersStatisticsService {
 		const usersRepo = getCustomRepository(UsersRepository);
 		const userPacientsRepo = getCustomRepository(ClientsRepository);
 		const userAtendimentosRepo = getCustomRepository(AppointmentsRepository);
+		const userEvolcuoesRepo = getCustomRepository(AppointmentsRepository);
 
 		const userExists = await usersRepo.findOne({ user_code });
 		if (!userExists) throw new AppError('Usuário não existe', 404);
@@ -26,9 +28,16 @@ class GetUsersStatisticsService {
 
 		const userAtendimentos = await userAtendimentosRepo.findAndCount({ user_id: userExists.user_id });
 
+		const userEvolucoes = await userEvolcuoesRepo.findAndCount({
+			user_id: userExists.user_id,
+			status: 1,
+			scheduled: true,
+		});
+
 		const retorno: IRetorno = {
 			qtdPacientes: Object.keys(usersPacientes[0]).length,
 			qtdAtendimentos: Object.keys(userAtendimentos[0]).length,
+			qtdEvolucoes: Object.keys(userEvolucoes[0]).length,
 		};
 
 		return retorno;
