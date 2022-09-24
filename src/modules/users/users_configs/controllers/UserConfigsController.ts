@@ -7,8 +7,6 @@ import UpdateUserConfigsService from '../services/UpdateUserConfigsService';
 export default class UserConfigsController {
 	public async create(request: Request, response: Response): Promise<Response> {
 		const {
-			start_workHour,
-			end_workHour,
 			allow_retroactiveDate,
 			allow_notifications,
 			schedule_startDay,
@@ -21,8 +19,6 @@ export default class UserConfigsController {
 		const createUserConfigs = new CreateUserConfigsService();
 		const userConfigs = await createUserConfigs.execute({
 			user_code,
-			start_workHour,
-			end_workHour,
 			allow_retroactiveDate,
 			allow_notifications,
 			schedule_startDay,
@@ -36,8 +32,6 @@ export default class UserConfigsController {
 
 	public async update(request: Request, response: Response): Promise<Response> {
 		const {
-			start_workHour,
-			end_workHour,
 			allow_retroactiveDate,
 			allow_notifications,
 			schedule_startDay,
@@ -50,8 +44,6 @@ export default class UserConfigsController {
 		const updateUserConfigs = new UpdateUserConfigsService();
 		const updateConfigs = await updateUserConfigs.execute({
 			user_code,
-			start_workHour,
-			end_workHour,
 			allow_retroactiveDate,
 			allow_notifications,
 			schedule_startDay,
