@@ -19,12 +19,6 @@ class UsersConfigs {
 	@Column({ name: 'user_id' })
 	user_id: number;
 
-	@Column({ default: '08:00:00.000-03:00' })
-	start_workHour: string;
-
-	@Column({ default: '18:00:00.000-03:00' })
-	end_workHour: string;
-
 	@Column({ default: false })
 	allow_retroactiveDate: boolean;
 

@@ -109,4 +109,20 @@ clientsRouter.post(
 	clientsController.getInfos,
 );
 
+clientsRouter.post(
+	'/find',
+	isAuthenticated,
+	celebrate({
+		[Segments.BODY]: Joi.object({
+			name: Joi.string().optional(),
+			cpf: Joi.string().optional(),
+			email: Joi.string().optional().email(),
+			telefone: Joi.string().optional(),
+			endereco: Joi.string().optional(),
+			tipoServico: Joi.number().optional(),
+		}).or('name', 'cpf', 'email', 'telefone', 'endereco', 'tipoServico'),
+	}),
+	clientsController.getClientByName,
+);
+
 export default clientsRouter;

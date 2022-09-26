@@ -6,8 +6,6 @@ import UsersConfigs from '../typeorm/entities/UsersConfigs';
 
 interface IRequest {
 	user_code: string;
-	start_workHour?: string;
-	end_workHour?: string;
 	allow_retroactiveDate?: boolean;
 	allow_notifications?: boolean;
 	schedule_startDay?: boolean;

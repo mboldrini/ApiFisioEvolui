@@ -9,6 +9,7 @@ import CreateClientObjectiveService from '@modules/clients/objectives_goals/serv
 import CreateClientPhysicalEvalService from '@modules/clients/physical_evaluation/services/CreatePhysicalEvalService';
 import CreateClientRespiratoryEvalService from '@modules/clients/respiratory_evaluation/services/CreateRespiratoryEvalService';
 import { Request, Response } from 'express';
+import ClientFindByNameService from '../services/ClientFindService';
 import CreateClientService from '../services/CreateClientService';
 import DeleteClientService from '../services/DeleteClientService';
 import GetAllClientsInfosService from '../services/GetAllClientsInfosService';
@@ -352,6 +353,24 @@ export default class ClientsController {
 			client_id: client_idD,
 			date,
 			user_code,
+		});
+
+		return response.json(client);
+	}
+
+	public async getClientByName(request: Request, response: Response): Promise<Response> {
+		const { name, cpf, email, telefone, endereco, tipoServico } = request.body;
+		const { user_code } = request.user;
+
+		const getclient = new ClientFindByNameService();
+		const client = await getclient.execute({
+			user_code,
+			name,
+			cpf,
+			email,
+			telefone,
+			endereco,
+			tipoServico: parseInt(tipoServico),
 		});
 
 		return response.json(client);

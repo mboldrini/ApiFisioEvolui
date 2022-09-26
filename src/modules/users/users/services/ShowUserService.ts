@@ -40,8 +40,6 @@ class ShowUserService {
 
 		const userConfigs = await userConfigsRepo.findOne({ user_id: user.user_id });
 		const userConfigsMap = {
-			start_workHour: userConfigs?.start_workHour,
-			end_workHour: userConfigs?.end_workHour,
 			allow_retroactiveDate: userConfigs?.allow_retroactiveDate,
 			allow_notifications: userConfigs?.allow_notifications,
 			schedule_startDay: userConfigs?.schedule_startDay,
