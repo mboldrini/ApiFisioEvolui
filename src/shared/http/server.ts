@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import 'dotenv/config';
 import express, { NextFunction, Request, Response } from 'express';
 // pra ele passar a usar aquela classe de erros ao invés do server só dar console e n falar nada
 import 'express-async-errors';
@@ -33,8 +34,8 @@ app.use((error: Error, request: Request, response: Response, next: NextFunction)
 	});
 });
 
-app.listen(3333, () => {
+app.listen(process.env.PORT_APP, () => {
 	console.log('		--⭐--		');
-	console.log('🚀 Server started on port 3333! 🚀🤑');
+	console.log('🚀 Server started on port ' + process.env.PORT_APP + '  🚀🤑');
 	console.log('		--⭐--		');
 });
