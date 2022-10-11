@@ -19,20 +19,20 @@ app.use(routes);
 app.use(errors()); //se o celebrate der erro, vem por aqui
 
 ///Middleware de erros
-// app.use((error: Error, request: Request, response: Response, next: NextFunction) => {
-// 	if (error instanceof AppError) {
-// 		return response.status(error.statusCode).json({
-// 			status: 'error',
-// 			message: error.message,
-// 		});
-// 	}
+app.use((error: Error, request: Request, response: Response, next: NextFunction) => {
+	if (error instanceof AppError) {
+		return response.status(error.statusCode).json({
+			status: 'error',
+			message: error.message,
+		});
+	}
 
-// 	return response.status(500).json({
-// 		status: 'error',
-// 		message: 'Internal server error - ',
-// 		error,
-// 	});
-// });
+	return response.status(500).json({
+		status: 'error',
+		message: 'Internal server error - ',
+		error,
+	});
+});
 
 app.listen(process.env.APP_PORTA, () => {
 	console.log('		--⭐--		');
