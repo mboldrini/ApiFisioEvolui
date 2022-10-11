@@ -34,8 +34,8 @@ app.use((error: Error, request: Request, response: Response, next: NextFunction)
 	});
 });
 
-app.listen(process.env.PORT_APP, () => {
+app.listen(process.env.APP_PORTA, () => {
 	console.log('		--⭐--		');
-	console.log('🚀 Server started on port ' + process.env.PORT_APP + '  🚀🤑');
+	console.log('🚀 Server started on port ' + process.env.APP_PORTA + '  🚀🤑');
 	console.log('		--⭐--		');
 });
