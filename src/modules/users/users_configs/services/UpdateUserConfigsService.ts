@@ -8,8 +8,6 @@ import UsersConfigs from '../typeorm/entities/UsersConfigs';
 
 interface IRequest {
 	user_code: string;
-	start_workHour: string;
-	end_workHour: string;
 	allow_retroactiveDate: boolean;
 	allow_notifications: boolean;
 	schedule_startDay: boolean;
@@ -19,8 +17,6 @@ interface IRequest {
 }
 
 interface IReturn {
-	start_workHour: string;
-	end_workHour: string;
 	allow_retroactiveDate: boolean;
 	allow_notifications: boolean;
 	schedule_startDay: boolean;
@@ -31,8 +27,6 @@ interface IReturn {
 class UpdateUserConfigsService {
 	public async execute({
 		user_code,
-		start_workHour,
-		end_workHour,
 		allow_retroactiveDate,
 		allow_notifications,
 		schedule_startDay,
@@ -48,8 +42,6 @@ class UpdateUserConfigsService {
 		const userConfigsExist = await userConfigRepo.findOne({ user_id: userExists.user_id });
 		if (!userConfigsExist) throw new AppError("Don't exist configs registry for this user", 404);
 
-		userConfigsExist.start_workHour = start_workHour;
-		userConfigsExist.end_workHour = end_workHour;
 		userConfigsExist.allow_retroactiveDate = allow_retroactiveDate;
 		userConfigsExist.allow_notifications = allow_notifications;
 		userConfigsExist.schedule_startDay = schedule_startDay;
@@ -59,8 +51,6 @@ class UpdateUserConfigsService {
 		await userConfigRepo.save(userConfigsExist);
 
 		const updatedConfigs = {
-			start_workHour: userConfigsExist.start_workHour,
-			end_workHour: userConfigsExist.end_workHour,
 			allow_retroactiveDate: userConfigsExist.allow_retroactiveDate,
 			allow_notifications: userConfigsExist.allow_notifications,
 			schedule_startDay: userConfigsExist.schedule_startDay,

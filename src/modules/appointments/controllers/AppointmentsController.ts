@@ -4,9 +4,12 @@ import { Request, Response } from 'express';
 import CancelAppointmentService from '../services/CancelAppointmentService';
 import CreateAppointmentService from '../services/CreateAppointmentService';
 import DeleteAppointmentService from '../services/DeleteAppointmentService';
-import GetAllDayAppointmentService from '../services/GetAllDayAppoinntmentService';
+import GetAllDayAppoinntmentsService from '../services/GetAllDayAppoinntmentsService';
 import GetAppointmentAvailabilityService from '../services/GetAppointmentAvailabilityService';
 import UpdateAppointmentService from '../services/UpdateAppointmentService';
+import { startOfMonth, endOfMonth } from 'date-fns';
+import GetAllMonthAppoinntmentsService from '../services/GetAllMonthAppointmentsService';
+import GetAppointmentService from '../services/GetAppointmentService';
 
 export default class AppointmentsController {
 	public async create(request: Request, response: Response): Promise<Response> {
@@ -50,6 +53,20 @@ export default class AppointmentsController {
 			type,
 			date_scheduled,
 			start_hour,
+		});
+
+		return response.json(appointment);
+	}
+
+	public async getAppointment(request: Request, response: Response): Promise<Response> {
+		const { id, client_id } = request.params;
+		const { user_code } = request.user;
+
+		const appointmentSrvc = new GetAppointmentService();
+		const appointment = await appointmentSrvc.execute({
+			id: parseInt(id),
+			client_id: parseInt(client_id),
+			user_code,
 		});
 
 		return response.json(appointment);
@@ -102,13 +119,27 @@ export default class AppointmentsController {
 	}
 
 	public async getAllDayAppointments(request: Request, response: Response): Promise<Response> {
-		const { date_scheduled } = request.body;
+		const { date } = request.body;
 		const { user_code } = request.user;
 
-		const appointmentSrvc = new GetAllDayAppointmentService();
+		const appointmentSrvc = new GetAllDayAppoinntmentsService();
 		const appointment = await appointmentSrvc.execute({
 			user_code,
-			date: date_scheduled,
+			date_scheduled: date,
+		});
+
+		return response.json(appointment);
+	}
+
+	public async getAllMonthAppointments(request: Request, response: Response): Promise<Response> {
+		const { client_id, date } = request.params;
+		const { user_code } = request.user;
+
+		const appointmentSrvc = new GetAllMonthAppoinntmentsService();
+		const appointment = await appointmentSrvc.execute({
+			client_id: parseInt(client_id),
+			user_code,
+			date,
 		});
 
 		return response.json(appointment);

@@ -24,6 +24,8 @@ appointmentsRouter.post(
 	appointmentsController.create,
 );
 
+appointmentsRouter.get('/:id&:client_id', isAuthenticated, appointmentsController.getAppointment);
+
 appointmentsRouter.patch(
 	'/:id',
 	isAuthenticated,
@@ -47,7 +49,7 @@ appointmentsRouter.post(
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			client_id: Joi.number().required(),
+			// client_id: Joi.number().required(),
 			serviceType_id: Joi.number().required(),
 			date_scheduled: Joi.string().required(),
 			start_hour: Joi.string().required(),
@@ -56,12 +58,12 @@ appointmentsRouter.post(
 	appointmentsController.getAvailability,
 );
 
-appointmentsRouter.get(
-	'/',
+appointmentsRouter.post(
+	'/day',
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			date_scheduled: Joi.date().required(),
+			date: Joi.date().required(),
 		},
 	}),
 	appointmentsController.getAllDayAppointments,
@@ -70,5 +72,7 @@ appointmentsRouter.get(
 appointmentsRouter.patch('/cancel/:id', isAuthenticated, appointmentsController.cancelAppointment);
 
 appointmentsRouter.delete('/delete/:id', isAuthenticated, appointmentsController.deleteAppointment);
+
+appointmentsRouter.get('/month/:client_id&:date', isAuthenticated, appointmentsController.getAllMonthAppointments);
 
 export default appointmentsRouter;

@@ -29,8 +29,6 @@ usersConfigsRouter.post(
 	isAuthenticated,
 	celebrate({
 		[Segments.BODY]: {
-			start_workHour: Joi.string().required(),
-			end_workHour: Joi.string().required(),
 			allow_retroactiveDate: Joi.boolean().required(),
 			allow_notifications: Joi.boolean().required(),
 			schedule_startDay: Joi.boolean().required(),

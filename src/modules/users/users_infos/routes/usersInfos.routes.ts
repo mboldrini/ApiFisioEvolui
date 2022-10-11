@@ -44,4 +44,6 @@ usersInfosRouter.put(
 
 usersInfosRouter.get('/', isAuthenticated, usersInfosController.get);
 
+usersInfosRouter.get('/statistic', isAuthenticated, usersInfosController.getStatistics);
+
 export default usersInfosRouter;

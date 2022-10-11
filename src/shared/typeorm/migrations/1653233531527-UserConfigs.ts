@@ -20,16 +20,6 @@ export class UserConfigs1653233531527 implements MigrationInterface {
 						isNullable: false,
 					},
 					{
-						name: 'start_workHour',
-						type: 'time',
-						isNullable: false,
-					},
-					{
-						name: 'end_workHour',
-						type: 'time',
-						isNullable: false,
-					},
-					{
 						name: 'allow_retroactiveDate',
 						type: 'boolean',
 						isNullable: false,

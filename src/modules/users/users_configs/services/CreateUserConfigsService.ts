@@ -6,8 +6,6 @@ import UsersConfigs from '../typeorm/entities/UsersConfigs';
 
 interface IRequest {
 	user_code: string;
-	start_workHour?: string;
-	end_workHour?: string;
 	allow_retroactiveDate?: boolean;
 	allow_notifications?: boolean;
 	schedule_startDay?: boolean;
@@ -19,8 +17,6 @@ interface IRequest {
 class CreateUserConfigsService {
 	public async execute({
 		user_code,
-		start_workHour,
-		end_workHour,
 		allow_retroactiveDate,
 		allow_notifications,
 		schedule_startDay,
@@ -38,8 +34,6 @@ class CreateUserConfigsService {
 		if (userConfigsExist) throw new AppError('Already exist a configs registry for this user', 404);
 
 		const userConfigs = userConfigRepo.create({
-			start_workHour: start_workHour ? start_workHour : '08:00:00.000-03:00',
-			end_workHour: end_workHour ? end_workHour : '18:00:00.000-03:00',
 			allow_retroactiveDate: allow_retroactiveDate ? allow_retroactiveDate : false,
 			allow_notifications: allow_notifications ? allow_notifications : false,
 			schedule_startDay: schedule_startDay ? schedule_startDay : true,

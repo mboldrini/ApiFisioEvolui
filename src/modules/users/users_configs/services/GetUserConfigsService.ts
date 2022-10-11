@@ -11,8 +11,6 @@ interface IRequest {
 }
 
 interface IReturn {
-	start_workHour: string;
-	end_workHour: string;
 	allow_retroactiveDate: boolean;
 	allow_notifications: boolean;
 	schedule_startDay: boolean;
@@ -33,8 +31,6 @@ class GetUserConfigsService {
 		if (!userConfigsExist) throw new AppError("Don't exist configs registry for this user", 404);
 
 		const userConfigs = {
-			start_workHour: userConfigsExist.start_workHour,
-			end_workHour: userConfigsExist.end_workHour,
 			allow_retroactiveDate: userConfigsExist.allow_retroactiveDate,
 			allow_notifications: userConfigsExist.allow_notifications,
 			schedule_startDay: userConfigsExist.schedule_startDay,

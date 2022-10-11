@@ -4,7 +4,7 @@ export class ClientDiagnostic1658524306035 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'paciente_diagnostico',
+				name: 'clients_clinicalDiagnosis',
 				columns: [
 					{
 						name: 'id',
@@ -15,23 +15,23 @@ export class ClientDiagnostic1658524306035 implements MigrationInterface {
 						generationStrategy: 'increment',
 					},
 					{
-						name: 'diagnostico',
+						name: 'diagnostic',
 						type: 'varchar(1000)',
 						isNullable: false,
 					},
 					{
-						name: 'observacoes',
+						name: 'comments',
 						type: 'varchar(500)',
 						isNullable: true,
 					},
 					{
-						name: 'data',
+						name: 'date',
 						type: 'date',
 						isNullable: false,
 					},
 
 					{
-						name: 'paciente_id',
+						name: 'client_id',
 						type: 'int',
 						isNullable: false,
 					},
@@ -62,7 +62,7 @@ export class ClientDiagnostic1658524306035 implements MigrationInterface {
 						name: 'FkPacienteId',
 						referencedTableName: 'clients', // tabela do USERS
 						referencedColumnNames: ['id'], // nome da coluna LA no user
-						columnNames: ['paciente_id'], //nome da coluna AQUI
+						columnNames: ['client_id'], //nome da coluna AQUI
 					},
 				],
 			}),
@@ -70,6 +70,6 @@ export class ClientDiagnostic1658524306035 implements MigrationInterface {
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropTable('paciente_diagnostico');
+		await queryRunner.dropTable('clients_clinicalDiagnosis');
 	}
 }

@@ -20,6 +20,11 @@ export class Clients1652909585043 implements MigrationInterface {
 						isNullable: false,
 					},
 					{
+						name: 'dataNascimento',
+						type: 'date',
+						isNullable: false,
+					},
+					{
 						name: 'document',
 						type: 'varchar(45)',
 						isNullable: true,

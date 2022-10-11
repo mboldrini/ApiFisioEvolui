@@ -15,13 +15,16 @@ export interface IAppointmentsList {
 	price?: number;
 	scheduled?: boolean;
 	user_id: number;
-	client_id: number;
+	// client_id: number;
 	serviceType_id: number;
 	created_at?: Date;
 	updated_at?: Date;
 }
 
 export function SetEndHour(startHour: string, duration: string) {
+	if (startHour.length == 5) {
+		startHour = startHour + ':00';
+	}
 	const [sHour, sMinute, sSecond] = startHour.split(':');
 	const [hora, minuto, segundo] = duration.split(':');
 	let dateHour = new Date(1995, 6, 1, parseInt(sHour), parseInt(sMinute), parseInt(sSecond));
@@ -66,7 +69,7 @@ interface IGetAllPossibleAppopintments {
 	dateScheduled: Date;
 	user_id: number;
 	serviceType_id: number;
-	client_id: number;
+	// client_id: number;
 }
 
 export function GetAllPossibleAppointmentsHours({
@@ -76,8 +79,8 @@ export function GetAllPossibleAppointmentsHours({
 	dateScheduled,
 	user_id,
 	serviceType_id,
-	client_id,
-}: IGetAllPossibleAppopintments) {
+}: // client_id,
+IGetAllPossibleAppopintments) {
 	// let startHour = userConfigs.start_workHour;
 	let startHourTimeStamp = GetTimeStamp(startHour);
 	let endHourTimeStamp = GetTimeStamp(endHour);
@@ -96,7 +99,7 @@ export function GetAllPossibleAppointmentsHours({
 			date_scheduled: dateScheduled,
 			user_id: user_id,
 			serviceType_id: serviceType_id,
-			client_id: client_id,
+			// client_id: client_id,
 		};
 		startHour = hour.end_hour;
 		startHourTimeStamp = GetTimeStamp(startHour);
