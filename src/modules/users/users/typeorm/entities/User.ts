@@ -2,7 +2,7 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateCol
 
 @Entity('users')
 class User {
-	@PrimaryGeneratedColumn('increment')
+	@PrimaryGeneratedColumn('uuid')
 	user_id: number;
 
 	@Column()
