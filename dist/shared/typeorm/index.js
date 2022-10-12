@@ -1,20 +1,25 @@
 "use strict";
 
 var _typeorm = require("typeorm");
-// import { createConnection } from 'typeorm';
-// // procura por todas as pastas do arquivo o ormconfig.json
-// createConnection();
+const rootDir = process.env.NODE_ENV === 'development' ? 'src' : 'dist/src';
+const extFormat = process.env.NODE_ENV === 'development' ? 'ts' : 'js';
 
-const AppDataSource = new _typeorm.DataSource({
-  type: 'mysql',
-  host: 'localhost',
-  port: 3306,
-  username: 'admin',
-  password: 'admin',
-  database: 'fisioevolui'
-});
-AppDataSource.initialize().then(() => {
-  console.log('Data Source has been initialized!');
-}).catch(err => {
-  console.error('Error during Data Source initialization', err);
-});
+// procura por todas as pastas do arquivo o ormconfig.json
+let config = {};
+config = {
+  type: process.env.DB_TYPE,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  entities: ['dist/modules/**/typeorm/entities/*.js'],
+  migrations: ['dist/shared/typeorm/migrations/*.js'],
+  cli: {
+    migrationsDir: 'dist/dist/shared/typeorm/migrations'
+  },
+  ssl: {
+    rejectUnauthorized: false
+  }
+};
+(0, _typeorm.createConnection)(config);
