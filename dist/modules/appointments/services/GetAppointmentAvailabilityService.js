@@ -59,9 +59,9 @@ class GetAppointmentAvailabilityService {
       start_hour,
       duration: serviceTypeExist.duration,
       end_hour: (0, _validateFunctions.SetEndHour)(start_hour, serviceTypeExist.duration),
-      price: serviceTypeExist === null || serviceTypeExist === void 0 ? void 0 : serviceTypeExist.price,
+      price: serviceTypeExist?.price,
       scheduled: true,
-      user_id: userExist === null || userExist === void 0 ? void 0 : userExist.user_id,
+      user_id: userExist?.user_id,
       // client_id,
       serviceType_id
     };

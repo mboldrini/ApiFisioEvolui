@@ -1,4 +1,5 @@
-import Clients from '@modules/clients/clients/typeorm/entities/Clients';
+// import Clients from '@modules/clients/clients/typeorm/entities/Clients';
+import Clients from '../../../clients/clients/typeorm/entities/Clients';
 import PaymentMethod from '@modules/payment_method/payment_method/typeorm/entities/PaymentMethod';
 import ServicesTypes from '@modules/services_types/typeorm/entities/ServicesTypes';
 import User from '@modules/users/users/typeorm/entities/User';

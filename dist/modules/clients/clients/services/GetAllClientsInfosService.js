@@ -55,7 +55,7 @@ class GetAllClientsInfosService {
     });
     if (!userExist) throw new _AppError.default('Esse usuário não existe');
     const clientExist = await clientsRepo.findOne({
-      user_id: userExist === null || userExist === void 0 ? void 0 : userExist.user_id,
+      user_id: userExist?.user_id,
       id: client_id,
       enabled: true
     });

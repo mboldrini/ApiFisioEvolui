@@ -43,26 +43,24 @@ class CreatePaymentMethodUserService {
     //Find the payment method USER
     const paymentMethodUserExists = await paymentMethodUserRepo.findOne({
       user_id: userExist.user_id,
-      paymentMethod_id: paymentMethodExist === null || paymentMethodExist === void 0 ? void 0 : paymentMethodExist.id
+      paymentMethod_id: paymentMethodExist?.id
     });
     if (paymentMethodUserExists) {
-      var _paymentMethodSystem;
       payment = {
-        id: paymentMethodUserExists === null || paymentMethodUserExists === void 0 ? void 0 : paymentMethodUserExists.id,
-        name: (_paymentMethodSystem = paymentMethodSystem) === null || _paymentMethodSystem === void 0 ? void 0 : _paymentMethodSystem.name,
-        description: paymentMethodUserExists === null || paymentMethodUserExists === void 0 ? void 0 : paymentMethodUserExists.description
+        id: paymentMethodUserExists?.id,
+        name: paymentMethodSystem?.name,
+        description: paymentMethodUserExists?.description
       };
     } else {
-      var _paymentMethodSystem2, _paymentMethodSystem3;
       const paymentMetUsr = paymentMethodUserRepo.create({
         description: description,
         user_id: userExist.user_id,
-        paymentMethod_id: (_paymentMethodSystem2 = paymentMethodSystem) === null || _paymentMethodSystem2 === void 0 ? void 0 : _paymentMethodSystem2.id
+        paymentMethod_id: paymentMethodSystem?.id
       });
       await paymentMethodUserRepo.save(paymentMetUsr);
       payment = {
         id: paymentMetUsr.id,
-        name: (_paymentMethodSystem3 = paymentMethodSystem) === null || _paymentMethodSystem3 === void 0 ? void 0 : _paymentMethodSystem3.name,
+        name: paymentMethodSystem?.name,
         description: paymentMetUsr.description
       };
     }

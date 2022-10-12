@@ -70,7 +70,7 @@ class CreateAppointmentService {
     }
     const appointment = await appointmentRepo.create(theAppointment);
     const newAppointment = await appointmentRepo.save(appointment);
-    if (userConfigsExist !== null && userConfigsExist !== void 0 && userConfigsExist.user_premium) {
+    if (userConfigsExist?.user_premium) {
       const servicePaymentRepo = (0, _typeorm.getCustomRepository)(_ServicePaymentRepository.ServicePaymentRepository);
       const payment = await servicePaymentRepo.create({
         user_id: userExist.user_id,

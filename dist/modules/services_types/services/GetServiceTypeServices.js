@@ -46,7 +46,7 @@ class GetServicesTypeService {
       duration: serviceExist.duration,
       price: serviceExist.price,
       paymentMethod_id: paymentMethodUserExist.id,
-      paymentMethod_name: paymentMethodExist === null || paymentMethodExist === void 0 ? void 0 : paymentMethodExist.name,
+      paymentMethod_name: paymentMethodExist?.name,
       created_at: serviceExist.created_at.toLocaleString(_DTO.TIMEZONE_LANGUAGE),
       updated_at: serviceExist.updated_at.toLocaleString(_DTO.TIMEZONE_LANGUAGE)
     };

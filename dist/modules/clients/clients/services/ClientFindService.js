@@ -21,7 +21,6 @@ class ClientFindService {
     endereco,
     tipoServico
   }) {
-    var _clientsList;
     const usersRepo = (0, _typeorm.getCustomRepository)(_UsersRepository.UsersRepository);
     const clientRepo = (0, _typeorm.getCustomRepository)(_ClientsRepository.ClientsRepository);
     const serviceTypeRepo = (0, _typeorm.getCustomRepository)(_ServicesTypesRepository.ServicesTypesRepository);
@@ -75,7 +74,7 @@ class ClientFindService {
         serviceType_id: tipoServico
       });
     }
-    const clients = (_clientsList = clientsList) === null || _clientsList === void 0 ? void 0 : _clientsList.map(client => ({
+    const clients = clientsList?.map(client => ({
       id: client.id,
       name: client.name,
       dataNascimento: client.dataNascimento,

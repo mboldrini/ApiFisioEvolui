@@ -50,7 +50,7 @@ class UpdatePaymentMethodUserService {
     paymentUserExists.paymentMethod_id = paymentMethodSystem.id;
     await paymentMethodUserRepo.save(paymentUserExists);
     let paymentUpdated = {
-      id: paymentUserExists === null || paymentUserExists === void 0 ? void 0 : paymentUserExists.id,
+      id: paymentUserExists?.id,
       description: paymentUserExists.description,
       user_id: paymentUserExists.user_id,
       paymentMethod_id: paymentUserExists.paymentMethod_id,

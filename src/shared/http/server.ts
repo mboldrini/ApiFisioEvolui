@@ -34,10 +34,10 @@ app.use((error: Error, request: Request, response: Response, next: NextFunction)
 	});
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3333;
 
 app.listen(PORT, () => {
 	console.log('		--⭐--		');
-	console.log('🚀 Server started on port ' + process.env.APP_PORTA + '  🚀🤑');
+	console.log('🚀 Server started on port ' + PORT + '  🚀🤑');
 	console.log('		--⭐--		');
 });

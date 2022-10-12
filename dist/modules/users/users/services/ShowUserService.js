@@ -32,36 +32,36 @@ class ShowUserService {
       user_id: user.user_id
     });
     const userAddressMap = {
-      address: userAddress === null || userAddress === void 0 ? void 0 : userAddress.address,
-      number: userAddress === null || userAddress === void 0 ? void 0 : userAddress.number,
-      city: userAddress === null || userAddress === void 0 ? void 0 : userAddress.city,
-      district: userAddress === null || userAddress === void 0 ? void 0 : userAddress.district,
-      state: userAddress === null || userAddress === void 0 ? void 0 : userAddress.state,
-      country: userAddress === null || userAddress === void 0 ? void 0 : userAddress.country
+      address: userAddress?.address,
+      number: userAddress?.number,
+      city: userAddress?.city,
+      district: userAddress?.district,
+      state: userAddress?.state,
+      country: userAddress?.country
     };
     const userConfigs = await userConfigsRepo.findOne({
       user_id: user.user_id
     });
     const userConfigsMap = {
-      allow_retroactiveDate: userConfigs === null || userConfigs === void 0 ? void 0 : userConfigs.allow_retroactiveDate,
-      allow_notifications: userConfigs === null || userConfigs === void 0 ? void 0 : userConfigs.allow_notifications,
-      schedule_startDay: userConfigs === null || userConfigs === void 0 ? void 0 : userConfigs.schedule_startDay,
-      user_premium: userConfigs === null || userConfigs === void 0 ? void 0 : userConfigs.user_premium,
-      premium_type: userConfigs === null || userConfigs === void 0 ? void 0 : userConfigs.premium_type,
-      premium_until: userConfigs === null || userConfigs === void 0 ? void 0 : userConfigs.premium_until.toLocaleString(_DTO.TIMEZONE_LANGUAGE)
+      allow_retroactiveDate: userConfigs?.allow_retroactiveDate,
+      allow_notifications: userConfigs?.allow_notifications,
+      schedule_startDay: userConfigs?.schedule_startDay,
+      user_premium: userConfigs?.user_premium,
+      premium_type: userConfigs?.premium_type,
+      premium_until: userConfigs?.premium_until.toLocaleString(_DTO.TIMEZONE_LANGUAGE)
     };
     const userInfosExist = await userInfosRepo.findOne({
       user_id: user.user_id
     });
     const userInfosMap = {
-      description: userInfosExist === null || userInfosExist === void 0 ? void 0 : userInfosExist.description,
-      professional_mail: userInfosExist === null || userInfosExist === void 0 ? void 0 : userInfosExist.professional_mail,
-      celphone: userInfosExist === null || userInfosExist === void 0 ? void 0 : userInfosExist.celphone,
-      second_celphone: userInfosExist === null || userInfosExist === void 0 ? void 0 : userInfosExist.second_celphone,
-      website: userInfosExist === null || userInfosExist === void 0 ? void 0 : userInfosExist.website,
-      instagram: userInfosExist === null || userInfosExist === void 0 ? void 0 : userInfosExist.instagram,
-      twitter: userInfosExist === null || userInfosExist === void 0 ? void 0 : userInfosExist.twitter,
-      tiktok: userInfosExist === null || userInfosExist === void 0 ? void 0 : userInfosExist.tiktok
+      description: userInfosExist?.description,
+      professional_mail: userInfosExist?.professional_mail,
+      celphone: userInfosExist?.celphone,
+      second_celphone: userInfosExist?.second_celphone,
+      website: userInfosExist?.website,
+      instagram: userInfosExist?.instagram,
+      twitter: userInfosExist?.twitter,
+      tiktok: userInfosExist?.tiktok
     };
     const servicesTypeList = await serviceTypesRepo.find({
       user_id: user.user_id
