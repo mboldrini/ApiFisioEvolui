@@ -7,6 +7,7 @@ exports.CreateUsers1629138793563 = void 0;
 var _typeorm = require("typeorm");
 class CreateUsers1629138793563 {
   async up(queryRunner) {
+    // await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
     await queryRunner.createTable(new _typeorm.Table({
       name: 'users',
       columns: [{
@@ -18,7 +19,7 @@ class CreateUsers1629138793563 {
         generationStrategy: 'increment'
       }, {
         name: 'user_code',
-        type: 'varchar(250)',
+        type: 'varchar',
         isNullable: false
       }, {
         name: 'name',

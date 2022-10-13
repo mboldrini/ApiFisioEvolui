@@ -72,6 +72,8 @@ class UsersInfos1652891574642 {
     }));
   }
 
-  async down(queryRunner) {}
+  async down(queryRunner) {
+    await queryRunner.dropTable('users_infos');
+  }
 }
 exports.UsersInfos1652891574642 = UsersInfos1652891574642;

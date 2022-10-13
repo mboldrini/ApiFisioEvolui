@@ -1,25 +1,20 @@
 "use strict";
 
 var _typeorm = require("typeorm");
-const rootDir = process.env.NODE_ENV === 'development' ? 'src' : 'dist/src';
-const extFormat = process.env.NODE_ENV === 'development' ? 'ts' : 'js';
-
 // procura por todas as pastas do arquivo o ormconfig.json
-let config = {};
-config = {
+
+// if (process.env.NODE_ENV === 'development') {
+const config = {
   type: process.env.DB_TYPE,
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  entities: ['dist/modules/**/typeorm/entities/*.js'],
-  migrations: ['dist/shared/typeorm/migrations/*.js'],
+  host: 'ec2-52-70-45-163.compute-1.amazonaws.com',
+  port: 5432,
+  username: 'fuaqjorgojypcn',
+  password: '5f65f88ffa3fecded2d90640edbe28467ead42c19ed161effc52436a2cd268ff',
+  database: 'd3ujer3k2ao8v3',
+  entities: ['src/modules/**/typeorm/entities/*.ts'],
+  migrations: ['src/shared/typeorm/migrations/*.ts'],
   cli: {
-    migrationsDir: 'dist/dist/shared/typeorm/migrations'
-  },
-  ssl: {
-    rejectUnauthorized: false
+    migrationsDir: 'src/dist/shared/typeorm/migrations'
   }
 };
-(0, _typeorm.createConnection)(config);
+(0, _typeorm.createConnection)();

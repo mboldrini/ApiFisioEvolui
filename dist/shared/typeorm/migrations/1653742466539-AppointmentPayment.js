@@ -78,6 +78,8 @@ class AppointmentPayment1653742466539 {
     }));
   }
 
-  async down(queryRunner) {}
+  async down(queryRunner) {
+    await queryRunner.dropTable('service_payment');
+  }
 }
 exports.AppointmentPayment1653742466539 = AppointmentPayment1653742466539;

@@ -38,14 +38,14 @@ class PaymentMethodUser1652967740933 {
         default: 'now()'
       }],
       foreignKeys: [{
-        name: 'FkUsrIdMttdUsr',
+        name: 'FkUsrIdPMTD',
         referencedTableName: 'users',
         // tabela do USERS
         referencedColumnNames: ['user_id'],
         // nome da coluna LA no user
         columnNames: ['user_id'] //nome da coluna AQUI
       }, {
-        name: 'FkPmtdxIdUsr',
+        name: 'FkPMTTDIdUsr',
         referencedTableName: 'payment_methods',
         // tabela do USERS
         referencedColumnNames: ['id'],

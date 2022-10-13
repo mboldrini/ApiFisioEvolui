@@ -54,7 +54,7 @@ class UserAddress1652822005636 {
         default: 'now()'
       }],
       foreignKeys: [{
-        name: 'FkUsrUsrAdd',
+        name: 'FkUSRADD',
         referencedTableName: 'users',
         // tabela do USERS
         referencedColumnNames: ['user_id'],
@@ -64,6 +64,8 @@ class UserAddress1652822005636 {
     }));
   }
 
-  async down(queryRunner) {}
+  async down(queryRunner) {
+    await queryRunner.dropTable('users_address');
+  }
 }
 exports.UserAddress1652822005636 = UserAddress1652822005636;

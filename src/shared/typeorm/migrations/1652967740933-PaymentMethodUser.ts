@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class UserAddress1652822005636 implements MigrationInterface {
+export class PaymentMethodUser1652967740933 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'users_address',
+				name: 'paymentMethod_User',
 				columns: [
 					{
 						name: 'id',
@@ -15,38 +15,18 @@ export class UserAddress1652822005636 implements MigrationInterface {
 						generationStrategy: 'increment',
 					},
 					{
-						name: 'address',
-						type: 'varchar(150)',
-						isNullable: true,
-					},
-					{
-						name: 'number',
-						type: 'int',
-						isNullable: true,
-					},
-					{
-						name: 'city',
-						type: 'varchar(100)',
-						isNullable: true,
-					},
-					{
-						name: 'district',
-						type: 'varchar(100)',
-						isNullable: true,
-					},
-					{
-						name: 'state',
-						type: 'varchar(3)',
-						isNullable: true,
-					},
-					{
-						name: 'country',
-						type: 'varchar(45)',
+						name: 'description',
+						type: 'varchar(250)',
 						isNullable: true,
 					},
 					{
 						name: 'user_id',
-						type: 'uuid',
+						type: 'int',
+						isNullable: false,
+					},
+					{
+						name: 'paymentMethod_id',
+						type: 'int',
 						isNullable: false,
 					},
 					{
@@ -62,15 +42,23 @@ export class UserAddress1652822005636 implements MigrationInterface {
 				],
 				foreignKeys: [
 					{
-						name: 'FkUSRADD',
+						name: 'FkUsrIdPMTD',
 						referencedTableName: 'users', // tabela do USERS
 						referencedColumnNames: ['user_id'], // nome da coluna LA no user
 						columnNames: ['user_id'], //nome da coluna AQUI
+					},
+					{
+						name: 'FkPMTTDIdUsr',
+						referencedTableName: 'payment_methods', // tabela do USERS
+						referencedColumnNames: ['id'], // nome da coluna LA no user
+						columnNames: ['paymentMethod_id'], //nome da coluna AQUI
 					},
 				],
 			}),
 		);
 	}
 
-	public async down(queryRunner: QueryRunner): Promise<void> {}
+	public async down(queryRunner: QueryRunner): Promise<void> {
+		await queryRunner.dropTable('paymentMethod_User');
+	}
 }

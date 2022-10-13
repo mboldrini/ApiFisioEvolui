@@ -13,7 +13,7 @@ import {
 	UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('paymentmethod_user')
+@Entity('paymentMethod_User')
 class PaymentMethodUser {
 	@PrimaryGeneratedColumn('increment')
 	id: number;

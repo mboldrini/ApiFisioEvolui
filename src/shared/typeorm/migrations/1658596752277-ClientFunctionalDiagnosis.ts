@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class UsersInfos1652891574642 implements MigrationInterface {
+export class ClientFunctionalDiagnosis1658596752277 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'users_infos',
+				name: 'clients_funcionalDiagnosis',
 				columns: [
 					{
 						name: 'id',
@@ -15,48 +15,29 @@ export class UsersInfos1652891574642 implements MigrationInterface {
 						generationStrategy: 'increment',
 					},
 					{
-						name: 'description',
-						type: 'varchar(250)',
+						name: 'diagnosis',
+						type: 'varchar(1000)',
+						isNullable: false,
+					},
+					{
+						name: 'comments',
+						type: 'varchar(500)',
 						isNullable: true,
 					},
 					{
-						name: 'professional_mail',
-						type: 'varchar(150)',
-						isNullable: true,
+						name: 'date',
+						type: 'date',
+						isNullable: false,
 					},
+
 					{
-						name: 'celphone',
-						type: 'varchar(15)',
-						isNullable: true,
-					},
-					{
-						name: 'second_celphone',
-						type: 'varchar(15)',
-						isNullable: true,
-					},
-					{
-						name: 'website',
-						type: 'varchar(250)',
-						isNullable: true,
-					},
-					{
-						name: 'instagram',
-						type: 'varchar(150)',
-						isNullable: true,
-					},
-					{
-						name: 'twitter',
-						type: 'varchar(250)',
-						isNullable: true,
-					},
-					{
-						name: 'tiktok',
-						type: 'varchar(250)',
-						isNullable: true,
+						name: 'client_id',
+						type: 'int',
+						isNullable: false,
 					},
 					{
 						name: 'user_id',
-						type: 'uuid',
+						type: 'int',
 						isNullable: false,
 					},
 					{
@@ -72,15 +53,23 @@ export class UsersInfos1652891574642 implements MigrationInterface {
 				],
 				foreignKeys: [
 					{
-						name: 'FkUsrUsrInfos3',
+						name: 'FkUsrIdFCD',
 						referencedTableName: 'users', // tabela do USERS
 						referencedColumnNames: ['user_id'], // nome da coluna LA no user
 						columnNames: ['user_id'], //nome da coluna AQUI
+					},
+					{
+						name: 'FkPacienteIdFCD',
+						referencedTableName: 'clients', // tabela do USERS
+						referencedColumnNames: ['id'], // nome da coluna LA no user
+						columnNames: ['client_id'], //nome da coluna AQUI
 					},
 				],
 			}),
 		);
 	}
 
-	public async down(queryRunner: QueryRunner): Promise<void> {}
+	public async down(queryRunner: QueryRunner): Promise<void> {
+		await queryRunner.dropTable('clients_hpp');
+	}
 }

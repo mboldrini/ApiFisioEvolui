@@ -12,7 +12,7 @@ interface IRequest {
 }
 
 class CreatePaymentMethodUserService {
-	public async execute({ name, description, user_code }: IRequest): Promise<Object> {
+	public async execute({ name, description, user_code }: IRequest): Promise<Any> {
 		const paymentMethRepo = getCustomRepository(PaymentMethodRepository);
 		const paymentMethodUserRepo = getCustomRepository(PaymentMethodUserRepository);
 		const userRepo = getCustomRepository(UsersRepository);

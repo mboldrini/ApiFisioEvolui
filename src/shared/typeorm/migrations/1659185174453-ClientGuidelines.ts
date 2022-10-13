@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class PaymentMethodUser1652967740933 implements MigrationInterface {
+export class ClientGuidelines1659185174453 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'paymentMethod_User',
+				name: 'clients_guidelines',
 				columns: [
 					{
 						name: 'id',
@@ -15,17 +15,28 @@ export class PaymentMethodUser1652967740933 implements MigrationInterface {
 						generationStrategy: 'increment',
 					},
 					{
-						name: 'description',
-						type: 'varchar(250)',
-						isNullable: true,
-					},
-					{
-						name: 'user_id',
-						type: 'uuid',
+						name: 'guideline',
+						type: 'varchar(1000)',
 						isNullable: false,
 					},
 					{
-						name: 'paymentMethod_id',
+						name: 'comments',
+						type: 'varchar(500)',
+						isNullable: true,
+					},
+					{
+						name: 'date',
+						type: 'date',
+						isNullable: false,
+					},
+
+					{
+						name: 'client_id',
+						type: 'int',
+						isNullable: false,
+					},
+					{
+						name: 'user_id',
 						type: 'int',
 						isNullable: false,
 					},
@@ -42,16 +53,16 @@ export class PaymentMethodUser1652967740933 implements MigrationInterface {
 				],
 				foreignKeys: [
 					{
-						name: 'FkUsrIdMttdUsr',
+						name: 'FkUsrIdGuidel',
 						referencedTableName: 'users', // tabela do USERS
 						referencedColumnNames: ['user_id'], // nome da coluna LA no user
 						columnNames: ['user_id'], //nome da coluna AQUI
 					},
 					{
-						name: 'FkPmtdxIdUsr',
-						referencedTableName: 'payment_methods', // tabela do USERS
+						name: 'FkPacienteIdGuidel',
+						referencedTableName: 'clients', // tabela do USERS
 						referencedColumnNames: ['id'], // nome da coluna LA no user
-						columnNames: ['paymentMethod_id'], //nome da coluna AQUI
+						columnNames: ['client_id'], //nome da coluna AQUI
 					},
 				],
 			}),
@@ -59,6 +70,6 @@ export class PaymentMethodUser1652967740933 implements MigrationInterface {
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropTable('paymentMethod_User');
+		await queryRunner.dropTable('clients_guidelines');
 	}
 }

@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class ServicesTypes1653136700670 implements MigrationInterface {
+export class Appointments1653153218339 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'services_types',
+				name: 'appointments',
 				columns: [
 					{
 						name: 'id',
@@ -15,17 +15,42 @@ export class ServicesTypes1653136700670 implements MigrationInterface {
 						generationStrategy: 'increment',
 					},
 					{
-						name: 'name',
-						type: 'varchar(250)',
-						isNullable: false,
-					},
-					{
 						name: 'description',
 						type: 'varchar(250)',
 						isNullable: true,
 					},
 					{
+						name: 'comments',
+						type: 'varchar(250)',
+						isNullable: true,
+					},
+					{
+						name: 'status',
+						type: 'int',
+						isNullable: false,
+					},
+					{
+						name: 'type',
+						type: 'int',
+						isNullable: false,
+					},
+					{
+						name: 'date_scheduled',
+						type: 'date',
+						isNullable: false,
+					},
+					{
+						name: 'start_hour',
+						type: 'time',
+						isNullable: false,
+					},
+					{
 						name: 'duration',
+						type: 'time',
+						isNullable: false,
+					},
+					{
+						name: 'end_hour',
 						type: 'time',
 						isNullable: false,
 					},
@@ -35,13 +60,23 @@ export class ServicesTypes1653136700670 implements MigrationInterface {
 						isNullable: false,
 					},
 					{
-						name: 'paymentMethod_id',
-						type: 'int',
+						name: 'scheduled',
+						type: 'boolean',
 						isNullable: false,
 					},
 					{
 						name: 'user_id',
-						type: 'uuid',
+						type: 'int',
+						isNullable: false,
+					},
+					{
+						name: 'client_id',
+						type: 'int',
+						isNullable: false,
+					},
+					{
+						name: 'serviceType_id',
+						type: 'int',
 						isNullable: false,
 					},
 					{
@@ -57,16 +92,22 @@ export class ServicesTypes1653136700670 implements MigrationInterface {
 				],
 				foreignKeys: [
 					{
-						name: 'FkUsrIdMttdUsrstpps',
+						name: 'FkUsrIdAppntmn',
 						referencedTableName: 'users', // tabela do USERS
 						referencedColumnNames: ['user_id'], // nome da coluna LA no user
 						columnNames: ['user_id'], //nome da coluna AQUI
 					},
 					{
-						name: 'FkPmtdxIdUsrStpps',
-						referencedTableName: 'paymentMethod_User', // tabela do USERS
+						name: 'FkClientIdAppntmn',
+						referencedTableName: 'clients', // tabela do USERS
 						referencedColumnNames: ['id'], // nome da coluna LA no user
-						columnNames: ['paymentMethod_id'], //nome da coluna AQUI
+						columnNames: ['client_id'], //nome da coluna AQUI
+					},
+					{
+						name: 'FkSrvcTypIdAppntmn',
+						referencedTableName: 'services_types', // tabela do USERS
+						referencedColumnNames: ['id'], // nome da coluna LA no user
+						columnNames: ['serviceType_id'], //nome da coluna AQUI
 					},
 				],
 			}),
@@ -74,6 +115,6 @@ export class ServicesTypes1653136700670 implements MigrationInterface {
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropTable('services_types');
+		await queryRunner.dropTable('appointments');
 	}
 }

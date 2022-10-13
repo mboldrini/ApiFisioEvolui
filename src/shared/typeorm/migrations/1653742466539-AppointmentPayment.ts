@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class ClientEvolution1660682740148 implements MigrationInterface {
+export class AppointmentPayment1653742466539 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'clients_evolutions',
+				name: 'service_payment',
 				columns: [
 					{
 						name: 'id',
@@ -15,29 +15,38 @@ export class ClientEvolution1660682740148 implements MigrationInterface {
 						generationStrategy: 'increment',
 					},
 					{
-						name: 'about',
-						type: 'varchar(1000)',
-						isNullable: false,
-					},
-					{
-						name: 'comments',
-						type: 'varchar(500)',
-						isNullable: true,
-					},
-					{
-						name: 'date',
-						type: 'date',
-						isNullable: false,
-					},
-
-					{
-						name: 'client_id',
+						name: 'appointment_id',
 						type: 'int',
 						isNullable: false,
 					},
 					{
 						name: 'user_id',
-						type: 'uuid',
+						type: 'int',
+						isNullable: false,
+					},
+					{
+						name: 'price',
+						type: 'decimal(15,2)',
+						isNullable: false,
+					},
+					{
+						name: 'comments',
+						type: 'varchar(250)',
+						isNullable: true,
+					},
+					{
+						name: 'status',
+						type: 'int',
+						isNullable: false,
+					},
+					{
+						name: 'scheduled',
+						type: 'boolean',
+						isNullable: false,
+					},
+					{
+						name: 'serviceType_id',
+						type: 'int',
 						isNullable: false,
 					},
 					{
@@ -53,16 +62,22 @@ export class ClientEvolution1660682740148 implements MigrationInterface {
 				],
 				foreignKeys: [
 					{
-						name: 'FkUsrIdEvolut',
+						name: 'FkUsrIdPayment',
 						referencedTableName: 'users', // tabela do USERS
 						referencedColumnNames: ['user_id'], // nome da coluna LA no user
 						columnNames: ['user_id'], //nome da coluna AQUI
 					},
 					{
-						name: 'FkPacienteIdEvolui',
-						referencedTableName: 'clients', // tabela do USERS
+						name: 'FkAppointmentIdPayment',
+						referencedTableName: 'appointments', // tabela do USERS
 						referencedColumnNames: ['id'], // nome da coluna LA no user
-						columnNames: ['client_id'], //nome da coluna AQUI
+						columnNames: ['appointment_id'], //nome da coluna AQUI
+					},
+					{
+						name: 'FkServiceTypeIdPmtdAppntm',
+						referencedTableName: 'services_types', // tabela do USERS
+						referencedColumnNames: ['id'], // nome da coluna LA no user
+						columnNames: ['serviceType_id'], //nome da coluna AQUI
 					},
 				],
 			}),
@@ -70,6 +85,6 @@ export class ClientEvolution1660682740148 implements MigrationInterface {
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropTable('clients_evolutions');
+		await queryRunner.dropTable('service_payment');
 	}
 }

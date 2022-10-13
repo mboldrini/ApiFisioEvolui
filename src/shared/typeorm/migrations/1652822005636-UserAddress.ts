@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class UserConfigs1653233531527 implements MigrationInterface {
+export class UserAddress1652822005636 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'users_configs',
+				name: 'users_address',
 				columns: [
 					{
 						name: 'id',
@@ -15,39 +15,39 @@ export class UserConfigs1653233531527 implements MigrationInterface {
 						generationStrategy: 'increment',
 					},
 					{
-						name: 'user_id',
-						type: 'uuid',
-						isNullable: false,
+						name: 'address',
+						type: 'varchar(150)',
+						isNullable: true,
 					},
 					{
-						name: 'allow_retroactiveDate',
-						type: 'boolean',
-						isNullable: false,
-					},
-					{
-						name: 'allow_notifications',
-						type: 'boolean',
-						isNullable: false,
-					},
-					{
-						name: 'schedule_startDay',
-						type: 'boolean',
-						isNullable: false,
-					},
-					{
-						name: 'user_premium',
-						type: 'boolean',
-						isNullable: false,
-					},
-					{
-						name: 'premium_type',
+						name: 'number',
 						type: 'int',
 						isNullable: true,
 					},
 					{
-						name: 'premium_until',
-						type: 'date',
+						name: 'city',
+						type: 'varchar(100)',
 						isNullable: true,
+					},
+					{
+						name: 'district',
+						type: 'varchar(100)',
+						isNullable: true,
+					},
+					{
+						name: 'state',
+						type: 'varchar(3)',
+						isNullable: true,
+					},
+					{
+						name: 'country',
+						type: 'varchar(45)',
+						isNullable: true,
+					},
+					{
+						name: 'user_id',
+						type: 'int',
+						isNullable: false,
 					},
 					{
 						name: 'created_at',
@@ -62,7 +62,7 @@ export class UserConfigs1653233531527 implements MigrationInterface {
 				],
 				foreignKeys: [
 					{
-						name: 'FkUsrIdUsrCfgs',
+						name: 'FkUSRADD',
 						referencedTableName: 'users', // tabela do USERS
 						referencedColumnNames: ['user_id'], // nome da coluna LA no user
 						columnNames: ['user_id'], //nome da coluna AQUI
@@ -73,6 +73,6 @@ export class UserConfigs1653233531527 implements MigrationInterface {
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropTable('users_configs');
+		await queryRunner.dropTable('users_address');
 	}
 }

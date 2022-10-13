@@ -5,11 +5,11 @@ import { createConnection } from 'typeorm';
 // if (process.env.NODE_ENV === 'development') {
 const config: any = {
 	type: process.env.DB_TYPE,
-	host: process.env.DB_HOST,
-	port: process.env.DB_PORT,
-	username: process.env.DB_USERNAME,
-	password: process.env.DB_PASSWORD,
-	database: process.env.DB_DATABASE,
+	host: 'ec2-52-70-45-163.compute-1.amazonaws.com',
+	port: 5432,
+	username: 'fuaqjorgojypcn',
+	password: '5f65f88ffa3fecded2d90640edbe28467ead42c19ed161effc52436a2cd268ff',
+	database: 'd3ujer3k2ao8v3',
 	entities: ['src/modules/**/typeorm/entities/*.ts'],
 	migrations: ['src/shared/typeorm/migrations/*.ts'],
 	cli: {
@@ -17,4 +17,4 @@ const config: any = {
 	},
 };
 
-createConnection(config);
+createConnection();

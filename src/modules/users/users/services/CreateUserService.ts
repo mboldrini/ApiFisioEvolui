@@ -24,11 +24,11 @@ class CreateUserService {
 	}: IRequest): Promise<any> /* the default was 'User' */ {
 		const usersRepository = getCustomRepository(UsersRepository);
 
-		// const userIdExists = await usersRepository.findOne(user_code);
-		// if (userIdExists) throw new AppError('Já existe um usuario com o ID informado', 404);
+		const userIdExists = await usersRepository.findOne(user_code);
+		if (userIdExists) throw new AppError('Já existe um usuario com o ID informado', 404);
 
-		// const userEmailExists = await usersRepository.findByEmail(email);
-		// if (userEmailExists) throw new AppError('Já existe um usuário com o email informado', 404);
+		const userEmailExists = await usersRepository.findByEmail(email);
+		if (userEmailExists) throw new AppError('Já existe um usuário com o email informado', 404);
 
 		const user = usersRepository.create({
 			user_code,
