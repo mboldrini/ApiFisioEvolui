@@ -1,5 +1,5 @@
-const rootDir = process.env.NODE_ENV === 'development' ? "src" : "dist/src";
-const extFormat = process.env.NODE_ENV === 'development' ? "ts" : "js";
+const rootDir = process.env.NODE_ENV === 'developmentff' ? "src" : "dist";
+const extFormat = process.env.NODE_ENV === 'developmentff' ? "ts" : "js";
 
 module.exports = {
 	"type": process.env.DB_TYPE,
@@ -8,12 +8,12 @@ module.exports = {
 	"username": process.env.DB_USERNAME,
 	"password": process.env.DB_PASSWORD,
 	"database": process.env.DB_DATABASE,
-	"entities": ["./"+ rootDir + +"/modules/**/typeorm/entities/*." + extFormat],
+	"entities": ["./dist/modules/**/typeorm/entities/*.js"],
 	"migrations": [
-		"./"+ rootDir + +"/shared/typeorm/migrations/*." + extFormat
+		"./dist/shared/typeorm/migrations/*.js"
 	],
 	"cli": {
-		"migrationsDir": "./"+ rootDir + +"/shared/typeorm/migrations"
+		"migrationsDir": "./dist/shared/typeorm/migrations"
 	},
 	"ssl": {
 		"rejectUnauthorized": false,
