@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class PaymentMethodUser1652967740933 implements MigrationInterface {
+export class Clients1652909585043 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'paymentMethod_User',
+				name: 'clients',
 				columns: [
 					{
 						name: 'id',
@@ -15,18 +15,48 @@ export class PaymentMethodUser1652967740933 implements MigrationInterface {
 						generationStrategy: 'increment',
 					},
 					{
-						name: 'description',
+						name: 'name',
+						type: 'varchar(250)',
+						isNullable: false,
+					},
+					{
+						name: 'dataNascimento',
+						type: 'date',
+						isNullable: false,
+					},
+					{
+						name: 'document',
+						type: 'varchar(45)',
+						isNullable: true,
+					},
+					{
+						name: 'email',
 						type: 'varchar(250)',
 						isNullable: true,
 					},
 					{
-						name: 'user_id',
-						type: 'int',
-						isNullable: false,
+						name: 'celphone',
+						type: 'varchar(15)',
+						isNullable: true,
 					},
 					{
-						name: 'paymentMethod_id',
-						type: 'int',
+						name: 'second_celphone',
+						type: 'varchar(15)',
+						isNullable: true,
+					},
+					{
+						name: 'instagram',
+						type: 'varchar(250)',
+						isNullable: true,
+					},
+					{
+						name: 'enabled',
+						type: 'boolean',
+						isNullable: true,
+					},
+					{
+						name: 'user_id',
+						type: 'uuid',
 						isNullable: false,
 					},
 					{
@@ -42,16 +72,10 @@ export class PaymentMethodUser1652967740933 implements MigrationInterface {
 				],
 				foreignKeys: [
 					{
-						name: 'FkUsrIdMttdUsr',
+						name: 'FkUsrUsrIdClients',
 						referencedTableName: 'users', // tabela do USERS
 						referencedColumnNames: ['user_id'], // nome da coluna LA no user
 						columnNames: ['user_id'], //nome da coluna AQUI
-					},
-					{
-						name: 'FkPmtdxIdUsr',
-						referencedTableName: 'payment_methods', // tabela do USERS
-						referencedColumnNames: ['id'], // nome da coluna LA no user
-						columnNames: ['paymentMethod_id'], //nome da coluna AQUI
 					},
 				],
 			}),
@@ -59,6 +83,6 @@ export class PaymentMethodUser1652967740933 implements MigrationInterface {
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropTable('paymentMethod_User');
+		await queryRunner.dropTable('clients');
 	}
 }

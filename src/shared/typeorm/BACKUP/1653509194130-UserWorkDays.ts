@@ -16,7 +16,7 @@ export class UserWorkDays1653509194130 implements MigrationInterface {
 					},
 					{
 						name: 'user_id',
-						type: 'int',
+						type: 'uuid',
 						isNullable: false,
 					},
 					{

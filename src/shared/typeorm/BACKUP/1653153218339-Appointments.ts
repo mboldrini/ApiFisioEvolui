@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class ClientComplaint1658582753561 implements MigrationInterface {
+export class Appointments1653153218339 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'clients_complaint',
+				name: 'appointments',
 				columns: [
 					{
 						name: 'id',
@@ -15,28 +15,67 @@ export class ClientComplaint1658582753561 implements MigrationInterface {
 						generationStrategy: 'increment',
 					},
 					{
-						name: 'complaint',
-						type: 'varchar(1000)',
-						isNullable: false,
-					},
-					{
-						name: 'comments',
-						type: 'varchar(500)',
+						name: 'description',
+						type: 'varchar(250)',
 						isNullable: true,
 					},
 					{
-						name: 'date',
+						name: 'comments',
+						type: 'varchar(250)',
+						isNullable: true,
+					},
+					{
+						name: 'status',
+						type: 'int',
+						isNullable: false,
+					},
+					{
+						name: 'type',
+						type: 'int',
+						isNullable: false,
+					},
+					{
+						name: 'date_scheduled',
 						type: 'date',
 						isNullable: false,
 					},
-
+					{
+						name: 'start_hour',
+						type: 'time',
+						isNullable: false,
+					},
+					{
+						name: 'duration',
+						type: 'time',
+						isNullable: false,
+					},
+					{
+						name: 'end_hour',
+						type: 'time',
+						isNullable: false,
+					},
+					{
+						name: 'price',
+						type: 'decimal(15,2)',
+						isNullable: false,
+					},
+					{
+						name: 'scheduled',
+						type: 'boolean',
+						isNullable: false,
+					},
+					{
+						name: 'user_id',
+						type: 'uuid',
+						isNullable: false,
+					},
 					{
 						name: 'client_id',
 						type: 'int',
 						isNullable: false,
 					},
 					{
-						name: 'user_id',
+						name: 'serviceType_id',
 						type: 'int',
 						isNullable: false,
 					},
@@ -53,16 +92,22 @@ export class ClientComplaint1658582753561 implements MigrationInterface {
 				],
 				foreignKeys: [
 					{
-						name: 'FkUsrIdCompl',
+						name: 'FkUsrIdAppntmn',
 						referencedTableName: 'users', // tabela do USERS
 						referencedColumnNames: ['user_id'], // nome da coluna LA no user
 						columnNames: ['user_id'], //nome da coluna AQUI
 					},
 					{
-						name: 'FkPacienteIdCompl',
+						name: 'FkClientIdAppntmn',
 						referencedTableName: 'clients', // tabela do USERS
 						referencedColumnNames: ['id'], // nome da coluna LA no user
 						columnNames: ['client_id'], //nome da coluna AQUI
+					},
+					{
+						name: 'FkSrvcTypIdAppntmn',
+						referencedTableName: 'services_types', // tabela do USERS
+						referencedColumnNames: ['id'], // nome da coluna LA no user
+						columnNames: ['serviceType_id'], //nome da coluna AQUI
 					},
 				],
 			}),
@@ -70,7 +115,6 @@ export class ClientComplaint1658582753561 implements MigrationInterface {
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropTable('clients_complaint');
+		await queryRunner.dropTable('appointments');
 	}
 }
-

@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class ClientFunctionalDiagnosis1658596752277 implements MigrationInterface {
+export class UserConfigs1653233531527 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'clients_funcionalDiagnosis',
+				name: 'users_configs',
 				columns: [
 					{
 						name: 'id',
@@ -15,30 +15,39 @@ export class ClientFunctionalDiagnosis1658596752277 implements MigrationInterfac
 						generationStrategy: 'increment',
 					},
 					{
-						name: 'diagnosis',
-						type: 'varchar(1000)',
+						name: 'user_id',
+						type: 'uuid',
 						isNullable: false,
 					},
 					{
-						name: 'comments',
-						type: 'varchar(500)',
+						name: 'allow_retroactiveDate',
+						type: 'boolean',
+						isNullable: false,
+					},
+					{
+						name: 'allow_notifications',
+						type: 'boolean',
+						isNullable: false,
+					},
+					{
+						name: 'schedule_startDay',
+						type: 'boolean',
+						isNullable: false,
+					},
+					{
+						name: 'user_premium',
+						type: 'boolean',
+						isNullable: false,
+					},
+					{
+						name: 'premium_type',
+						type: 'int',
 						isNullable: true,
 					},
 					{
-						name: 'date',
+						name: 'premium_until',
 						type: 'date',
-						isNullable: false,
-					},
-
-					{
-						name: 'client_id',
-						type: 'int',
-						isNullable: false,
-					},
-					{
-						name: 'user_id',
-						type: 'int',
-						isNullable: false,
+						isNullable: true,
 					},
 					{
 						name: 'created_at',
@@ -53,16 +62,10 @@ export class ClientFunctionalDiagnosis1658596752277 implements MigrationInterfac
 				],
 				foreignKeys: [
 					{
-						name: 'FkUsrIdFCD',
+						name: 'FkUsrIdUsrCfgs',
 						referencedTableName: 'users', // tabela do USERS
 						referencedColumnNames: ['user_id'], // nome da coluna LA no user
 						columnNames: ['user_id'], //nome da coluna AQUI
-					},
-					{
-						name: 'FkPacienteIdFCD',
-						referencedTableName: 'clients', // tabela do USERS
-						referencedColumnNames: ['id'], // nome da coluna LA no user
-						columnNames: ['client_id'], //nome da coluna AQUI
 					},
 				],
 			}),
@@ -70,6 +73,6 @@ export class ClientFunctionalDiagnosis1658596752277 implements MigrationInterfac
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropTable('clients_hpp');
+		await queryRunner.dropTable('users_configs');
 	}
 }

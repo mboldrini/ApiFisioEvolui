@@ -37,7 +37,7 @@ export class ClientRespiratoryEval1659121687336 implements MigrationInterface {
 					},
 					{
 						name: 'user_id',
-						type: 'int',
+						type: 'uuid',
 						isNullable: false,
 					},
 					{

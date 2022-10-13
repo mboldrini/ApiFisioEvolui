@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class Clients1652909585043 implements MigrationInterface {
+export class ClientGoals1659126814429 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'clients',
+				name: 'clients_objectives',
 				columns: [
 					{
 						name: 'id',
@@ -15,48 +15,29 @@ export class Clients1652909585043 implements MigrationInterface {
 						generationStrategy: 'increment',
 					},
 					{
-						name: 'name',
-						type: 'varchar(250)',
+						name: 'objectives',
+						type: 'varchar(1000)',
 						isNullable: false,
 					},
 					{
-						name: 'dataNascimento',
+						name: 'comments',
+						type: 'varchar(500)',
+						isNullable: true,
+					},
+					{
+						name: 'date',
 						type: 'date',
 						isNullable: false,
 					},
+
 					{
-						name: 'document',
-						type: 'varchar(45)',
-						isNullable: true,
-					},
-					{
-						name: 'email',
-						type: 'varchar(250)',
-						isNullable: true,
-					},
-					{
-						name: 'celphone',
-						type: 'varchar(15)',
-						isNullable: true,
-					},
-					{
-						name: 'second_celphone',
-						type: 'varchar(15)',
-						isNullable: true,
-					},
-					{
-						name: 'instagram',
-						type: 'varchar(250)',
-						isNullable: true,
-					},
-					{
-						name: 'enabled',
-						type: 'boolean',
-						isNullable: true,
+						name: 'client_id',
+						type: 'int',
+						isNullable: false,
 					},
 					{
 						name: 'user_id',
-						type: 'int',
+						type: 'uuid',
 						isNullable: false,
 					},
 					{
@@ -72,10 +53,16 @@ export class Clients1652909585043 implements MigrationInterface {
 				],
 				foreignKeys: [
 					{
-						name: 'FkUsrUsrIdClients',
+						name: 'FkUsrIdObject',
 						referencedTableName: 'users', // tabela do USERS
 						referencedColumnNames: ['user_id'], // nome da coluna LA no user
 						columnNames: ['user_id'], //nome da coluna AQUI
+					},
+					{
+						name: 'FkPacienteIdObject',
+						referencedTableName: 'clients', // tabela do USERS
+						referencedColumnNames: ['id'], // nome da coluna LA no user
+						columnNames: ['client_id'], //nome da coluna AQUI
 					},
 				],
 			}),
@@ -83,6 +70,6 @@ export class Clients1652909585043 implements MigrationInterface {
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropTable('clients');
+		await queryRunner.dropTable('clients_objectives');
 	}
 }

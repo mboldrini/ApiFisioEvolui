@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class UserAddress1652822005636 implements MigrationInterface {
+export class ClientHda1658586642751 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'users_address',
+				name: 'clients_hda',
 				columns: [
 					{
 						name: 'id',
@@ -15,38 +15,29 @@ export class UserAddress1652822005636 implements MigrationInterface {
 						generationStrategy: 'increment',
 					},
 					{
-						name: 'address',
-						type: 'varchar(150)',
+						name: 'hda',
+						type: 'varchar(1000)',
+						isNullable: false,
+					},
+					{
+						name: 'comments',
+						type: 'varchar(500)',
 						isNullable: true,
 					},
 					{
-						name: 'number',
+						name: 'date',
+						type: 'date',
+						isNullable: false,
+					},
+
+					{
+						name: 'client_id',
 						type: 'int',
-						isNullable: true,
-					},
-					{
-						name: 'city',
-						type: 'varchar(100)',
-						isNullable: true,
-					},
-					{
-						name: 'district',
-						type: 'varchar(100)',
-						isNullable: true,
-					},
-					{
-						name: 'state',
-						type: 'varchar(3)',
-						isNullable: true,
-					},
-					{
-						name: 'country',
-						type: 'varchar(45)',
-						isNullable: true,
+						isNullable: false,
 					},
 					{
 						name: 'user_id',
-						type: 'int',
+						type: 'uuid',
 						isNullable: false,
 					},
 					{
@@ -62,15 +53,23 @@ export class UserAddress1652822005636 implements MigrationInterface {
 				],
 				foreignKeys: [
 					{
-						name: 'FkUsrUsrAdd',
+						name: 'FkUsrIdHDA',
 						referencedTableName: 'users', // tabela do USERS
 						referencedColumnNames: ['user_id'], // nome da coluna LA no user
 						columnNames: ['user_id'], //nome da coluna AQUI
+					},
+					{
+						name: 'FkPacienteIdHDA',
+						referencedTableName: 'clients', // tabela do USERS
+						referencedColumnNames: ['id'], // nome da coluna LA no user
+						columnNames: ['client_id'], //nome da coluna AQUI
 					},
 				],
 			}),
 		);
 	}
 
-	public async down(queryRunner: QueryRunner): Promise<void> {}
+	public async down(queryRunner: QueryRunner): Promise<void> {
+		await queryRunner.dropTable('clients_hda');
+	}
 }

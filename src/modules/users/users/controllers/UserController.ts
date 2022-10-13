@@ -1,6 +1,6 @@
 import AppError from '@shared/errors/AppError';
 import { MAGIC_CODE } from '../DTO/magicCode';
-import { Request, Response } from 'express';
+import { json, Request, Response } from 'express';
 import CreateUserService from '../services/CreateUserService';
 import ShowUserService from '../services/ShowUserService';
 import CreateUserAddressService from '@modules/users/users_address/services/CreateUserAddressService';
@@ -44,43 +44,43 @@ export default class UsersController {
 			email,
 		});
 
-		const createUserConfigs = new CreateUserConfigsService();
-		const userConfigs = await createUserConfigs.execute({
-			user_code: user_code,
-		});
+		// const createUserConfigs = new CreateUserConfigsService();
+		// const userConfigs = await createUserConfigs.execute({
+		// 	user_code: user_code,
+		// });
 
-		if (address) {
-			const createUserAddress = new CreateUserAddressService();
-			const addRess = await createUserAddress.execute({
-				user_code: user_code,
-				address: address.address,
-				number: address.number,
-				city: address.city,
-				district: address.district,
-				state: address.state,
-				country: address.country,
-			});
-		}
+		// if (address) {
+		// 	const createUserAddress = new CreateUserAddressService();
+		// 	const addRess = await createUserAddress.execute({
+		// 		user_code: user_code,
+		// 		address: address.address,
+		// 		number: address.number,
+		// 		city: address.city,
+		// 		district: address.district,
+		// 		state: address.state,
+		// 		country: address.country,
+		// 	});
+		// }
 
-		if (infos) {
-			const createUserInfos = new CreateUsersInfosService();
-			const addInfos = await createUserInfos.execute({
-				user_code: user_code,
-				description: infos.description,
-				professional_mail: infos.professional_mail,
-				celphone: infos.celphone,
-				second_celphone: infos.second_celphone,
-				website: infos.website,
-				instagram: infos.instagram,
-				twitter: infos.twitter,
-				tiktok: infos.tiktok,
-			});
-		}
+		// if (infos) {
+		// 	const createUserInfos = new CreateUsersInfosService();
+		// 	const addInfos = await createUserInfos.execute({
+		// 		user_code: user_code,
+		// 		description: infos.description,
+		// 		professional_mail: infos.professional_mail,
+		// 		celphone: infos.celphone,
+		// 		second_celphone: infos.second_celphone,
+		// 		website: infos.website,
+		// 		instagram: infos.instagram,
+		// 		twitter: infos.twitter,
+		// 		tiktok: infos.tiktok,
+		// 	});
+		// }
 
-		const createUserWorkDays = new CreateUserWorkDaysService();
-		const userWorkDays = await createUserWorkDays.execute({
-			user_code,
-		});
+		// const createUserWorkDays = new CreateUserWorkDaysService();
+		// const userWorkDays = await createUserWorkDays.execute({
+		// 	user_code,
+		// });
 
 		return response.json(user);
 	}

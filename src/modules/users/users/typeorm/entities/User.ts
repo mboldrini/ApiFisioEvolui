@@ -1,8 +1,9 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Exclude, Expose } from 'class-transformer';
 
 @Entity('users')
 class User {
-	@PrimaryGeneratedColumn('uuid')
+	@PrimaryGeneratedColumn('increment')
 	user_id: number;
 
 	@Column()

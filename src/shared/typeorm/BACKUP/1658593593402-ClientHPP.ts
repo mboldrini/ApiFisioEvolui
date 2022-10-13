@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class ClientPhysicalEval1658668338550 implements MigrationInterface {
+export class ClientHPP1658593593402 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'clients_physicalEval',
+				name: 'clients_hpp',
 				columns: [
 					{
 						name: 'id',
@@ -15,7 +15,7 @@ export class ClientPhysicalEval1658668338550 implements MigrationInterface {
 						generationStrategy: 'increment',
 					},
 					{
-						name: 'evaluation',
+						name: 'hpp',
 						type: 'varchar(1000)',
 						isNullable: false,
 					},
@@ -37,7 +37,7 @@ export class ClientPhysicalEval1658668338550 implements MigrationInterface {
 					},
 					{
 						name: 'user_id',
-						type: 'int',
+						type: 'uuid',
 						isNullable: false,
 					},
 					{
@@ -53,13 +53,13 @@ export class ClientPhysicalEval1658668338550 implements MigrationInterface {
 				],
 				foreignKeys: [
 					{
-						name: 'FkUsrIdPEv',
+						name: 'FkUsrIdHPP',
 						referencedTableName: 'users', // tabela do USERS
 						referencedColumnNames: ['user_id'], // nome da coluna LA no user
 						columnNames: ['user_id'], //nome da coluna AQUI
 					},
 					{
-						name: 'FkPacienteIdPev',
+						name: 'FkPacienteIdHPP',
 						referencedTableName: 'clients', // tabela do USERS
 						referencedColumnNames: ['id'], // nome da coluna LA no user
 						columnNames: ['client_id'], //nome da coluna AQUI
@@ -70,6 +70,6 @@ export class ClientPhysicalEval1658668338550 implements MigrationInterface {
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropTable('clients_physicalEval');
+		await queryRunner.dropTable('clients_hpp');
 	}
 }
