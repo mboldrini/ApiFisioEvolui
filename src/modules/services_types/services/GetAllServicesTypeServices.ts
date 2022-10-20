@@ -26,6 +26,7 @@ class GetAllServicesTypeService {
 			description: service.description,
 			duration: service.duration,
 			price: service.price,
+			// paymentMethod_id: service.paymentMethod_id,
 			created_at: service.created_at.toLocaleString(TIMEZONE_LANGUAGE),
 			updated_at: service.created_at.toLocaleString(TIMEZONE_LANGUAGE),
 		}));

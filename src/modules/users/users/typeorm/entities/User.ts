@@ -25,7 +25,7 @@ class User {
 	email: string;
 
 	@Column()
-	enabled: number;
+	enabled: boolean;
 
 	@CreateDateColumn({ type: 'timestamp' })
 	created_at: Date;

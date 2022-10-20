@@ -33,7 +33,7 @@ class CreateServicesTypeService {
 			description,
 			duration,
 			price,
-			paymentMethod_id,
+			paymentMethod_id: paymentMethod_id,
 			user_id: userExist.user_id,
 		});
 
