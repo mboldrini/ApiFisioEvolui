@@ -21,6 +21,7 @@ import clientResEvalRouter from '@modules/clients/respiratory_evaluation/routes/
 import clientObjectiveRouter from '@modules/clients/objectives_goals/routes/clientObjectives.routes';
 import guidelineRouter from '@modules/clients/guideline/routes/guidelines.routes';
 import evolutionsRouter from '@modules/clients/evolutions/routes/evolutions.routes';
+import versionamentoRouter from '@modules/versionamento/routes/versionamento.routes';
 
 const routes = Router();
 
@@ -62,5 +63,7 @@ routes.use('/servicesTypes', servicesTypesRouter);
 routes.use('/servicepayment', servicePaymentRouter);
 
 routes.use('/appointments', appointmentsRouter);
+
+routes.use('/versao', versionamentoRouter);
 
 export default routes;
