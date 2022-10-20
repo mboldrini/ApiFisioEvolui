@@ -27,6 +27,7 @@ var _clientRespiratoryEval = _interopRequireDefault(require("../../../modules/cl
 var _clientObjectives = _interopRequireDefault(require("../../../modules/clients/objectives_goals/routes/clientObjectives.routes"));
 var _guidelines = _interopRequireDefault(require("../../../modules/clients/guideline/routes/guidelines.routes"));
 var _evolutions = _interopRequireDefault(require("../../../modules/clients/evolutions/routes/evolutions.routes"));
+var _versionamento = _interopRequireDefault(require("../../../modules/versionamento/routes/versionamento.routes"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 const routes = (0, _express.Router)();
 routes.get('/', (request, response) => {
@@ -56,5 +57,6 @@ routes.use('/paymentMethod/', _paymentMethodUser.default);
 routes.use('/servicesTypes', _servicesTypes.default);
 routes.use('/servicepayment', _servicepayment.default);
 routes.use('/appointments', _appointments.default);
+routes.use('/versao', _versionamento.default);
 var _default = routes;
 exports.default = _default;
