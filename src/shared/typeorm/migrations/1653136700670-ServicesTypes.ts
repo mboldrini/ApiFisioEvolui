@@ -63,7 +63,7 @@ export class ServicesTypes1653136700670 implements MigrationInterface {
 						columnNames: ['user_id'], //nome da coluna AQUI
 					},
 					{
-						name: 'FkPmtdxIdUsrStpps',
+						name: 'FkPaymentMethod',
 						referencedTableName: 'paymentMethod_User', // tabela do USERS
 						referencedColumnNames: ['id'], // nome da coluna LA no user
 						columnNames: ['paymentMethod_id'], //nome da coluna AQUI

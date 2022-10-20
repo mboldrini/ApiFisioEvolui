@@ -1,31 +1,21 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { Exclude, Expose } from 'class-transformer';
 
-@Entity('users')
-class User {
+@Entity('versao')
+class Versionamento {
 	@PrimaryGeneratedColumn('increment')
-	user_id: number;
+	id: number;
 
 	@Column()
-	user_code: string;
+	versao: string;
 
 	@Column()
-	name: string;
+	novidades: string;
 
 	@Column()
-	family_name: string;
+	data_publicacao: Date;
 
 	@Column()
-	given_name: string;
-
-	@Column()
-	picture: string;
-
-	@Column()
-	email: string;
-
-	@Column()
-	enabled: boolean;
+	liberado: boolean;
 
 	@CreateDateColumn({ type: 'timestamp' })
 	created_at: Date;
@@ -33,4 +23,4 @@ class User {
 	@UpdateDateColumn({ type: 'timestamp' })
 	updated_at: Date;
 }
-export default User;
+export default Versionamento;

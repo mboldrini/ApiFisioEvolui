@@ -7,6 +7,7 @@ export class UsersRepository extends Repository<User> {
 		const user = await this.findOne({
 			where: {
 				user_code,
+				enabled: true,
 			},
 		});
 		return user;
@@ -16,6 +17,7 @@ export class UsersRepository extends Repository<User> {
 		const user = await this.findOne({
 			where: {
 				email,
+				enabled: true,
 			},
 		});
 		return user;

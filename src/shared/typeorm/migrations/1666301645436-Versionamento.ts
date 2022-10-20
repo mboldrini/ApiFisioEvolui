@@ -1,14 +1,13 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateUsers1629138793563 implements MigrationInterface {
+export class Versionamento1666301645436 implements MigrationInterface {
 	public async up(queryRunner: QueryRunner): Promise<void> {
-		// await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
 		await queryRunner.createTable(
 			new Table({
-				name: 'users',
+				name: 'versao',
 				columns: [
 					{
-						name: 'user_id',
+						name: 'id',
 						type: 'int',
 						isPrimary: true,
 						isNullable: false,
@@ -16,42 +15,25 @@ export class CreateUsers1629138793563 implements MigrationInterface {
 						generationStrategy: 'increment',
 					},
 					{
-						name: 'user_code',
-						type: 'varchar(250)',
+						name: 'versao',
+						type: 'varchar(11)',
 						isNullable: false,
 					},
 					{
-						name: 'name',
-						type: 'varchar(50)',
-						isNullable: false,
-					},
-					{
-						name: 'family_name',
-						type: 'varchar(50)',
+						name: 'novidades',
+						type: 'varchar(500)',
 						isNullable: true,
 					},
 					{
-						name: 'given_name',
-						type: 'varchar(45)',
-						isNullable: true,
-					},
-
-					{
-						name: 'picture',
-						type: 'varchar(250)',
+						name: 'data_publicacao',
+						type: 'timestamp',
 						isNullable: true,
 					},
 					{
-						name: 'email',
-						type: 'varchar(200)',
-						isUnique: true,
-						isNullable: false,
-					},
-					{
-						name: 'enabled',
+						name: 'liberado',
 						type: 'boolean',
-						isNullable: true,
-						default: false,
+						isNullable: false,
+						default: true,
 					},
 					{
 						name: 'created_at',
@@ -69,6 +51,6 @@ export class CreateUsers1629138793563 implements MigrationInterface {
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropTable('users');
+		await queryRunner.dropTable('versionamento');
 	}
 }

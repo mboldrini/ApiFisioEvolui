@@ -8,12 +8,12 @@ module.exports = {
 	"username": process.env.DB_USERNAME,
 	"password": process.env.DB_PASSWORD,
 	"database": process.env.DB_DATABASE,
-	"entities": ["./dist/modules/**/typeorm/entities/*.js"],
+	"entities": ["./src/modules/**/typeorm/entities/*.ts"],
 	"migrations": [
-		"./dist/shared/typeorm/migrations/*.js"
+		"./src/shared/typeorm/migrations/*.ts"
 	],
 	"cli": {
-		"migrationsDir": "./dist/shared/typeorm/migrations"
+		"migrationsDir": "./src/shared/typeorm/migrations"
 	},
 	"ssl": {
 		"rejectUnauthorized": false,
