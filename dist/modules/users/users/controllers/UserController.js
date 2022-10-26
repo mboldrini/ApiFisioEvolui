@@ -13,6 +13,8 @@ var _CreateUserInfosService = _interopRequireDefault(require("../../users_infos/
 var _CreateUserConfigsService = _interopRequireDefault(require("../../users_configs/services/CreateUserConfigsService"));
 var _CreateUserWorkDaysService = _interopRequireDefault(require("../../user_workDays/services/CreateUserWorkDaysService"));
 var _UserAlreadyExistService = _interopRequireDefault(require("../services/UserAlreadyExistService"));
+var _CreatePaymentMethodUserService = _interopRequireDefault(require("../../../payment_method/paymentMethod_user/services/CreatePaymentMethodUserService"));
+var _CreateServiceTypeService = _interopRequireDefault(require("../../../services_types/services/CreateServiceTypeService"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 class UsersController {
   async show(request, response) {
@@ -96,6 +98,21 @@ class UsersController {
     const createUserWorkDays = new _CreateUserWorkDaysService.default();
     const userWorkDays = await createUserWorkDays.execute({
       user_code
+    });
+    const createPaymentType = new _CreatePaymentMethodUserService.default();
+    const userPaymnt = await createPaymentType.execute({
+      name: 'PIX',
+      description: 'Pagamento via transferência PIX',
+      user_code: user.user_code
+    });
+    const createServiceType = new _CreateServiceTypeService.default();
+    const serviceType = await createServiceType.execute({
+      name: 'Atendimento Simples',
+      description: 'Atendimento básico de 30 minutos',
+      duration: '00:30',
+      price: 100.0,
+      paymentMethod_id: userPaymnt.id,
+      user_code: user.user_code
     });
     return response.json(user);
   }

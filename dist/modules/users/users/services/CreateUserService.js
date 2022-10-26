@@ -23,7 +23,7 @@ class CreateUserService {
     const userEmailExists = await usersRepository.findByEmail(email);
     if (userEmailExists) throw new _AppError.default('Já existe um usuário com o email informado', 404);
     const user = usersRepository.create({
-      user_code: '112545285895674179379',
+      user_code,
       name,
       family_name,
       given_name,
