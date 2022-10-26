@@ -12,7 +12,8 @@ let UsersRepository = (_dec = (0, _typeorm.EntityRepository)(_User.default), _de
   async findById(user_code) {
     const user = await this.findOne({
       where: {
-        user_code
+        user_code,
+        enabled: true
       }
     });
     return user;
@@ -20,7 +21,8 @@ let UsersRepository = (_dec = (0, _typeorm.EntityRepository)(_User.default), _de
   async findByEmail(email) {
     const user = await this.findOne({
       where: {
-        email
+        email,
+        enabled: true
       }
     });
     return user;

@@ -18,7 +18,7 @@ class CreateUserService {
     email
   }) /* the default was 'User' */{
     const usersRepository = (0, _typeorm.getCustomRepository)(_UsersRepository.UsersRepository);
-    const userIdExists = await usersRepository.findOne(user_code);
+    const userIdExists = await usersRepository.findById(user_code);
     if (userIdExists) throw new _AppError.default('Já existe um usuario com o ID informado', 404);
     const userEmailExists = await usersRepository.findByEmail(email);
     if (userEmailExists) throw new _AppError.default('Já existe um usuário com o email informado', 404);
@@ -29,12 +29,10 @@ class CreateUserService {
       given_name,
       picture,
       email,
-      enabled: 1
+      enabled: true
     });
     await usersRepository.save(user);
-    return {
-      message: 'ok'
-    };
+    return user;
   }
 }
 var _default = CreateUserService;

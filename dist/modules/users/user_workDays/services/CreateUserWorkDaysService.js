@@ -18,7 +18,7 @@ class CreateUserWorkDaysService {
     const userExists = await usersRepo.findOne({
       user_code
     });
-    if (!userExists) throw new _AppError.default("User don' exist", 404);
+    if (!userExists) throw new _AppError.default('Esse usuário não existe - wkdays', 404);
     const workdayExist = await userWorkDayRepo.findOne({
       user_id: userExists.user_id
     });

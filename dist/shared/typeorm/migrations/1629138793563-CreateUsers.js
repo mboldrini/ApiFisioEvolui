@@ -19,7 +19,7 @@ class CreateUsers1629138793563 {
         generationStrategy: 'increment'
       }, {
         name: 'user_code',
-        type: 'varchar',
+        type: 'varchar(250)',
         isNullable: false
       }, {
         name: 'name',

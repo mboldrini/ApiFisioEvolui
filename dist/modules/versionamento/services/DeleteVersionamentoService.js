@@ -4,37 +4,32 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _ServicesTypesRepository = require("../typeorm/repositories/ServicesTypesRepository");
+var _VersionamentoRepository = require("./../typeorm/repositories/VersionamentoRepository");
 var _UsersRepository = require("../../users/users/typeorm/repositories/UsersRepository");
 var _AppError = _interopRequireDefault(require("../../../shared/errors/AppError"));
 var _typeorm = require("typeorm");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-class CreateServicesTypeService {
+class DeleteVersionamentoService {
   async execute({
-    name,
-    description,
-    duration,
-    price,
-    paymentMethod_id,
+    id,
     user_code
   }) {
     const usersRepo = (0, _typeorm.getCustomRepository)(_UsersRepository.UsersRepository);
-    const servicesTypesRepo = (0, _typeorm.getCustomRepository)(_ServicesTypesRepository.ServicesTypesRepository);
+    const versionamentoRepo = (0, _typeorm.getCustomRepository)(_VersionamentoRepository.VersionamentoRepository);
     const userExist = await usersRepo.findOne({
-      user_code
+      user_code,
+      email: 'equipeviciobr@gmail.com'
     });
     if (!userExist) throw new _AppError.default("User don't exist", 404);
-    const service = servicesTypesRepo.create({
-      name,
-      description,
-      duration,
-      price,
-      paymentMethod_id: paymentMethod_id,
-      user_id: userExist.user_id
+    const versaoObj = await versionamentoRepo.findOne({
+      id
     });
-    await servicesTypesRepo.save(service);
-    return service;
+    if (!versaoObj) throw new _AppError.default('Versão não encontrada', 404);
+    await versionamentoRepo.delete(versaoObj);
+    return {
+      message: 'ok'
+    };
   }
 }
-var _default = CreateServicesTypeService;
+var _default = DeleteVersionamentoService;
 exports.default = _default;
