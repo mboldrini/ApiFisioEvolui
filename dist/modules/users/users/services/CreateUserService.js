@@ -32,9 +32,7 @@ class CreateUserService {
       enabled: true
     });
     await usersRepository.save(user);
-    return {
-      message: 'ok'
-    };
+    return user;
   }
 }
 var _default = CreateUserService;

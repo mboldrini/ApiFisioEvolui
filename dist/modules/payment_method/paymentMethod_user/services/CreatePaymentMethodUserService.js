@@ -24,7 +24,7 @@ class CreatePaymentMethodUserService {
     const userExist = await userRepo.findOne({
       user_code
     });
-    if (!userExist) throw new _AppError.default("This user don't exist", 404);
+    if (!userExist) throw new _AppError.default('Esse usuário não existe - wkdays', 404);
 
     /// Find the payment method - system
     const paymentMethodExist = await paymentMethRepo.findOne({

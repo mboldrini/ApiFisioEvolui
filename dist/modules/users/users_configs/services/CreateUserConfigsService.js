@@ -24,7 +24,7 @@ class CreateUserConfigsService {
     const userExists = await usersRepo.findOne({
       user_code
     });
-    if (!userExists) throw new _AppError.default("User don't exist", 404);
+    if (!userExists) throw new _AppError.default('Usuário não encontrado - usrcfgs', 404);
     const userConfigsExist = await userConfigRepo.findOne({
       user_id: userExists.user_id
     });

@@ -26,7 +26,7 @@ class CreateUsersInfosService {
     const userExists = await usersRepo.findOne({
       user_code
     });
-    if (!userExists) throw new _AppError.default("User don't exist", 404);
+    if (!userExists) throw new _AppError.default('Usuário não encontrado - usrinfs', 404);
     const usersInfosExists = await usersInfosRepo.findOne({
       user_id: userExists.user_id
     });
