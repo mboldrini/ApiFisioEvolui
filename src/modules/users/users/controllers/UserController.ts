@@ -8,6 +8,8 @@ import CreateUsersInfosService from '@modules/users/users_infos/services/CreateU
 import CreateUserConfigsService from '@modules/users/users_configs/services/CreateUserConfigsService';
 import CreateUserWorkDaysService from '@modules/users/user_workDays/services/CreateUserWorkDaysService';
 import UserAlreadyExistService from '../services/UserAlreadyExistService';
+import CreatePaymentMethodUserService from '@modules/payment_method/paymentMethod_user/services/CreatePaymentMethodUserService';
+import CreateServiceTypeService from '@modules/services_types/services/CreateServiceTypeService';
 
 export default class UsersController {
 	public async show(request: Request, response: Response): Promise<Response> {
@@ -80,6 +82,23 @@ export default class UsersController {
 		const createUserWorkDays = new CreateUserWorkDaysService();
 		const userWorkDays = await createUserWorkDays.execute({
 			user_code,
+		});
+
+		const createPaymentType = new CreatePaymentMethodUserService();
+		const userPaymnt = await createPaymentType.execute({
+			name: 'PIX',
+			description: 'Pagamento via transferência PIX',
+			user_code: user.user_code,
+		});
+
+		const createServiceType = new CreateServiceTypeService();
+		const serviceType = await createServiceType.execute({
+			name: 'Atendimento Simples',
+			description: 'Atendimento básico de 30 minutos',
+			duration: '00:30',
+			price: 100.0,
+			paymentMethod_id: userPaymnt.id,
+			user_code: user.user_code,
 		});
 
 		return response.json(user);

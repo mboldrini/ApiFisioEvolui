@@ -15,7 +15,7 @@ module.exports = {
 	"cli": {
 		"migrationsDir": "./dist/shared/typeorm/migrations"
 	},
-	"ssl": {
-		"rejectUnauthorized": false,
-	}
+	// "ssl": {
+	// 	"rejectUnauthorized": false,
+	// }
 }
