@@ -32,7 +32,7 @@ class CreateUsersInfosService {
 		const usersInfosRepo = getCustomRepository(UsersInfosRepository);
 
 		const userExists = await usersRepo.findOne({ user_code });
-		if (!userExists) throw new AppError("User don't exist", 404);
+		if (!userExists) throw new AppError('Usuário não encontrado - usrinfs', 404);
 
 		const usersInfosExists = await usersInfosRepo.findOne({ user_id: userExists.user_id });
 		if (usersInfosExists) throw new AppError('Already exist a infos registry for this user', 404);

@@ -28,7 +28,7 @@ class CreateUsersAddressService {
 		const usersAddressRepo = getCustomRepository(UsersAddressRepository);
 
 		const userExists = await usersRepo.findOne({ user_code });
-		if (!userExists) throw new AppError("User don't exist", 404);
+		if (!userExists) throw new AppError('Usuário não encontrado - usraddress', 404);
 		if (!userExists.enabled) throw new AppError('This User is deactivated', 404);
 
 		const userAddressExists = await usersAddressRepo.findOne({ user_id: userExists.user_id });

@@ -30,7 +30,7 @@ class CreateUserService {
 		if (userEmailExists) throw new AppError('Já existe um usuário com o email informado', 404);
 
 		const user = usersRepository.create({
-			user_code: '112545285895674179379',
+			user_code,
 			name,
 			family_name,
 			given_name,
@@ -41,7 +41,7 @@ class CreateUserService {
 
 		await usersRepository.save(user);
 
-		return { message: 'ok' };
+		return user;
 	}
 }
 export default CreateUserService;

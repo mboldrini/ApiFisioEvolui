@@ -28,7 +28,7 @@ class CreateUserConfigsService {
 		const userConfigRepo = getCustomRepository(UsersConfigsRepository);
 
 		const userExists = await usersRepo.findOne({ user_code });
-		if (!userExists) throw new AppError("User don't exist", 404);
+		if (!userExists) throw new AppError('Usuário não encontrado - usrcfgs', 404);
 
 		const userConfigsExist = await userConfigRepo.findOne({ user_id: userExists.user_id });
 		if (userConfigsExist) throw new AppError('Already exist a configs registry for this user', 404);
