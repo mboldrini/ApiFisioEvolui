@@ -56,9 +56,12 @@ class GetAppointmentAvailabilityService {
 		const workDayInfos = GetWorkDayInfos(date_scheduled, userWorkDaysExist, userConfigs.user_premium);
 		if (!workDayInfos.work) throw new AppError('This date is not available for appointment', 404);
 
-		const allDayAppointments: IAppointmentsList[] = await appointmentRepo.find({ date_scheduled, scheduled: true });
+		const allDayAppointments: IAppointmentsList[] = await appointmentRepo.findAllDayAppointments({
+			date_scheduled,
+			user_id: userExist.user_id,
+		});
 
-		let theAppointment = {
+		const theAppointment = {
 			date_scheduled,
 			start_hour,
 			duration: serviceTypeExist.duration,
@@ -70,9 +73,9 @@ class GetAppointmentAvailabilityService {
 			serviceType_id,
 		};
 
-		let isAvailable = VerifyAllDaySchedules(allDayAppointments, theAppointment);
+		const isAvailable = VerifyAllDaySchedules(allDayAppointments, theAppointment);
 
-		let infos = {
+		const infos = {
 			startHour: workDayInfos.start_hour,
 			endHour: workDayInfos.end_hour,
 			serviceDuration: serviceTypeExist.duration,
@@ -82,9 +85,9 @@ class GetAppointmentAvailabilityService {
 			// client_id: clientExist.id,
 		};
 
-		let allPossibleHours = GetAllPossibleAppointmentsHours(infos);
+		const allPossibleHours = GetAllPossibleAppointmentsHours(infos);
 
-		let availableHoursList = [] as IAppointmentsList[];
+		const availableHoursList = [] as IAppointmentsList[];
 
 		allPossibleHours.forEach(hoursAvailabled => {
 			if (VerifyAllDaySchedules(allDayAppointments, hoursAvailabled)) {
@@ -92,7 +95,7 @@ class GetAppointmentAvailabilityService {
 			}
 		});
 
-		let result = {
+		const result = {
 			available: isAvailable,
 			hours_availabled: availableHoursList,
 		};

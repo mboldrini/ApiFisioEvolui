@@ -48,6 +48,20 @@ let AppointmentsRepository = (_dec = (0, _typeorm.EntityRepository)(_Appointment
     });
     return diagnostic;
   }
+  async findAllDayAppointments({
+    user_id,
+    date_scheduled
+  }) {
+    const diagnostic = await this.find({
+      where: {
+        scheduled: true,
+        user_id,
+        date_scheduled: date_scheduled,
+        status: (0, _typeorm.In)([0, 1, 2, 6])
+      }
+    });
+    return diagnostic;
+  }
 }) || _class);
 exports.AppointmentsRepository = AppointmentsRepository;
 var _default = AppointmentsRepository;
