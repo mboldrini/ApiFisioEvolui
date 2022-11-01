@@ -13,6 +13,11 @@ interface IProps2 {
 	date_scheduled: Date;
 }
 
+interface IFindAllDay {
+	user_id: number;
+	date_scheduled: Date;
+}
+
 @EntityRepository(Appointments)
 export class AppointmentsRepository extends Repository<Appointments> {
 	public async findOrderBy({ user_id, client_id, start_date, end_date }: IProps): Promise<any | undefined> {
