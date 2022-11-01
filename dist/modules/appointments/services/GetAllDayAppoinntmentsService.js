@@ -29,12 +29,11 @@ class GetAllDayAppoinntmentsService {
     const clients = await clientsRepo.find({
       user_id: userExist.user_id
     });
-    const appointments = await appointmentRepo.find({
+    const appointments = await appointmentRepo.findAllAppointmentDayOrderBy({
       date_scheduled,
-      user_id: userExist.user_id,
-      scheduled: true
+      user_id: userExist.user_id
     });
-    let appointmentsList = appointments.map(appointment => ({
+    const appointmentsList = appointments.map(appointment => ({
       id: appointment.id,
       status: appointment.status,
       type: appointment.type,

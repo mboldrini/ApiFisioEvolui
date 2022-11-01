@@ -8,7 +8,7 @@ interface IProps {
 	end_date?: Date;
 }
 
-interface IFindAllDay {
+interface IProps2 {
 	user_id: number;
 	date_scheduled: Date;
 }
