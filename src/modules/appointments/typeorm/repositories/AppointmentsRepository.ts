@@ -8,6 +8,11 @@ interface IProps {
 	end_date?: Date;
 }
 
+interface IProps2 {
+	user_id: number;
+	date_scheduled: Date;
+}
+
 @EntityRepository(Appointments)
 export class AppointmentsRepository extends Repository<Appointments> {
 	public async findOrderBy({ user_id, client_id, start_date, end_date }: IProps): Promise<any | undefined> {
@@ -35,6 +40,20 @@ export class AppointmentsRepository extends Repository<Appointments> {
 			},
 			order: {
 				date_scheduled: 'ASC',
+				start_hour: 'ASC',
+			},
+		});
+
+		return diagnostic;
+	}
+	public async findAllAppointmentDayOrderBy({ user_id, date_scheduled }: IProps2): Promise<any | undefined> {
+		const diagnostic = await this.find({
+			where: {
+				user_id,
+				date_scheduled: date_scheduled,
+				scheduled: true,
+			},
+			order: {
 				start_hour: 'ASC',
 			},
 		});

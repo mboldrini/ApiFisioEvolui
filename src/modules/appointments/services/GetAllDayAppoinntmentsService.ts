@@ -15,8 +15,22 @@ function GetDateString(date: Date) {
 	return format(date, 'yyyy-MM-dd');
 }
 
+interface IRetorno {
+	id: number;
+	status: number;
+	type: number;
+	date_scheduled: Date;
+	start_hour: string;
+	end_hour: string;
+	duration: string;
+	scheduled: boolean;
+	serviceType_id: number;
+	client_id: number;
+	client_name: string;
+}
+
 class GetAllDayAppoinntmentsService {
-	public async execute({ user_code, date_scheduled }: IRequest): Promise<Object> {
+	public async execute({ user_code, date_scheduled }: IRequest): Promise<IRetorno> {
 		const userRepo = getCustomRepository(UsersRepository);
 		const appointmentRepo = getCustomRepository(AppointmentsRepository);
 		const clientsRepo = getCustomRepository(ClientsRepository);
@@ -26,13 +40,12 @@ class GetAllDayAppoinntmentsService {
 
 		const clients = await clientsRepo.find({ user_id: userExist.user_id });
 
-		const appointments = await appointmentRepo.find({
+		const appointments = await appointmentRepo.findAllAppointmentDayOrderBy({
 			date_scheduled,
 			user_id: userExist.user_id,
-			scheduled: true,
 		});
 
-		let appointmentsList = appointments.map(appointment => ({
+		const appointmentsList = appointments.map((appointment: IRetorno) => ({
 			id: appointment.id,
 			status: appointment.status,
 			type: appointment.type,
