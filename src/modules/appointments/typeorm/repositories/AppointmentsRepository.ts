@@ -64,5 +64,20 @@ export class AppointmentsRepository extends Repository<Appointments> {
 
 		return diagnostic;
 	}
+
+	public async findAllAppointmentDayOrderBy({ user_id, date_scheduled }: IFindAllDay): Promise<any | undefined> {
+		const diagnostic = await this.find({
+			where: {
+				user_id,
+				date_scheduled: date_scheduled,
+				scheduled: true,
+			},
+			order: {
+				start_hour: 'ASC',
+			},
+		});
+
+		return diagnostic;
+	}
 }
 export default AppointmentsRepository;
