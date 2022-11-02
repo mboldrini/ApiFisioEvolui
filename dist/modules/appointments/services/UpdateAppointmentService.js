@@ -57,7 +57,7 @@ class UpdateAppointmentService {
       date_scheduled,
       scheduled: true
     });
-    let oldappointment = {
+    const oldappointment = {
       description,
       comments,
       status,
@@ -72,8 +72,10 @@ class UpdateAppointmentService {
       client_id,
       serviceType_id
     };
-    if (((0, _dateFns.isSameDay)(new Date(date_scheduled), new Date(appointment.date_scheduled)) == false || appointment.start_hour != start_hour) && !(0, _validateFunctions.VerifyAllDaySchedules)(allDayAppointments, oldappointment)) {
-      throw new _AppError.default('Already exist an appointment for the selected hour');
+    if (!(0, _dateFns.isSameDay)(new Date(date_scheduled), appointment.date_scheduled)) {
+      if (((0, _dateFns.isSameDay)(new Date(date_scheduled), new Date(appointment.date_scheduled)) == false || appointment.start_hour != start_hour) && !(0, _validateFunctions.VerifyAllDaySchedules)(allDayAppointments, oldappointment)) {
+        throw new _AppError.default('Já existe um agendamento p/ o horário escolhido');
+      }
     }
     if (servicePaymentExist) {
       servicePaymentExist.price = serviceTypeExist.price;
@@ -81,6 +83,8 @@ class UpdateAppointmentService {
       await servicePaymentRepo.save(servicePaymentExist);
     }
     if (appointment) {
+      const newStatus = ValidaStatus(status);
+      const newType = ValidaType(status, type);
       appointment.serviceType_id = serviceType_id;
       if (description) {
         appointment.description = description;
@@ -88,8 +92,8 @@ class UpdateAppointmentService {
       if (comments) {
         appointment.comments = comments;
       }
-      appointment.status = status;
-      appointment.type = type;
+      appointment.status = newStatus;
+      appointment.type = newType;
       appointment.date_scheduled = date_scheduled;
       appointment.start_hour = start_hour;
       appointment.duration = serviceTypeExist.duration;
@@ -103,6 +107,24 @@ class UpdateAppointmentService {
       message: 'fail'
     };
   }
+}
+function ValidaStatus(status) {
+  if (status == 3) {
+    return 1;
+  }
+  if (status == 0) {
+    return 1;
+  }
+  return status;
+}
+function ValidaType(status, type) {
+  if (type == 0) {
+    return 2;
+  }
+  if (type == 1) {
+    return 3;
+  }
+  return type;
 }
 var _default = UpdateAppointmentService;
 exports.default = _default;
