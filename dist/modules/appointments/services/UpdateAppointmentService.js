@@ -83,9 +83,6 @@ class UpdateAppointmentService {
       await servicePaymentRepo.save(servicePaymentExist);
     }
     if (appointment) {
-      if (status == 0) {
-        status = 1;
-      }
       const newStatus = ValidaStatus(status);
       const newType = ValidaType(status, type);
       appointment.serviceType_id = serviceType_id;
@@ -113,6 +110,9 @@ class UpdateAppointmentService {
 }
 function ValidaStatus(status) {
   if (status == 3) {
+    return 1;
+  }
+  if (status == 0) {
     return 1;
   }
   return status;

@@ -99,10 +99,6 @@ class UpdateAppointmentService {
 		}
 
 		if (appointment) {
-			if (status == 0) {
-				status = 1;
-			}
-
 			const newStatus = ValidaStatus(status);
 			const newType = ValidaType(status, type);
 
@@ -133,6 +129,9 @@ class UpdateAppointmentService {
 
 function ValidaStatus(status: number) {
 	if (status == 3) {
+		return 1;
+	}
+	if (status == 0) {
 		return 1;
 	}
 	return status;
