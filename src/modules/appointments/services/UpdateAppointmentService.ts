@@ -8,6 +8,7 @@ import { UsersRepository } from '@modules/users/users/typeorm/repositories/Users
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository, SimpleConsoleLogger } from 'typeorm';
 import { isSameDay, isSameHour } from 'date-fns';
+import Appointments from '../typeorm/entities/Appointments';
 
 interface IRequest {
 	id: number;
@@ -22,6 +23,10 @@ interface IRequest {
 	start_hour: string;
 }
 
+interface IErro {
+	message: string;
+}
+
 class UpdateAppointmentService {
 	public async execute({
 		id,
@@ -34,7 +39,7 @@ class UpdateAppointmentService {
 		type,
 		date_scheduled,
 		start_hour,
-	}: IRequest): Promise<Object> {
+	}: IRequest): Promise<Appointments | IErro> {
 		const userRepo = getCustomRepository(UsersRepository);
 		const clientRepo = getCustomRepository(ClientsRepository);
 		const appointmentRepo = getCustomRepository(AppointmentsRepository);
@@ -60,7 +65,7 @@ class UpdateAppointmentService {
 
 		const allDayAppointments: IAppointmentsList[] = await appointmentRepo.find({ date_scheduled, scheduled: true });
 
-		let oldappointment = {
+		const oldappointment = {
 			description,
 			comments,
 			status,
@@ -76,12 +81,14 @@ class UpdateAppointmentService {
 			serviceType_id,
 		};
 
-		if (
-			(isSameDay(new Date(date_scheduled), new Date(appointment.date_scheduled)) == false ||
-				appointment.start_hour != start_hour) &&
-			!VerifyAllDaySchedules(allDayAppointments, oldappointment)
-		) {
-			throw new AppError('Already exist an appointment for the selected hour');
+		if (!isSameDay(new Date(date_scheduled), appointment.date_scheduled)) {
+			if (
+				(isSameDay(new Date(date_scheduled), new Date(appointment.date_scheduled)) == false ||
+					appointment.start_hour != start_hour) &&
+				!VerifyAllDaySchedules(allDayAppointments, oldappointment)
+			) {
+				throw new AppError('Já existe um agendamento p/ o horário escolhido');
+			}
 		}
 
 		if (servicePaymentExist) {
@@ -92,6 +99,13 @@ class UpdateAppointmentService {
 		}
 
 		if (appointment) {
+			if (status == 0) {
+				status = 1;
+			}
+
+			const newStatus = ValidaStatus(status);
+			const newType = ValidaType(status, type);
+
 			appointment.serviceType_id = serviceType_id;
 			if (description) {
 				appointment.description = description;
@@ -99,8 +113,8 @@ class UpdateAppointmentService {
 			if (comments) {
 				appointment.comments = comments;
 			}
-			appointment.status = status;
-			appointment.type = type;
+			appointment.status = newStatus;
+			appointment.type = newType;
 			appointment.date_scheduled = date_scheduled;
 			appointment.start_hour = start_hour;
 			appointment.duration = serviceTypeExist.duration;
@@ -115,6 +129,23 @@ class UpdateAppointmentService {
 
 		return { message: 'fail' };
 	}
+}
+
+function ValidaStatus(status: number) {
+	if (status == 3) {
+		return 1;
+	}
+	return status;
+}
+
+function ValidaType(status: number, type: number) {
+	if (type == 0) {
+		return 2;
+	}
+	if (type == 1) {
+		return 3;
+	}
+	return type;
 }
 
 export default UpdateAppointmentService;
