@@ -23,16 +23,16 @@ usersInfosRouter.post('/', _isAuthenticated.default, (0, _celebrate.celebrate)({
     tiktok: _celebrate.Joi.string().optional()
   }
 }), usersInfosController.create);
-usersInfosRouter.put('/', _isAuthenticated.default, (0, _celebrate.celebrate)({
+usersInfosRouter.patch('/', _isAuthenticated.default, (0, _celebrate.celebrate)({
   [_celebrate.Segments.BODY]: {
     description: _celebrate.Joi.string().required(),
     professional_mail: _celebrate.Joi.string().required(),
     celphone: _celebrate.Joi.string().required(),
-    second_celphone: _celebrate.Joi.string().required(),
-    website: _celebrate.Joi.string().required(),
-    instagram: _celebrate.Joi.string().required(),
-    twitter: _celebrate.Joi.string().required(),
-    tiktok: _celebrate.Joi.string().required()
+    second_celphone: _celebrate.Joi.string().optional(),
+    website: _celebrate.Joi.string().optional(),
+    instagram: _celebrate.Joi.string().optional(),
+    twitter: _celebrate.Joi.string().optional(),
+    tiktok: _celebrate.Joi.string().optional()
   }
 }), usersInfosController.update);
 usersInfosRouter.get('/', _isAuthenticated.default, usersInfosController.get);

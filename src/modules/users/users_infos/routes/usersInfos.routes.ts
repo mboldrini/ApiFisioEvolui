@@ -24,7 +24,7 @@ usersInfosRouter.post(
 	usersInfosController.create,
 );
 
-usersInfosRouter.put(
+usersInfosRouter.patch(
 	'/',
 	isAuthenticated,
 	celebrate({
@@ -32,11 +32,11 @@ usersInfosRouter.put(
 			description: Joi.string().required(),
 			professional_mail: Joi.string().required(),
 			celphone: Joi.string().required(),
-			second_celphone: Joi.string().required(),
-			website: Joi.string().required(),
-			instagram: Joi.string().required(),
-			twitter: Joi.string().required(),
-			tiktok: Joi.string().required(),
+			second_celphone: Joi.string().optional(),
+			website: Joi.string().optional(),
+			instagram: Joi.string().optional(),
+			twitter: Joi.string().optional(),
+			tiktok: Joi.string().optional(),
 		},
 	}),
 	usersInfosController.update,
