@@ -24,6 +24,24 @@ appointmentsRouter.post(
 	appointmentsController.create,
 );
 
+appointmentsRouter.post(
+	'/recurrentDay',
+	isAuthenticated,
+	celebrate({
+		[Segments.BODY]: {
+			client_id: Joi.number().required(),
+			serviceType_id: Joi.number().required(),
+			status: Joi.number().required(),
+			type: Joi.number().required(),
+			date_scheduled: Joi.string().required(),
+			start_hour: Joi.string().required(),
+			recurrent: Joi.boolean().required(),
+			final_date: Joi.date().optional(),
+		},
+	}),
+	appointmentsController.createRecurrentDayWeek,
+);
+
 appointmentsRouter.get('/:id&:client_id', isAuthenticated, appointmentsController.getAppointment);
 
 appointmentsRouter.patch(

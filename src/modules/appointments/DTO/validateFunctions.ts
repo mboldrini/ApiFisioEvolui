@@ -1,6 +1,6 @@
 import UsersConfigs from '@modules/users/users_configs/typeorm/entities/UsersConfigs';
 import UserWorkDays from '@modules/users/user_workDays/typeorm/entities/UserWorkDays';
-import { addHours, addMinutes, addSeconds, format } from 'date-fns';
+import { addHours, addMinutes, addSeconds, eachDayOfInterval, format, getDay } from 'date-fns';
 
 export interface IAppointmentsList {
 	id?: number;
@@ -188,4 +188,18 @@ export function GetWorkDayInfos(date_scheduled: Date, userWorkDays: UserWorkDays
 	}
 
 	return workDay;
+}
+
+/// Pega um intervalo de dias, da data inicial até a final, considerando
+/// que os dias da semana, serão os dias da data inicial
+/// Ex: 12/12/2022 até 09/02/2023  => todas as segundas até dia 9
+export function GetEspecificDaysInterval(date_start: Date, date_end: Date) {
+	const intervaloDias: Date[] = eachDayOfInterval({ start: date_start, end: date_end });
+
+	const intervaloEspecifico = intervaloDias.filter(cadaDia => {
+		if (getDay(new Date(cadaDia)) == getDay(new Date(date_start))) {
+			return cadaDia;
+		}
+	});
+	return intervaloEspecifico;
 }

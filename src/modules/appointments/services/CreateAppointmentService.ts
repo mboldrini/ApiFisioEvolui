@@ -1,9 +1,9 @@
-import { ServicePaymentRepository } from './../../service_payment/typeorm/repositories/ServicePaymentRepository';
-import { UsersConfigsRepository } from './../../users/users_configs/typeorm/repositories/UsersConfigsRepository';
-import { IAppointmentsList, VerifyAllDaySchedules, SetEndHour } from './../DTO/validateFunctions';
-import { ServicesTypesRepository } from './../../services_types/typeorm/repositories/ServicesTypesRepository';
-import { AppointmentsRepository } from './../typeorm/repositories/AppointmentsRepository';
-import { ClientsRepository } from './../../clients/clients/typeorm/repositories/ClientsRepository';
+import { ServicePaymentRepository } from '../../service_payment/typeorm/repositories/ServicePaymentRepository';
+import { UsersConfigsRepository } from '../../users/users_configs/typeorm/repositories/UsersConfigsRepository';
+import { IAppointmentsList, VerifyAllDaySchedules, SetEndHour } from '../DTO/validateFunctions';
+import { ServicesTypesRepository } from '../../services_types/typeorm/repositories/ServicesTypesRepository';
+import { AppointmentsRepository } from '../typeorm/repositories/AppointmentsRepository';
+import { ClientsRepository } from '../../clients/clients/typeorm/repositories/ClientsRepository';
 import { UsersRepository } from '@modules/users/users/typeorm/repositories/UsersRepository';
 import AppError from '@shared/errors/AppError';
 import { getCustomRepository, SimpleConsoleLogger } from 'typeorm';

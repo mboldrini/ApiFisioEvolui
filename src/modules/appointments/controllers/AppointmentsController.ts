@@ -10,6 +10,8 @@ import UpdateAppointmentService from '../services/UpdateAppointmentService';
 import { startOfMonth, endOfMonth } from 'date-fns';
 import GetAllMonthAppoinntmentsService from '../services/GetAllMonthAppointmentsService';
 import GetAppointmentService from '../services/GetAppointmentService';
+import CreateRecurrentAppointmentService from '../services/CreateRecurrentDayWeekAppointmentService';
+import CreateRecurrentDayWeekAppointmentService from '../services/CreateRecurrentDayWeekAppointmentService';
 
 export default class AppointmentsController {
 	public async create(request: Request, response: Response): Promise<Response> {
@@ -28,6 +30,27 @@ export default class AppointmentsController {
 			type,
 			date_scheduled,
 			start_hour,
+		});
+
+		return response.json(appointment);
+	}
+
+	public async createRecurrentDayWeek(request: Request, response: Response): Promise<Response> {
+		const { client_id, serviceType_id, status, type, date_scheduled, start_hour, recurrent, final_date } =
+			request.body;
+		const { user_code } = request.user;
+
+		const appointmentSrvc = new CreateRecurrentDayWeekAppointmentService();
+		const appointment = await appointmentSrvc.execute({
+			user_code,
+			serviceType_id,
+			client_id,
+			status,
+			type,
+			date_scheduled,
+			start_hour,
+			recurrent,
+			final_date,
 		});
 
 		return response.json(appointment);
