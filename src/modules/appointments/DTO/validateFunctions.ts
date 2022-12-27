@@ -1,6 +1,6 @@
 import UsersConfigs from '@modules/users/users_configs/typeorm/entities/UsersConfigs';
 import UserWorkDays from '@modules/users/user_workDays/typeorm/entities/UserWorkDays';
-import { addHours, addMinutes, addSeconds, eachDayOfInterval, format, getDay } from 'date-fns';
+import { addHours, addMinutes, addSeconds, eachDayOfInterval, format, getDay, parseISO, setMinutes, setHours } from 'date-fns';
 
 export interface IAppointmentsList {
 	id?: number;
@@ -36,10 +36,12 @@ export function SetEndHour(startHour: string, duration: string) {
 
 export function GetTimeStamp(hour: string) {
 	const [hora, minuto, segundo] = hour.split(':');
-	let dateHour = new Date(1995, 6, 1, parseInt(hora), parseInt(minuto), parseInt(segundo));
-	// dateHour = addHours(dateHour, parseInt(hora));
-	// dateHour = addMinutes(dateHour, parseInt(minuto));
-	// dateHour = addSeconds(dateHour, parseInt(segundo));
+	let dateHour;
+	if (segundo) {
+		dateHour = new Date(1995, 6, 1, parseInt(hora), parseInt(minuto), parseInt(segundo));
+	} else {
+		dateHour = new Date(1995, 6, 1, parseInt(hora), parseInt(minuto));
+	}
 	return dateHour.getTime();
 }
 
@@ -48,12 +50,9 @@ export function VerifyAllDaySchedules(allAppointments: IAppointmentsList[], sele
 	allAppointments.forEach((appointment: IAppointmentsList) => {
 		if (
 			GetTimeStamp(selectedAppointment.start_hour) == GetTimeStamp(appointment.start_hour) ||
-			(GetTimeStamp(selectedAppointment.start_hour) >= GetTimeStamp(appointment.start_hour) &&
-				GetTimeStamp(selectedAppointment.start_hour) < GetTimeStamp(appointment.end_hour)) ||
-			(GetTimeStamp(selectedAppointment.end_hour) > GetTimeStamp(appointment.start_hour) &&
-				GetTimeStamp(selectedAppointment.end_hour) <= GetTimeStamp(appointment.end_hour)) ||
-			(GetTimeStamp(selectedAppointment.start_hour) <= GetTimeStamp(appointment.start_hour) &&
-				GetTimeStamp(selectedAppointment.end_hour) >= GetTimeStamp(appointment.end_hour))
+			(GetTimeStamp(selectedAppointment.start_hour) >= GetTimeStamp(appointment.start_hour) && GetTimeStamp(selectedAppointment.start_hour) < GetTimeStamp(appointment.end_hour)) ||
+			(GetTimeStamp(selectedAppointment.end_hour) > GetTimeStamp(appointment.start_hour) && GetTimeStamp(selectedAppointment.end_hour) <= GetTimeStamp(appointment.end_hour)) ||
+			(GetTimeStamp(selectedAppointment.start_hour) <= GetTimeStamp(appointment.start_hour) && GetTimeStamp(selectedAppointment.end_hour) >= GetTimeStamp(appointment.end_hour))
 		) {
 			result = false;
 			return;
@@ -194,11 +193,14 @@ export function GetWorkDayInfos(date_scheduled: Date, userWorkDays: UserWorkDays
 /// que os dias da semana, serão os dias da data inicial
 /// Ex: 12/12/2022 até 09/02/2023  => todas as segundas até dia 9
 export function GetEspecificDaysInterval(date_start: Date, date_end: Date) {
-	const intervaloDias: Date[] = eachDayOfInterval({ start: date_start, end: date_end });
+	const intervaloDias = eachDayOfInterval({
+		start: date_start,
+		end: date_end,
+	});
 
 	const intervaloEspecifico = intervaloDias.filter(cadaDia => {
 		if (getDay(new Date(cadaDia)) == getDay(new Date(date_start))) {
-			return cadaDia;
+			return cadaDia.toLocaleDateString();
 		}
 	});
 	return intervaloEspecifico;

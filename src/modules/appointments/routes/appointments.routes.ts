@@ -33,7 +33,7 @@ appointmentsRouter.post(
 			serviceType_id: Joi.number().required(),
 			status: Joi.number().required(),
 			type: Joi.number().required(),
-			date_scheduled: Joi.string().required(),
+			date_scheduled: Joi.date().required(),
 			start_hour: Joi.string().required(),
 			recurrent: Joi.boolean().required(),
 			final_date: Joi.date().optional(),
